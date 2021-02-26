@@ -82,8 +82,8 @@
         };
 
         fetch(Home.uri, {
-            method: 'POST',
-            headers: {
+            method: 'POST'
+            , headers: {
                 'Accept': 'application/json'
                 , 'Content-Type': 'application/json'
                 , 'Authorization': `Bearer ${Home.user.token}`
@@ -111,7 +111,9 @@
 
         fetch(`${Home.uri}/${id}`, {
             method: 'DELETE'
-            , 'Authorization': `Bearer ${Home.user.token}`
+            , headers: {
+                'Authorization': `Bearer ${Home.user.token}`
+            }            
         })
             .then(() => Home.getItems())
             .catch(error => console.error('Unable to delete item.', error));
