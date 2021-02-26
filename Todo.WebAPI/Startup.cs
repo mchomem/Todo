@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Todo.Core.Models.DataBase.Repositories;
+using Todo.Core.Models.DataBase.Repositories.Interfaces;
 
 namespace Todo.WebAPI
 {
@@ -23,6 +25,9 @@ namespace Todo.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddScoped<ITodoItemRepository, TodoItemRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             var key = Encoding.ASCII.GetBytes("+WsLhdwMcCnW&cJW4a5hm^jFemE&?V?Y?z9eMdcN_X3DktLE7W9nS#Z2&vpakM6v");
             services.AddAuthentication(x =>

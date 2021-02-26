@@ -7,7 +7,7 @@ using Todo.Core.Models.Entities;
 
 namespace Todo.Core.Models.DataBase.Repositories
 {
-    public class UserRepository : ICrud<User>
+    public class UserRepository : IUserRepository
     {
         public void Create(User entity)
         {
@@ -63,7 +63,7 @@ namespace Todo.Core.Models.DataBase.Repositories
 
         public UserDto Authenticate(User entity)
         {
-            // TODO use an Utils.Cypher in password.
+            // TODO: use an Utils.Cypher in password.
 
             using (TodoContext db = new TodoContext())
             {
@@ -76,18 +76,13 @@ namespace Todo.Core.Models.DataBase.Repositories
                 if (user == null)
                     return null;
 
-                return this.GetDto(user);
+                return new UserDto()
+                {
+                    UserID = user.UserID.Value,
+                    Name = user.Name,
+                    IsActive = user.IsActive.Value
+                };
             }
-        }
-
-        private UserDto GetDto(User user)
-        {
-            return new UserDto()
-            {
-                UserID = user.UserID.Value,
-                Name = user.Name,
-                IsActive = user.IsActive.Value
-            };
         }
     }
 }

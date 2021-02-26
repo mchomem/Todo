@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using Todo.Core.Models.DataBase.Repositories;
+using Todo.Core.Models.DataBase.Repositories.Interfaces;
 using Todo.Core.Models.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,14 +14,21 @@ namespace Todo.WebAPI.Controllers
     [ApiController]
     public class TodoItemController : ControllerBase
     {
+        private readonly ITodoItemRepository _todoItemRepository;
+
+        public TodoItemController(ITodoItemRepository todoItemRepository)
+        {
+            _todoItemRepository = todoItemRepository;
+        }
+
         // GET: api/<TodoItemController>
         [HttpGet]
         public ActionResult<IEnumerable<TodoItem>> Get(int userID)
         {
             try
             {
-                return new TodoItemRepository()
-                .Retrieve(new TodoItem() { CreatedBy = new User() { UserID = userID } });
+                return _todoItemRepository
+                    .Retrieve(new TodoItem() { CreatedBy = new User() { UserID = userID } });
             }
             catch (Exception e)
             {
@@ -35,7 +42,7 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                new TodoItemRepository().Create(todoItem);
+                _todoItemRepository.Create(todoItem);
                 return Ok(new { message = "Task created." });
             }
             catch (Exception e)
@@ -50,14 +57,17 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                TodoItem todo = new TodoItemRepository()
+                TodoItem todo = _todoItemRepository
                     .Details(new TodoItem() { TodoItemID = id });
 
                 todo.Name = todoItem.Name;
                 todo.IsDone = todoItem.IsDone;
                 todo.DeadLine = todoItem.DeadLine;
 
-                new TodoItemRepository().Update(todo);
+                if (todo == null)
+                    return NotFound();
+
+                _todoItemRepository.Update(todo);
 
                 return StatusCode(204);
             }
@@ -73,7 +83,7 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                new TodoItemRepository()
+                _todoItemRepository
                     .Delete(new TodoItem() { TodoItemID = id });
 
                 return Ok();
