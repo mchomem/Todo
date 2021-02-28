@@ -6,5 +6,7 @@ namespace Todo.Core.Models.DataBase.Repositories.Interfaces
     public interface IUserRepository : ICrud<User>
     {
         public UserDto Authenticate(User entity);
+
+        public void ChangePassword(User entity, string newPassword);
     }
 }

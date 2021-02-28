@@ -46,6 +46,7 @@ namespace Todo.Core.Models.DataBase.Repositories
                         (!entity.UserID.HasValue || x.UserID.Value == entity.UserID.Value)
                         && (String.IsNullOrEmpty(entity.Name) || x.Name.Contains(entity.Name))
                         && (String.IsNullOrEmpty(entity.Login) || x.Name.Contains(entity.Login))
+                        && (String.IsNullOrEmpty(entity.Password) || x.Password == entity.Password)
                         && (!entity.IsActive.HasValue || x.IsActive.Value == entity.IsActive.Value)
                     ))
                     .ToList();
@@ -82,6 +83,21 @@ namespace Todo.Core.Models.DataBase.Repositories
                     Name = user.Name,
                     IsActive = user.IsActive.Value
                 };
+            }
+        }
+    
+        public void ChangePassword(User entity, string newPassword)
+        {
+            using (TodoContext db = new TodoContext())
+            {
+                User user = this.Retrieve(entity)
+                    .FirstOrDefault();
+
+                if (user == null)
+                    throw new Exception("Incorrect user or password.");
+
+                user.Password = newPassword;
+                this.Update(user);
             }
         }
     }

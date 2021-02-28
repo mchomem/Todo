@@ -26,6 +26,7 @@ namespace Todo.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        [Route("authentication")]
         public ActionResult<UserDto> GetAuthentication(string login, string password)
         {
             try
@@ -48,9 +49,26 @@ namespace Todo.WebAPI.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<UserDto> Get(int id)
         {
-            return "value";
+            try
+            {
+                User user = _userRepository
+                    .Details(new User() { UserID = id });
+
+                UserDto userDto = new UserDto()
+                {
+                    UserID = user.UserID.Value,
+                    Name = user.Name,
+                    IsActive = user.IsActive.Value
+                };
+
+                return Ok(userDto);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
 
         // POST api/<UserController>
@@ -76,7 +94,7 @@ namespace Todo.WebAPI.Controllers
             try
             {
                 User userUpdate = _userRepository
-                    .Details(new User() { UserID = id});
+                    .Details(new User() { UserID = id });
 
                 if (userUpdate == null)
                     return NotFound();
@@ -84,6 +102,22 @@ namespace Todo.WebAPI.Controllers
                 _userRepository.Update(user);
 
                 return StatusCode(204);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
+        }
+
+        [HttpPut]
+        [Route("password")]
+        public ActionResult ChangePassword(int userId, string currentPassword, string newPassword)
+        {
+            try
+            {
+                _userRepository.ChangePassword(new User() { UserID = userId, Password = currentPassword }, newPassword);
+
+                return StatusCode(204, new { message = "Password changed successfully" });
             }
             catch (Exception e)
             {

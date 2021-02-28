@@ -40,13 +40,13 @@
             return
         }
 
-        let url = `https://localhost:44332/api/user?login=${self.$txtUser.value}&password=${self.$txtPassword.value}`;
+        let url = `https://localhost:44332/api/user/authentication?login=${self.$txtUser.value}&password=${self.$txtPassword.value}`;
 
         self.$signInLabel.style.display = 'none';
         self.$loader.style.display = 'block';
 
         fetch(url, {
-            method: 'get'            
+            method: 'get'
             , headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -54,8 +54,15 @@
         })
             .then(response => response.json())
             .then(data => {
-                sessionStorage.setItem('user', JSON.stringify(data));
-                document.location.href = 'home.html';
+                // TODO: apply best pratice to better response when user not found!
+                if (data.status == 404) {
+                    self.$signInLabel.style.display = 'block';
+                    self.$loader.style.display = 'none';
+                    alert('User not found. Do you forget your password?');
+                } else {
+                    sessionStorage.setItem('user', JSON.stringify(data));
+                    document.location.href = 'home.html';
+                }
             })
             .catch(error => console.error('Error', error));
     }

@@ -4,7 +4,10 @@
 
     , user: JSON.parse(sessionStorage.getItem('user'))
 
-    , uri: 'https://localhost:44332/api/TodoItem'
+    // TODO: put url's into Util.js
+    , uriTodoItem: 'https://localhost:44332/api/TodoItem'
+
+    , uriUser: 'https://localhost:44332/api/user'
 
     , todos: []
 
@@ -21,11 +24,29 @@
         self.$addName = document.getElementById('add-name');
         self.$txtDeadLine = document.getElementById('txtDeadLine');
         self.$btnAddName = document.getElementById('btnAddName');
+
+        // TODO: finish modal user form
+        self.$btnEditUserAccount = document.getElementById('btnEditUserAccount');
+        self.$lblNameUser = document.getElementById('lblNameUser');
+
+        self.$txtCurrentPassword = document.getElementById('txtCurrentPassword');
+        self.$iconCurrentPassword = document.getElementById('iconCurrentPassword');
+        self.$btnShowHideCurrentPassword = document.getElementById('btnShowHideCurrentPassword');
+
+        self.$txtNewPassword = document.getElementById('txtNewPassword');
+        self.$iconNewPassword = document.getElementById('iconNewPassword');
+        self.$btnShowHideNewPassword = document.getElementById('btnShowHideNewPassword');
+        
+        self.$btnCloseEditUser = document.getElementById('btnCloseEditUser');
+        self.$btnSaveEditUser = document.getElementById('btnSaveEditUser');
+
         self.$editId = document.getElementById('edit-id');
         self.$editName = document.getElementById('edit-name');
         self.$editDeadLine = document.getElementById('edit-deadLine');
         self.$editIsComplete = document.getElementById('edit-isComplete');
+        self.$btnClose = document.getElementById('btnClose');
         self.$btnSaveEdit = document.getElementById('btnSaveEdit');
+
         self.$loader = document.getElementById('loader');
         self.$listing = document.getElementById('listing');
         self.$noData = document.getElementById('noData');
@@ -44,6 +65,44 @@
             document.location.href = 'login.html';
         });
 
+        self.$btnEditUserAccount.addEventListener('click', function () {
+            Home.loadUser();
+        });
+
+        self.$btnShowHideCurrentPassword.addEventListener('click', function () {
+            if (self.$txtCurrentPassword.getAttribute('type') == 'password') {
+                self.$iconCurrentPassword.classList.remove('fa-eye-slash');
+                self.$iconCurrentPassword.classList.add('fa-eye');
+                self.$txtCurrentPassword.setAttribute('type', 'text');
+            }
+            else {
+                self.$iconCurrentPassword.classList.add('fa-eye-slash');
+                self.$iconCurrentPassword.classList.remove('fa-eye');
+                self.$txtCurrentPassword.setAttribute('type', 'password');
+            }
+        });
+
+        self.$btnShowHideNewPassword.addEventListener('click', function () {
+            if (self.$txtNewPassword.getAttribute('type') == 'password') {
+                self.$iconNewPassword.classList.remove('fa-eye-slash');
+                self.$iconNewPassword.classList.add('fa-eye');
+                self.$txtNewPassword.setAttribute('type', 'text');
+            }
+            else {
+                self.$iconNewPassword.classList.add('fa-eye-slash');
+                self.$iconNewPassword.classList.remove('fa-eye');
+                self.$txtNewPassword.setAttribute('type', 'password');
+            }
+        });
+
+        self.$btnCloseEditUser.addEventListener('click', function () {
+            Home.clearUserEditForm();
+        })
+
+        self.$btnSaveEditUser.addEventListener('click', function () {
+            Home.changePassword();
+        });
+
         self.$btnAddName.addEventListener('click', function () {
             Home.addItem();
         });
@@ -54,7 +113,7 @@
     }
 
     , getItems: function () {
-        fetch(Home.uri + '/?userId=' + Home.user.userID, {
+        fetch(Home.uriTodoItem + '/?userId=' + Home.user.userID, {
             method: 'GET'
             , headers: {
                 'Authorization': `Bearer ${Home.user.token}`
@@ -81,7 +140,7 @@
             createdBy: Home.user
         };
 
-        fetch(Home.uri, {
+        fetch(Home.uriTodoItem, {
             method: 'POST'
             , headers: {
                 'Accept': 'application/json'
@@ -109,11 +168,11 @@
             return;
         }
 
-        fetch(`${Home.uri}/${id}`, {
+        fetch(`${Home.uriTodoItem}/${id}`, {
             method: 'DELETE'
             , headers: {
                 'Authorization': `Bearer ${Home.user.token}`
-            }            
+            }
         })
             .then(() => Home.getItems())
             .catch(error => console.error('Unable to delete item.', error));
@@ -137,7 +196,7 @@
             isDone: self.$editIsComplete.checked
         };
 
-        fetch(`${Home.uri}/${itemId}`, {
+        fetch(`${Home.uriTodoItem}/${itemId}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json'
@@ -153,7 +212,7 @@
         successMessage.classList.remove('d-none');
 
         setTimeout(function () {
-            document.getElementById('btnClose').click();
+            self.$btnClose.click();
             successMessage.classList.add('d-none');
         }, 2000);
 
@@ -229,6 +288,39 @@
 
         self.$loader.style.display = 'none';
         self.$listing.style.display = 'block';
+    }
+
+    , loadUser: function () {
+        self.$lblNameUser.innerText = Home.user.name;
+    }
+
+    , changePassword: function () {
+        let currentPassword = self.$txtCurrentPassword.value;
+        let newPassword = self.$txtNewPassword.value;
+
+        if (self.$txtCurrentPassword.value.length === 0
+            || self.$txtNewPassword.value.length === 0) {
+            alert('Fill the required filds.');
+            return;
+        }
+
+        fetch(`${Home.uriUser}/password/?userId=${Home.user.userID}&currentPassword=${currentPassword}&newPassword=${newPassword}`, {
+            method: 'PUT'
+            , headers: {
+                'Authorization': `Bearer ${Home.user.token}`
+            }
+        })
+            .then(() => {
+                Home.clearUserEditForm();
+                alert('Password changed;');
+                self.$btnCloseEditUser.click();                
+            })
+            .catch(error => console.error(`${error}`));
+    }
+
+    , clearUserEditForm: function () {
+        self.$txtCurrentPassword.value = '';
+        self.$txtNewPassword.value = '';
     }
 
 }
