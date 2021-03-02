@@ -85,7 +85,7 @@ namespace Todo.Core.Models.DataBase.Repositories
                 };
             }
         }
-
+    
         public void ChangePassword(User entity, string newPassword)
         {
             using (TodoContext db = new TodoContext())
