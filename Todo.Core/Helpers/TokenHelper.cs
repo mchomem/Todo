@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using Todo.Core.Models.Dtos;
 
-namespace Todo.WebAPI.Helpers
+namespace Todo.Core.Helpers
 {
     public static class TokenHelper
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Todo.Core.Helpers;
 using Todo.Core.Models.DataBase.Repositories.Interfaces;
 using Todo.Core.Models.Dtos;
 using Todo.Core.Models.Entities;
-using Todo.WebAPI.Helpers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
