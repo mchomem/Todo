@@ -31,6 +31,7 @@ namespace Todo.WebAPI
 
             services.AddScoped<ITodoItemRepository, TodoItemRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserPictureRepository, UserPictureRepository>();
 
             #endregion
 

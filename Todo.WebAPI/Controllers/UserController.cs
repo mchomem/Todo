@@ -16,14 +16,15 @@ namespace Todo.WebAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUserPictureRepository _userPictureRepository;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, IUserPictureRepository userPictureRepository)
         {
             _userRepository = userRepository;
+            _userPictureRepository = userPictureRepository;
         }
 
         // GET: api/<UserController>
-
         [AllowAnonymous]
         [HttpGet]
         [Route("authentication")]
@@ -60,6 +61,7 @@ namespace Todo.WebAPI.Controllers
                 {
                     UserID = user.UserID.Value,
                     Name = user.Name,
+                    Picture = user.Picture?.Picture,
                     IsActive = user.IsActive.Value
                 };
 
@@ -89,7 +91,7 @@ namespace Todo.WebAPI.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, User user)
+        public ActionResult Put(int id, UserDto userDto)
         {
             try
             {
@@ -99,7 +101,37 @@ namespace Todo.WebAPI.Controllers
                 if (userUpdate == null)
                     return NotFound();
 
-                _userRepository.Update(user);
+                UserPicture userPicture;
+
+                if (userUpdate.Picture != null)
+                {
+                    userPicture =
+                        _userPictureRepository
+                            .Details(new UserPicture() { UserPictureID = userUpdate.Picture.UserPictureID });
+                }
+                else
+                {
+                    userPicture = new UserPicture()
+                    {
+                        PictureFromUserID = userUpdate.UserID
+                        ,
+                        User = userUpdate
+                    };
+                }
+
+                userPicture.Picture = userDto.Picture;
+
+                // Do already exists the user picture?
+                if (userUpdate.Picture == null)
+                {
+                    _userPictureRepository.Create(userPicture);
+                }
+                else
+                {
+                    _userPictureRepository.Update(userPicture);
+                }
+
+                _userRepository.Update(userUpdate);
 
                 return StatusCode(204);
             }
@@ -110,7 +142,7 @@ namespace Todo.WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("password")]
+        [Route("change-password")]
         public ActionResult ChangePassword(int userId, string currentPassword, string newPassword)
         {
             try
@@ -121,14 +153,43 @@ namespace Todo.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, e);
+                return StatusCode(500, new { message = e });
             }
         }
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            return Ok();
         }
+
+        [HttpDelete, Route("delete-user-picture")]
+        public ActionResult DeleteUserPicture(int userId)
+        {
+            try
+            {
+                User user = _userRepository.Details(new User() { UserID = userId });
+
+                if (user == null)
+                    return NotFound("User not found.");
+
+                UserPicture userPicture = _userPictureRepository
+                    .Details(new UserPicture() { PictureFromUserID = userId });
+
+                if (userPicture == null)
+                    return NotFound("User picture not found.");
+
+                _userPictureRepository
+                    .Delete(userPicture);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
+        }
+
     }
 }

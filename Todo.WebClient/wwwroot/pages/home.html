@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -27,6 +28,15 @@
                                     data-bs-target="#userModalEdit"
                                     style="font-size: 9px;height:16px;padding-top:0px;">
                                 <b>Account</b>
+                            </button>
+
+                            <button id="btnChangePassword"
+                                    class="btn btn-sm btn-secondary ms-2"
+                                    type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#userModalChangePassword"
+                                    style="font-size: 9px;height:16px;padding-top:0px;">
+                                <b>Change password</b>
                             </button>
 
                             <button id="btnExit"
@@ -81,30 +91,31 @@
                         <form>
                             <div class="row mt-3">
                                 <div class="col">
-                                    <label>Name:</label>
-                                    <label id="lblNameUser"></label>
+                                    <img id="imgUserPicture"
+                                         src="../assets/images/user-default-picture.png"
+                                         style="background-color: gainsboro; height:100px; width:100px;cursor:pointer;" />
+                                    <input id="btnLoadPicture"
+                                           class="form-control"
+                                           type="file"
+                                           value="Load your picture"
+                                           style="font-size:10px; width:100px;display:none;" />
                                 </div>
                             </div>
-
-                            <div class="row mt-3">
+                            <div class="row mt-1">
                                 <div class="col">
-                                    <div class="input-group">
-                                        <input id="txtCurrentPassword" class="form-control form-control-sm" placeholder="Current password" type="password" />
-                                        <button id="btnShowHideCurrentPassword" class="btn btn-sm btn-secondary" style="width:60px;" type="button">
-                                            <i id="iconCurrentPassword" class="fas fa-eye-slash"></i>
-                                        </button>
-                                    </div>
+                                    <button id="btnDeletePicture"
+                                            class="btn btn-sm btn-danger"
+                                            type="button" style="width:100px;">
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
-
                             <div class="row mt-3">
                                 <div class="col">
-                                    <div class="input-group">
-                                        <input id="txtNewPassword" class="form-control form-control-sm" placeholder="New password" type="password" />
-                                        <button id="btnShowHideNewPassword" class="btn btn-sm btn-secondary" style="min-width:60px;" type="button">
-                                            <i id="iconNewPassword" class="fas fa-eye-slash"></i>
-                                        </button>
-                                    </div>
+                                    <input id="txtUserName"
+                                           class="form-control form-control-sm"
+                                           placeholder="User name"
+                                           type="text" />
                                 </div>
                             </div>
                         </form>
@@ -114,6 +125,52 @@
                         <button id="btnSaveEditUser" type="button" class="btn btn-primary">Save</button>
                     </div>
                     <div id="success-message-user" class="alert alert-success m-3 d-none">Done!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for change password-->
+        <div id="userModalChangePassword" class="modal fade" tabindex="-1" aria-labelledby="userModalChangePasswordLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary bg-gradient text-white">
+                        <h5 class="modal-title" id="userModalChangePasswordLabel">Change your password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mt-3">
+                            <div class="col">
+                                <div class="input-group">
+                                    <input id="txtCurrentPassword"
+                                           class="form-control form-control-sm"
+                                           placeholder="Current password"
+                                           type="password" />
+                                    <button id="btnShowHideCurrentPassword"
+                                            class="btn btn-sm btn-secondary"
+                                            style="width:60px;"
+                                            type="button">
+                                        <i id="iconCurrentPassword" class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col">
+                                <div class="input-group">
+                                    <input id="txtNewPassword" class="form-control form-control-sm" placeholder="New password" type="password" />
+                                    <button id="btnShowHideNewPassword" class="btn btn-sm btn-secondary" style="min-width:60px;" type="button">
+                                        <i id="iconNewPassword" class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnCloseChangePassword" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="btnSaveChangePassword" type="button" class="btn btn-primary">Save</button>
+                    </div>
+                    <div id="success-message-password-changed" class="alert alert-success m-3 d-none">Done!</div>
                 </div>
             </div>
         </div>

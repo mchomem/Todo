@@ -10,32 +10,32 @@ namespace Todo.Core.Models.DataBase.Mappings
 
     public class TodoItemMapping : IEntityTypeConfiguration<TodoItem>
     {
-        public void Configure(EntityTypeBuilder<TodoItem> modelBuilder)
+        public void Configure(EntityTypeBuilder<TodoItem> builder)
         {
-            modelBuilder
+            builder
                 .ToTable("TodoItem")
                 .HasKey(x => x.TodoItemID);
 
-            modelBuilder
+            builder
                 .Property(x => x.TodoItemID)
                 .IsRequired()
                 .ValueGeneratedOnAdd();
 
-            modelBuilder
+            builder
                 .Property(x => x.Name)
                 .HasMaxLength(100)
                 .IsRequired();
 
-            modelBuilder
+            builder
                 .Property(x => x.IsDone)
                 .IsRequired()
                 .HasDefaultValue(false);
 
-            modelBuilder
+            builder
                 .Property(x => x.DeadLine)
                 .IsRequired(false);
 
-            modelBuilder
+            builder
                 .Property(x => x.CreatedIn)
                 .IsRequired()
                 .HasDefaultValueSql("getdate()");

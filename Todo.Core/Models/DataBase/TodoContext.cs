@@ -10,6 +10,7 @@ namespace Todo.Core.Models.DataBase
 
         public DbSet<TodoItem> TodoItems { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserPicture> UserPictures { get; set; }
 
         #endregion
 
@@ -21,7 +22,8 @@ namespace Todo.Core.Models.DataBase
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMapping());
-            modelBuilder.ApplyConfiguration(new TodoItemMapping());
+            modelBuilder.ApplyConfiguration(new UserPictureMapping());
+            modelBuilder.ApplyConfiguration(new TodoItemMapping());            
         }
 
         #endregion

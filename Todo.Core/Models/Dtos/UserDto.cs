@@ -12,6 +12,8 @@ namespace Todo.Core.Models.Dtos
 
         public bool IsActive { get; set; }
 
+        public byte[] Picture { get; set; }
+
         public string Token { get; set; }
 
         #endregion

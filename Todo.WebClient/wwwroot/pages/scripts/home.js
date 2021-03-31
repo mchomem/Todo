@@ -2,12 +2,14 @@
 
     self: this
 
-    , user: JSON.parse(sessionStorage.getItem('user'))
+    , userCache: JSON.parse(sessionStorage.getItem('user'))
 
     // TODO: put url's into Util.js
     , uriTodoItem: 'https://localhost:44332/api/TodoItem'
 
     , uriUser: 'https://localhost:44332/api/user'
+
+    , imagePicture: undefined
 
     , todos: []
 
@@ -19,27 +21,37 @@
     }
 
     , addControl: function () {
+
+        // Controls for header app.
         self.$spanUser = document.getElementById('spanUser');
+        self.$btnEditUserAccount = document.getElementById('btnEditUserAccount');
         self.$btnExit = document.getElementById('btnExit');
+
+        // Constrols for form insert todo item.
         self.$addName = document.getElementById('add-name');
         self.$txtDeadLine = document.getElementById('txtDeadLine');
         self.$btnAddName = document.getElementById('btnAddName');
 
-        // TODO: finish modal user form
-        self.$btnEditUserAccount = document.getElementById('btnEditUserAccount');
-        self.$lblNameUser = document.getElementById('lblNameUser');
-
-        self.$txtCurrentPassword = document.getElementById('txtCurrentPassword');
-        self.$iconCurrentPassword = document.getElementById('iconCurrentPassword');
-        self.$btnShowHideCurrentPassword = document.getElementById('btnShowHideCurrentPassword');
-
-        self.$txtNewPassword = document.getElementById('txtNewPassword');
-        self.$iconNewPassword = document.getElementById('iconNewPassword');
-        self.$btnShowHideNewPassword = document.getElementById('btnShowHideNewPassword');
-        
+        // Controls for modal user edit.
+        self.$imgUserPicture = document.getElementById('imgUserPicture');
+        self.$userPicture = '';
+        self.$btnLoadPicture = document.getElementById('btnLoadPicture');
+        self.$btnDeletePicture = document.getElementById('btnDeletePicture');
+        self.$txtUserName = document.getElementById('txtUserName');
         self.$btnCloseEditUser = document.getElementById('btnCloseEditUser');
         self.$btnSaveEditUser = document.getElementById('btnSaveEditUser');
 
+        // Controls for modal change password.
+        self.$txtCurrentPassword = document.getElementById('txtCurrentPassword');
+        self.$iconCurrentPassword = document.getElementById('iconCurrentPassword');
+        self.$btnShowHideCurrentPassword = document.getElementById('btnShowHideCurrentPassword');
+        self.$txtNewPassword = document.getElementById('txtNewPassword');
+        self.$iconNewPassword = document.getElementById('iconNewPassword');
+        self.$btnShowHideNewPassword = document.getElementById('btnShowHideNewPassword');
+        self.$btnCloseChangePassword = document.getElementById('btnCloseChangePassword');
+        self.$btnSaveChangePassword = document.getElementById('btnSaveChangePassword');
+
+        // Controls for modal form edit todo item.
         self.$editId = document.getElementById('edit-id');
         self.$editName = document.getElementById('edit-name');
         self.$editDeadLine = document.getElementById('edit-deadLine');
@@ -47,15 +59,12 @@
         self.$btnClose = document.getElementById('btnClose');
         self.$btnSaveEdit = document.getElementById('btnSaveEdit');
 
+        // Another controls.
         self.$loader = document.getElementById('loader');
         self.$listing = document.getElementById('listing');
         self.$noData = document.getElementById('noData');
         self.$counter = document.getElementById('counter');
         self.$todosListing = document.getElementById('todosListing');
-    }
-
-    , getUserData: function () {
-        self.$spanUser.innerHTML = Home.user.name.toUpperCase();
     }
 
     , attachEvent: function () {
@@ -67,6 +76,19 @@
 
         self.$btnEditUserAccount.addEventListener('click', function () {
             Home.loadUser();
+        });
+
+        self.$imgUserPicture.addEventListener('click', function () {
+            self.$btnLoadPicture.click();
+        });
+
+        self.$btnLoadPicture.addEventListener('change', function () {
+            Home.upLoadPicture();
+        });
+
+        self.$btnDeletePicture.addEventListener('click', function () {
+            self.$imgUserPicture.setAttribute('src', '../assets/images/user-default-picture.png');
+            Home.deletePicture();
         });
 
         self.$btnShowHideCurrentPassword.addEventListener('click', function () {
@@ -97,9 +119,17 @@
 
         self.$btnCloseEditUser.addEventListener('click', function () {
             Home.clearUserEditForm();
-        })
+        });
 
         self.$btnSaveEditUser.addEventListener('click', function () {
+            Home.saveUser();
+        });
+
+        self.$btnCloseChangePassword.addEventListener('click', function () {
+            Home.clearUserChangePasswordForm();
+        });
+
+        self.$btnSaveChangePassword.addEventListener('click', function () {
             Home.changePassword();
         });
 
@@ -112,11 +142,15 @@
         });
     }
 
+    , getUserData: function () {
+        self.$spanUser.innerHTML = Home.userCache.name.toUpperCase();
+    }
+
     , getItems: function () {
-        fetch(Home.uriTodoItem + '/?userId=' + Home.user.userID, {
+        fetch(Home.uriTodoItem + '/?userId=' + Home.userCache.userID, {
             method: 'GET'
             , headers: {
-                'Authorization': `Bearer ${Home.user.token}`
+                'Authorization': `Bearer ${Home.userCache.token}`
             }
         })
             .then(response => response.json())
@@ -133,11 +167,17 @@
             return;
         }
 
+        let user = {
+            userID: Home.userCache.userID
+            , name: Home.userCache.name
+            , isActive: Home.userCache.isActive
+        }
+
         const todoItem = {
             isDone: false,
             name: self.$addName.value.trim(),
             deadLine: (self.$txtDeadLine.value.length === 0 ? null : self.$txtDeadLine.value),
-            createdBy: Home.user
+            createdBy: user
         };
 
         fetch(Home.uriTodoItem, {
@@ -145,7 +185,7 @@
             , headers: {
                 'Accept': 'application/json'
                 , 'Content-Type': 'application/json'
-                , 'Authorization': `Bearer ${Home.user.token}`
+                , 'Authorization': `Bearer ${Home.userCache.token}`
             },
             body: JSON.stringify(todoItem)
         })
@@ -171,7 +211,7 @@
         fetch(`${Home.uriTodoItem}/${id}`, {
             method: 'DELETE'
             , headers: {
-                'Authorization': `Bearer ${Home.user.token}`
+                'Authorization': `Bearer ${Home.userCache.token}`
             }
         })
             .then(() => Home.getItems())
@@ -201,7 +241,7 @@
             headers: {
                 'Accept': 'application/json'
                 , 'Content-Type': 'application/json'
-                , 'Authorization': `Bearer ${Home.user.token}`
+                , 'Authorization': `Bearer ${Home.userCache.token}`
             },
             body: JSON.stringify(item)
         })
@@ -291,7 +331,38 @@
     }
 
     , loadUser: function () {
-        self.$lblNameUser.innerText = Home.user.name;
+        self.$txtUserName.value = Home.userCache.name;
+
+        // TODO: Use a controller to load user picture on
+        if (Home.userCache.picture != undefined && Home.userCache.picture.length != 0) {
+            self.$imgUserPicture.setAttribute('src', 'data:image/png;base64,' + Home.userCache.picture);
+        }
+    }
+
+    , saveUser: function () {
+
+        let user = {
+            userId: Home.userCache.userID
+            , name: self.$txtUserName.value
+            , isActive: Home.userCache.isActive
+            , picture: self.$userPicture
+        };
+
+        fetch(`${Home.uriUser}/${Home.userCache.userID}`, {
+            method: 'PUT'
+            , headers: {
+                'Authorization': `Bearer ${Home.userCache.token}`
+                , 'Content-type': 'application/json; charset=utf-8'
+            }
+            , body: JSON.stringify(user)
+        })
+            .then(() => {
+                Home.userCache.picture = user.picture;
+                sessionStorage.setItem('user', JSON.stringify(user));
+                alert('User updated.');
+            });
+
+        self.$btnCloseEditUser.click();
     }
 
     , changePassword: function () {
@@ -304,21 +375,70 @@
             return;
         }
 
-        fetch(`${Home.uriUser}/password/?userId=${Home.user.userID}&currentPassword=${currentPassword}&newPassword=${newPassword}`, {
+        fetch(`${Home.uriUser}/change-password/?userId=${Home.userCache.userID}&currentPassword=${currentPassword}&newPassword=${newPassword}`, {
             method: 'PUT'
             , headers: {
-                'Authorization': `Bearer ${Home.user.token}`
+                'Authorization': `Bearer ${Home.userCache.token}`
             }
         })
             .then(() => {
-                Home.clearUserEditForm();
+                Home.clearUserChangePasswordForm();
                 alert('Password changed;');
-                self.$btnCloseEditUser.click();                
+                self.$btnCloseEditUser.click();
             })
-            .catch(error => console.error(`${error}`));
+            .catch(error => {
+                console.error(`${error}`)
+                alert(error);
+            });
+    }
+
+    , upLoadPicture: function () {
+        let file = self.$btnLoadPicture.files[0];
+
+        if (file === undefined)
+            return;
+
+        imagePicture = self.$btnLoadPicture.files[0];
+        let reader = new FileReader();
+
+        reader.onloadend = function () {
+            self.$imgUserPicture.src = reader.result;
+            var surrogate = reader.result.substring(0, reader.result.lastIndexOf(',') + 1);
+            self.$userPicture = reader.result.replace(surrogate, '');
+        }
+
+        if (imagePicture) {
+            reader.readAsDataURL(imagePicture);
+        } else {
+            self.$imgUserPicture.src = "#";
+        }
+    }
+
+    , deletePicture: function () {
+
+        fetch(`${Home.uriUser}/delete-user-picture/?userId=${Home.userCache.userID}`, {
+            method: 'DELETE'
+            , headers: {
+                'Authorization': `Bearer ${Home.userCache.token}`
+            }
+        })
+            .then(() => {
+                let user = Home.userCache;
+                Home.userCache.picture = null;
+                sessionStorage.setItem('user', JSON.stringify(user));
+                alert('User picture delete!');
+            })
+            .catch(error => {
+                console.error(`${error}`)
+                alert(error);
+            });
     }
 
     , clearUserEditForm: function () {
+        self.$imgUserPicture.setAttribute('src', '../assets/images/user-default-picture.png');
+    }
+
+    , clearUserChangePasswordForm: function () {
         self.$txtCurrentPassword.value = '';
         self.$txtNewPassword.value = '';
     }

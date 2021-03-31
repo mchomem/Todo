@@ -17,6 +17,8 @@ namespace Todo.Core.Models.Entities
         [JsonIgnore]
         public ICollection<TodoItem> TodoItems { get; set; }
 
+        public UserPicture Picture { get; set; }
+
         #endregion
     }
 }

@@ -6,44 +6,49 @@ namespace Todo.Core.Models.DataBase.Mappings
 {
     // TODO revisar
     // como configurar nomes para constraints
-    // relacionamento entre a entidade TodoItem via Fluente API.
+    // relacionamento entre a entidade TodoItem via Fluent API.
 
     public class UserMapping : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<User> modelBuilder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            modelBuilder
+            builder
                 .ToTable<User>("User")
                 .HasKey(x => x.UserID);
 
-            modelBuilder
+            builder
                 .Property(x => x.UserID)
                 .IsRequired()
                 .ValueGeneratedOnAdd();
 
-            modelBuilder
+            builder
                 .Property(x => x.Name)
                 .HasMaxLength(200)
                 .IsRequired();
 
-            modelBuilder
+            builder
                 .Property(x => x.Login)
                 .HasMaxLength(20)
                 .IsRequired();
 
-            modelBuilder
+            builder
                 .HasIndex(x => x.Login)
                 .IsUnique();
 
-            modelBuilder
+            builder
                 .Property(x => x.Password)
                 .HasMaxLength(300)
                 .IsRequired();
 
-            modelBuilder
+            builder
                 .Property(x => x.IsActive)
                 .IsRequired()
                 .HasDefaultValue(true);
+
+            builder
+                .HasOne<UserPicture>(u => u.Picture)
+                .WithOne(up => up.User)
+                .HasForeignKey<UserPicture>(u => u.PictureFromUserID);
         }
     }
 }
