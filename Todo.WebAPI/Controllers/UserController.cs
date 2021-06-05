@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using Todo.Core.Models.DataBase.Repositories.Interfaces;
 using Todo.Core.Models.Dtos;
 using Todo.Core.Models.Entities;
@@ -80,6 +81,9 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
+                if (_userRepository.Retrieve(new User() { Name = user.Name }).Any())
+                    throw new Exception("This name is already being used");
+
                 _userRepository.Create(user);
                 return Ok();
             }

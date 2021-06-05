@@ -67,13 +67,18 @@
             },
             body: JSON.stringify(newUser)
         })
-            .then(() => {
-                self.$formNewUser.style.display = 'none';
-                self.$messageNewUser.style.display = 'block';
-                console.log('New user created.');
-
+            .then((response) => {
+                if (response.ok) {
+                    self.$formNewUser.style.display = 'none';
+                    self.$messageNewUser.style.display = 'block';
+                    console.log('New user created.');
+                } else {
+                    console.log(response);
+                }
             })
-            .catch(error => console.error('Unable to add item.', error));
+            .catch(error => {
+                console.error('Unable to add item.', error)
+                alert('Error');
+            });
     }
-
 }
