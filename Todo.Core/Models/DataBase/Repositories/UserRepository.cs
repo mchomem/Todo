@@ -47,9 +47,9 @@ namespace Todo.Core.Models.DataBase.Repositories
                     .Where(x =>
                     (
                         (!entity.UserID.HasValue || x.UserID.Value == entity.UserID.Value)
-                        && (String.IsNullOrEmpty(entity.Name) || x.Name.Contains(entity.Name))
-                        && (String.IsNullOrEmpty(entity.Login) || x.Name.Contains(entity.Login))
-                        && (String.IsNullOrEmpty(entity.Password) || x.Password == entity.Password)
+                        && (string.IsNullOrEmpty(entity.Name) || x.Name.Contains(entity.Name))
+                        && (string.IsNullOrEmpty(entity.Login) || x.Name.Contains(entity.Login))
+                        && (string.IsNullOrEmpty(entity.Password) || x.Password == entity.Password)
                         && (!entity.IsActive.HasValue || x.IsActive.Value == entity.IsActive.Value)
                     ))
                     .ToList();

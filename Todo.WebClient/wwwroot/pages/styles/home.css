@@ -1,0 +1,41 @@
+﻿/* Dark */
+
+.dark {
+    background: #000000;
+    color: #ffffff;
+}
+
+div.card-header.dark {
+    background-color: #ba21bf !important;
+}
+
+div.card-footer.dark {
+    background-color: #1e1e15 !important;
+}
+
+div.modal-dialog > div.modal-content > div.modal-header.dark {
+    background-color: #ba21bf !important;
+}
+
+div.modal-dialog > div.modal-content > div.modal-body.dark {
+    background: #000000;
+    color: #ffffff;
+}
+
+div.modal-dialog > div.modal-content > div.modal-footer.dark {
+    background-color: #1e1e15 !important;
+}
+
+.table.dark {
+    color: #ffffff;
+}
+
+/* Light */
+light {
+    background: #ffffff;
+    color: #000000;
+}
+
+.table.light {
+    color: #000000;
+}

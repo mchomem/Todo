@@ -113,8 +113,7 @@ namespace Todo.WebAPI.Controllers
                 {
                     userPicture = new UserPicture()
                     {
-                        PictureFromUserID = userUpdate.UserID
-                        ,
+                        PictureFromUserID = userUpdate.UserID,
                         User = userUpdate
                     };
                 }
@@ -131,6 +130,7 @@ namespace Todo.WebAPI.Controllers
                     _userPictureRepository.Update(userPicture);
                 }
 
+                userUpdate.Name = userDto.Name;
                 _userRepository.Update(userUpdate);
 
                 return StatusCode(204);
@@ -190,6 +190,5 @@ namespace Todo.WebAPI.Controllers
                 return StatusCode(500, e);
             }
         }
-
     }
 }

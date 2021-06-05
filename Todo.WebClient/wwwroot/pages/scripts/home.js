@@ -4,7 +4,6 @@
 
     , userCache: JSON.parse(sessionStorage.getItem('user'))
 
-    // TODO: put url's into Util.js
     , uriTodoItem: 'https://localhost:44332/api/TodoItem'
 
     , uriUser: 'https://localhost:44332/api/user'
@@ -21,10 +20,11 @@
     }
 
     , addControl: function () {
-
         // Controls for header app.
         self.$spanUser = document.getElementById('spanUser');
         self.$btnEditUserAccount = document.getElementById('btnEditUserAccount');
+        self.$toogleTheme = document.getElementById('toogleTheme');
+        self.$iconToogleTheme = document.getElementById('iconToogleTheme');
         self.$btnExit = document.getElementById('btnExit');
 
         // Constrols for form insert todo item.
@@ -68,6 +68,18 @@
     }
 
     , attachEvent: function () {
+
+        self.$toogleTheme.addEventListener('click', function () {
+            if (self.$iconToogleTheme.classList.contains('fa-moon')) {
+                self.$iconToogleTheme.classList.remove('fa-moon');
+                self.$iconToogleTheme.classList.add('fa-sun');
+                Home.applyTheme('dark');
+            } else {
+                self.$iconToogleTheme.classList.remove('fa-sun');
+                self.$iconToogleTheme.classList.add('fa-moon');
+                Home.applyTheme('light');
+            }
+        });
 
         self.$btnExit.addEventListener('click', function () {
             sessionStorage.setItem('user', null);
@@ -143,7 +155,7 @@
     }
 
     , getUserData: function () {
-        self.$spanUser.innerHTML = Home.userCache.name.toUpperCase();
+        self.$spanUser.innerHTML = (Home.userCache.name.length <= 10 ? Home.userCache.name : `${Home.userCache.name.substring(0, 10)} ...`).toUpperCase();
     }
 
     , getItems: function () {
@@ -273,7 +285,6 @@
         const button = document.createElement('button');
 
         data.forEach(item => {
-
             let isDone = document.createElement('div');
             let innerSpan = document.createElement('span');
             innerSpan.classList.add('badge', 'mt-1', item.isDone ? 'bg-success' : 'bg-danger');
@@ -321,7 +332,6 @@
 
             let td5 = tr.insertCell(4);
             td5.appendChild(deleteButton);
-
         });
 
         todos = data;
@@ -333,14 +343,12 @@
     , loadUser: function () {
         self.$txtUserName.value = Home.userCache.name;
 
-        // TODO: Use a controller to load user picture on
         if (Home.userCache.picture != undefined && Home.userCache.picture.length != 0) {
             self.$imgUserPicture.setAttribute('src', 'data:image/png;base64,' + Home.userCache.picture);
         }
     }
 
     , saveUser: function () {
-
         let user = {
             userId: Home.userCache.userID
             , name: self.$txtUserName.value
@@ -358,7 +366,9 @@
         })
             .then(() => {
                 Home.userCache.picture = user.picture;
+                Home.userCache.name = user.name;
                 sessionStorage.setItem('user', JSON.stringify(user));
+                Home.getUserData();
                 alert('User updated.');
             });
 
@@ -415,7 +425,6 @@
     }
 
     , deletePicture: function () {
-
         fetch(`${Home.uriUser}/delete-user-picture/?userId=${Home.userCache.userID}`, {
             method: 'DELETE'
             , headers: {
@@ -443,4 +452,64 @@
         self.$txtNewPassword.value = '';
     }
 
+    , applyTheme: function (theme) {
+        document.body.setAttribute('class', '');
+        document.body.classList.add(theme);
+
+        document.querySelectorAll('#userModalEdit > div.modal-dialog > div.modal-content > div.modal-header').forEach(function (el, index, arr) {
+            el.classList.remove('dark', 'light');
+        });
+
+        document.querySelectorAll('div.modal-dialog > div.modal-content > div.modal-header').forEach(function (el, index, arr) {
+            el.classList.add(theme);
+        });
+
+        document.querySelectorAll('div.modal-dialog > div.modal-content > div.modal-body').forEach(function (el, index, arr) {
+            el.classList.remove('dark', 'light');
+        });
+
+        document.querySelectorAll('div.modal-dialog > div.modal-content > div.modal-body').forEach(function (el, index, arr) {
+            el.classList.add(theme);
+        });
+
+        document.querySelectorAll('div.modal-dialog > div.modal-content > div.modal-footer').forEach(function (el, index, arr) {
+            el.classList.remove('dark', 'light');
+        });
+
+        document.querySelectorAll('div.modal-dialog > div.modal-content > div.modal-footer').forEach(function (el, index, arr) {
+            el.classList.add(theme);
+        });
+
+        document.querySelectorAll('div.card>div.card-header').forEach(function (el, index, arr) {
+            el.classList.remove('dark', 'light');
+        });
+
+        document.querySelectorAll('div.card>div.card-header').forEach(function (el, index, arr) {
+            el.classList.add(theme);
+        });
+
+        document.querySelectorAll('div.card>div.card-body').forEach(function (el, index, arr) {
+            el.classList.remove('dark', 'light');
+        });
+
+        document.querySelectorAll('div.card>div.card-body').forEach(function (el, index, arr) {
+            el.classList.add(theme);
+        });
+
+        document.querySelectorAll('div.card>div.card-footer').forEach(function (el, index, arr) {
+            el.classList.remove('dark', 'light');
+        });
+
+        document.querySelectorAll('div.card>div.card-footer').forEach(function (el, index, arr) {
+            el.classList.add(theme);
+        });
+
+        document.querySelectorAll('table').forEach(function (el, index, arr) {
+            el.classList.remove('dark', 'light');
+        });
+
+        document.querySelectorAll('table').forEach(function (el, index, arr) {
+            el.classList.add(theme);
+        });
+    }
 }

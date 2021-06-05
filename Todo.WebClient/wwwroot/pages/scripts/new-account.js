@@ -74,7 +74,6 @@
 
             })
             .catch(error => console.error('Unable to add item.', error));
-
     }
 
 }

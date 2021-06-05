@@ -9,12 +9,13 @@
     <link href="../assets/icons/fontawesome-free-5.15.2-web/css/brands.css" rel="stylesheet" />
     <link href="../assets/icons/fontawesome-free-5.15.2-web/css/solid.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="../assets/icons/paste_plain.png" />
+    <link href="styles/home.css" rel="stylesheet" />
     <title>To-do</title>
 </head>
 <body>
     <div class="container-fluid justify-content-sm-center mt-3" style="max-width:600px;">
 
-        <!--Form-->
+        <!--Main form-->
         <div class="row mt-3">
             <div class="col">
                 <form>
@@ -40,10 +41,16 @@
                             </button>
 
                             <button id="btnExit"
-                                    class="btn btn-success btn-sm float-end"
+                                    class="btn btn-success btn-sm ms-2 float-end"
                                     type="button">
                                 Exit
                                 <i class="fas fa-door-open ms-2"></i>
+                            </button>
+
+                            <button id="toogleTheme"
+                                    class="btn btn-sm btn-success ms-2 float-end"
+                                    type="button">
+                                <i id="iconToogleTheme" class="fas fa-moon"></i>
                             </button>
                         </div>
                         <div class="card-body">
@@ -129,7 +136,7 @@
             </div>
         </div>
 
-        <!-- Modal for change password-->
+        <!--Modal for change password-->
         <div id="userModalChangePassword" class="modal fade" tabindex="-1" aria-labelledby="userModalChangePasswordLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
