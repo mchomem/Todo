@@ -81,8 +81,8 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                if (_userRepository.Retrieve(new User() { Name = user.Name }).Any())
-                    throw new Exception("This name is already being used");
+                if (_userRepository.Retrieve(new User() { Login = user.Login }).Any())
+                    throw new Exception("This user is already being used");
 
                 _userRepository.Create(user);
                 return Ok();
