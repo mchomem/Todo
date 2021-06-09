@@ -53,7 +53,7 @@
 
         // Controls for modal form edit todo item.
         self.$editId = document.getElementById('edit-id');
-        self.$editName = document.getElementById('edit-name');
+        self.$editTaskName = document.getElementById('edit-taskName');
         self.$editDeadLine = document.getElementById('edit-deadLine');
         self.$editIsComplete = document.getElementById('edit-isComplete');
         self.$btnClose = document.getElementById('btnClose');
@@ -155,7 +155,10 @@
     }
 
     , getUserData: function () {
-        self.$spanUser.innerHTML = (Home.userCache.name.length <= 10 ? Home.userCache.name : `${Home.userCache.name.substring(0, 10)} ...`).toUpperCase();
+        self.$spanUser.innerHTML =
+            (Home.userCache.name.length <= 10
+                ? Home.userCache.name
+                : `${Home.userCache.name.substring(0, 10)} ...`).toUpperCase();
     }
 
     , getItems: function () {
@@ -232,7 +235,7 @@
 
     , displayEditForm: function (id) {
         const item = todos.find(item => item.todoItemID === id);
-        self.$editName.value = item.name;
+        self.$editTaskName.value = item.name;
         self.$editDeadLine.value = moment(item.deadLine).format('yyyy[-]MM[-]DD');
         self.$editId.value = item.todoItemID;
         self.$editIsComplete.checked = item.isDone;
@@ -243,7 +246,7 @@
 
         const item = {
             todoItemID: parseInt(itemId, 10),
-            name: self.$editName.value.trim(),
+            name: self.$editTaskName.value.trim(),
             deadLine: self.$editDeadLine.value,
             isDone: self.$editIsComplete.checked
         };

@@ -92,7 +92,10 @@
                 <div class="modal-content">
                     <div class="modal-header bg-primary bg-gradient text-white">
                         <h5 class="modal-title" id="userModalEditLabel">Edit your data</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form>
@@ -128,8 +131,17 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button id="btnCloseEditUser" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button id="btnSaveEditUser" type="button" class="btn btn-primary">Save</button>
+                        <button id="btnCloseEditUser"
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button id="btnSaveEditUser"
+                                type="button"
+                                class="btn btn-primary">
+                            Save
+                        </button>
                     </div>
                     <div id="success-message-user" class="alert alert-success m-3 d-none">Done!</div>
                 </div>
@@ -141,8 +153,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-primary bg-gradient text-white">
-                        <h5 class="modal-title" id="userModalChangePasswordLabel">Change your password</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 id="userModalChangePasswordLabel" class="modal-title">Change your password</h5>
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row mt-3">
@@ -165,8 +180,14 @@
                         <div class="row mt-3">
                             <div class="col">
                                 <div class="input-group">
-                                    <input id="txtNewPassword" class="form-control form-control-sm" placeholder="New password" type="password" />
-                                    <button id="btnShowHideNewPassword" class="btn btn-sm btn-secondary" style="min-width:60px;" type="button">
+                                    <input id="txtNewPassword"
+                                           class="form-control form-control-sm"
+                                           placeholder="New password"
+                                           type="password" />
+                                    <button id="btnShowHideNewPassword"
+                                            class="btn btn-sm btn-secondary"
+                                            style="min-width:60px;"
+                                            type="button">
                                         <i id="iconNewPassword" class="fas fa-eye-slash"></i>
                                     </button>
                                 </div>
@@ -174,8 +195,17 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="btnCloseChangePassword" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button id="btnSaveChangePassword" type="button" class="btn btn-primary">Save</button>
+                        <button id="btnCloseChangePassword"
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button id="btnSaveChangePassword"
+                                type="button"
+                                class="btn btn-primary">
+                            Save
+                        </button>
                     </div>
                     <div id="success-message-password-changed" class="alert alert-success m-3 d-none">Done!</div>
                 </div>
@@ -188,18 +218,23 @@
                 <div class="modal-content">
                     <div class="modal-header bg-primary bg-gradient text-white">
                         <h5 class="modal-title" id="todoModalEditLabel">Edit to-do</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form>
                             <div class="row mt-3">
                                 <div class="col">
-                                    <input id="edit-name" class="form-control form-control-sm" type="text">
+                                    <label>Task</label>
+                                    <input id="edit-taskName" class="form-control form-control-sm" type="text">
                                 </div>
                             </div>
 
                             <div class="row mt-3">
                                 <div class="col">
+                                    <label>Dead line</label>
                                     <input id="edit-deadLine" class="form-control form-control-sm" type="date" />
                                 </div>
                             </div>
@@ -216,8 +251,17 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button id="btnSaveEdit" type="button" class="btn btn-primary">Save</button>
+                        <button id="btnClose"
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button id="btnSaveEdit"
+                                type="button"
+                                class="btn btn-primary">
+                            Save
+                        </button>
                     </div>
                     <div id="success-message" class="alert alert-success m-3 d-none">Done!</div>
                 </div>
