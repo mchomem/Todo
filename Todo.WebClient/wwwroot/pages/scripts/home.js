@@ -317,6 +317,15 @@
 
             let tr = tBody.insertRow();
 
+            // Check if is late.
+            if (Home.checkIsLate(item.deadLine) && !item.isDone) {
+                tr.style.backgroundColor = '#ffb3b3';
+                let spanIsLate = document.createElement('span');
+                spanIsLate.classList.add('badge', 'm-1', 'bg-danger');
+                spanIsLate.innerHTML = 'Is late';
+                isDone.append(spanIsLate);
+            }
+
             let td1 = tr.insertCell(0);
             td1.appendChild(isDone);
 
@@ -341,6 +350,10 @@
 
         self.$loader.style.display = 'none';
         self.$listing.style.display = 'block';
+    }
+
+    , checkIsLate: function (date) {
+        return Date.parse(date) < Date.now();
     }
 
     , loadUser: function () {
