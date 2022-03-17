@@ -82,7 +82,6 @@ namespace Todo.Core.Models.DataBase.Repositories
 
         public async Task<UserDto> Authenticate(User entity)
         {
-            // TODO: use an Utils.Cypher in password.
             using (TodoContext db = new TodoContext())
             {
                 User user = await db.Users
@@ -107,7 +106,7 @@ namespace Todo.Core.Models.DataBase.Repositories
 
         public async Task ChangePassword(User entity, string newPassword)
         {
-            User user = ((IEnumerable<User>)await this.Retrieve(entity)).FirstOrDefault();
+            User user = (await this.Retrieve(entity)).FirstOrDefault();
 
             if (user == null)
                 throw new Exception("Incorrect user or password.");
