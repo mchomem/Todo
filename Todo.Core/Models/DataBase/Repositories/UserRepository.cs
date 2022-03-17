@@ -99,16 +99,13 @@ namespace Todo.Core.Models.DataBase.Repositories
 
         public async Task ChangePassword(User entity, string newPassword)
         {
-            using (TodoContext db = new TodoContext())
-            {
-                User user = ((IEnumerable<User>)await this.Retrieve(entity)).FirstOrDefault();
+            User user = ((IEnumerable<User>)await this.Retrieve(entity)).FirstOrDefault();
 
-                if (user == null)
-                    throw new Exception("Incorrect user or password.");
+            if (user == null)
+                throw new Exception("Incorrect user or password.");
 
-                user.Password = newPassword;
-                await this.Update(user);
-            }
+            user.Password = newPassword;
+            await this.Update(user);
         }
     }
 }
