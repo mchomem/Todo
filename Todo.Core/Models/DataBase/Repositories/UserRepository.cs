@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Todo.Core.Models.DataBase.Repositories.Interfaces;
 using Todo.Core.Models.Dtos;
 using Todo.Core.Models.Entities;
+using Todo.Core.Models.Utils;
 
 namespace Todo.Core.Models.DataBase.Repositories
 {
@@ -15,6 +16,7 @@ namespace Todo.Core.Models.DataBase.Repositories
         {
             using (TodoContext db = new TodoContext())
             {
+                entity.Password = Cypher.Encrypt(entity.Password);
                 db.Users.Add(entity);
                 await db.SaveChangesAsync();
             }
@@ -33,9 +35,13 @@ namespace Todo.Core.Models.DataBase.Repositories
         {
             using (TodoContext db = new TodoContext())
             {
-                return await db.Users
+                User user = await db.Users
                     .Include(x => x.Picture)
                         .FirstOrDefaultAsync(x => x.UserID == entity.UserID);
+
+                user.Password = Cypher.Decrypt(user.Password);
+
+                return user;
             }
         }
 
@@ -50,7 +56,7 @@ namespace Todo.Core.Models.DataBase.Repositories
                         (!entity.UserID.HasValue || x.UserID.Value == entity.UserID.Value)
                         && (string.IsNullOrEmpty(entity.Name) || x.Name.Contains(entity.Name))
                         && (string.IsNullOrEmpty(entity.Login) || x.Name.Contains(entity.Login))
-                        && (string.IsNullOrEmpty(entity.Password) || x.Password == entity.Password)
+                        && (string.IsNullOrEmpty(entity.Password) || x.Password == Cypher.Encrypt(entity.Password))
                         && (!entity.IsActive.HasValue || x.IsActive.Value == entity.IsActive.Value)
                     ))
                     .ToListAsync();
@@ -61,6 +67,8 @@ namespace Todo.Core.Models.DataBase.Repositories
         {
             using (TodoContext db = new TodoContext())
             {
+                entity.Password = Cypher.Encrypt(entity.Password);
+
                 if (entity.Picture != null)
                 {
                     db.UserPictures.Attach(entity.Picture);
@@ -80,7 +88,7 @@ namespace Todo.Core.Models.DataBase.Repositories
                 User user = await db.Users
                     .Include(x => x.Picture)
                     .Where(x => x.Login == entity.Login
-                           && x.Password == entity.Password
+                           && x.Password == Cypher.Encrypt(entity.Password)
                            && x.IsActive.Value)
                     .FirstOrDefaultAsync();
 
