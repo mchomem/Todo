@@ -35,7 +35,7 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                UserDto user = (UserDto) await _userRepository
+                UserDto user = (UserDto)await _userRepository
                     .Authenticate(new User() { Login = login, Password = password });
 
                 if (user == null)
@@ -83,7 +83,7 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                if (((IEnumerable<User>) await _userRepository.Retrieve(new User() { Login = user.Login })).Any())
+                if (((IEnumerable<User>)await _userRepository.Retrieve(new User() { Login = user.Login })).Any())
                     throw new Exception("This user is already being used");
 
                 await _userRepository.Create(user);
@@ -157,7 +157,8 @@ namespace Todo.WebAPI.Controllers
                     .ChangePassword(new User()
                     {
                         UserID = userId
-                        , Password = currentPassword
+                        ,
+                        Password = currentPassword
                     }, newPassword);
 
                 return StatusCode(204, new { message = "Password changed successfully" });

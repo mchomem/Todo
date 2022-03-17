@@ -39,19 +39,6 @@ namespace Todo.WebAPI.Controllers
             }
         }
 
-        //public ActionResult<IEnumerable<TodoItem>> Get(int userID)
-        //{
-        //try
-        //{
-        //    return _todoItemRepository
-        //        .Retrieve(new TodoItem() { CreatedBy = new User() { UserID = userID } });
-        //}
-        //catch (Exception e)
-        //{
-        //    return StatusCode(500, e);
-        //}
-        //}
-
         // POST api/<TodoItemController>
         [HttpPost]
         public async Task<ActionResult> Post(TodoItem todoItem)
@@ -73,7 +60,7 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                TodoItem todo = (TodoItem) await _todoItemRepository
+                TodoItem todo = (TodoItem)await _todoItemRepository
                     .Details(new TodoItem() { TodoItemID = id });
 
                 todo.Name = todoItem.Name;
