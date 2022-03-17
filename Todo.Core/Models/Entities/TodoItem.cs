@@ -2,6 +2,7 @@
 
 namespace Todo.Core.Models.Entities
 {
+    [Serializable]
     public class TodoItem
     {
         #region properties

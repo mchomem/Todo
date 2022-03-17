@@ -2,6 +2,7 @@
 
 namespace Todo.Core.Models.Dtos
 {
+    [Serializable]
     public class UserDto
     {
         #region Propeties

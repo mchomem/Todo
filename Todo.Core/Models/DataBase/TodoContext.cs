@@ -23,7 +23,7 @@ namespace Todo.Core.Models.DataBase
         {
             modelBuilder.ApplyConfiguration(new UserMapping());
             modelBuilder.ApplyConfiguration(new UserPictureMapping());
-            modelBuilder.ApplyConfiguration(new TodoItemMapping());            
+            modelBuilder.ApplyConfiguration(new TodoItemMapping());
         }
 
         #endregion

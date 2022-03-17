@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Todo.Core.Models.DataBase.Repositories.Interfaces
 {
     public interface ICrud<E> where E : class
     {
-        public void Create(E entity);
-        public void Delete(E entity);
-        public E Details(E entity);
-        public List<E> Retrieve(E entity);
-        public void Update(E entity);
+        public Task Create(E entity);
+        public Task Delete(E entity);
+        public Task<E> Details(E entity);
+        public Task<IEnumerable<E>> Retrieve(E entity);
+        public Task Update(E entity);
     }
 }

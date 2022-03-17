@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Todo.Core.Models.DataBase.Repositories.Interfaces;
 using Todo.Core.Models.Entities;
 
@@ -23,12 +24,14 @@ namespace Todo.WebAPI.Controllers
 
         // GET: api/<TodoItemController>
         [HttpGet]
-        public ActionResult<IEnumerable<TodoItem>> Get(int userID)
+        public async Task<ActionResult<IEnumerable<TodoItem>>> Get(int userID)
         {
             try
             {
-                return _todoItemRepository
+                var items = await _todoItemRepository
                     .Retrieve(new TodoItem() { CreatedBy = new User() { UserID = userID } });
+
+                return Ok(items);
             }
             catch (Exception e)
             {
@@ -38,11 +41,11 @@ namespace Todo.WebAPI.Controllers
 
         // POST api/<TodoItemController>
         [HttpPost]
-        public ActionResult Post(TodoItem todoItem)
+        public async Task<ActionResult> Post(TodoItem todoItem)
         {
             try
             {
-                _todoItemRepository.Create(todoItem);
+                await _todoItemRepository.Create(todoItem);
                 return Ok(new { message = "Task created." });
             }
             catch (Exception e)
@@ -53,11 +56,11 @@ namespace Todo.WebAPI.Controllers
 
         // PUT api/<TodoItemController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, TodoItem todoItem)
+        public async Task<ActionResult> Put(int id, TodoItem todoItem)
         {
             try
             {
-                TodoItem todo = _todoItemRepository
+                TodoItem todo = (TodoItem)await _todoItemRepository
                     .Details(new TodoItem() { TodoItemID = id });
 
                 todo.Name = todoItem.Name;
@@ -67,7 +70,7 @@ namespace Todo.WebAPI.Controllers
                 if (todo == null)
                     return NotFound();
 
-                _todoItemRepository.Update(todo);
+                await _todoItemRepository.Update(todo);
 
                 return StatusCode(204);
             }
@@ -79,11 +82,11 @@ namespace Todo.WebAPI.Controllers
 
         // DELETE api/<TodoItemController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                _todoItemRepository
+                await _todoItemRepository
                     .Delete(new TodoItem() { TodoItemID = id });
 
                 return Ok();
