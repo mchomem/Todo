@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Todo.Core.Models.Entities
 {
+    [Serializable]
     public class User
     {
         #region Propeties

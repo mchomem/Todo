@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Todo.Core.Models.DataBase.Repositories.Interfaces;
 using Todo.Core.Models.Dtos;
 using Todo.Core.Models.Entities;
@@ -29,11 +31,11 @@ namespace Todo.WebAPI.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("authentication")]
-        public ActionResult<UserDto> GetAuthentication(string login, string password)
+        public async Task<ActionResult<UserDto>> GetAuthentication(string login, string password)
         {
             try
             {
-                UserDto user = _userRepository
+                UserDto user = (UserDto) await _userRepository
                     .Authenticate(new User() { Login = login, Password = password });
 
                 if (user == null)
@@ -51,11 +53,11 @@ namespace Todo.WebAPI.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public ActionResult<UserDto> Get(int id)
+        public async Task<ActionResult<UserDto>> Get(int id)
         {
             try
             {
-                User user = _userRepository
+                User user = (User)await _userRepository
                     .Details(new User() { UserID = id });
 
                 UserDto userDto = new UserDto()
@@ -77,14 +79,14 @@ namespace Todo.WebAPI.Controllers
         // POST api/<UserController>
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Post(User user)
+        public async Task<ActionResult> Post(User user)
         {
             try
             {
-                if (_userRepository.Retrieve(new User() { Login = user.Login }).Any())
+                if (((IEnumerable<User>) await _userRepository.Retrieve(new User() { Login = user.Login })).Any())
                     throw new Exception("This user is already being used");
 
-                _userRepository.Create(user);
+                await _userRepository.Create(user);
                 return Ok();
             }
             catch (Exception e)
@@ -95,11 +97,11 @@ namespace Todo.WebAPI.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, UserDto userDto)
+        public async Task<ActionResult> Put(int id, UserDto userDto)
         {
             try
             {
-                User userUpdate = _userRepository
+                User userUpdate = (User)await _userRepository
                     .Details(new User() { UserID = id });
 
                 if (userUpdate == null)
@@ -110,7 +112,7 @@ namespace Todo.WebAPI.Controllers
                 if (userUpdate.Picture != null)
                 {
                     userPicture =
-                        _userPictureRepository
+                        await _userPictureRepository
                             .Details(new UserPicture() { UserPictureID = userUpdate.Picture.UserPictureID });
                 }
                 else
@@ -127,15 +129,15 @@ namespace Todo.WebAPI.Controllers
                 // Do already exists the user picture?
                 if (userUpdate.Picture == null)
                 {
-                    _userPictureRepository.Create(userPicture);
+                    await _userPictureRepository.Create(userPicture);
                 }
                 else
                 {
-                    _userPictureRepository.Update(userPicture);
+                    await _userPictureRepository.Update(userPicture);
                 }
 
                 userUpdate.Name = userDto.Name;
-                _userRepository.Update(userUpdate);
+                await _userRepository.Update(userUpdate);
 
                 return StatusCode(204);
             }
@@ -147,11 +149,16 @@ namespace Todo.WebAPI.Controllers
 
         [HttpPut]
         [Route("change-password")]
-        public ActionResult ChangePassword(int userId, string currentPassword, string newPassword)
+        public async Task<ActionResult> ChangePassword(int userId, string currentPassword, string newPassword)
         {
             try
             {
-                _userRepository.ChangePassword(new User() { UserID = userId, Password = currentPassword }, newPassword);
+                await _userRepository
+                    .ChangePassword(new User()
+                    {
+                        UserID = userId
+                        , Password = currentPassword
+                    }, newPassword);
 
                 return StatusCode(204, new { message = "Password changed successfully" });
             }
@@ -169,22 +176,22 @@ namespace Todo.WebAPI.Controllers
         }
 
         [HttpDelete, Route("delete-user-picture")]
-        public ActionResult DeleteUserPicture(int userId)
+        public async Task<ActionResult> DeleteUserPicture(int userId)
         {
             try
             {
-                User user = _userRepository.Details(new User() { UserID = userId });
+                User user = (User)await _userRepository.Details(new User() { UserID = userId });
 
                 if (user == null)
                     return NotFound("User not found.");
 
-                UserPicture userPicture = _userPictureRepository
+                UserPicture userPicture = (UserPicture)await _userPictureRepository
                     .Details(new UserPicture() { PictureFromUserID = userId });
 
                 if (userPicture == null)
                     return NotFound("User picture not found.");
 
-                _userPictureRepository
+                await _userPictureRepository
                     .Delete(userPicture);
 
                 return Ok();

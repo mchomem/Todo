@@ -1,7 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Todo.Core.Models.Entities
 {
+    [Serializable]
     public class UserPicture
     {
         public int? UserPictureID { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Todo.Core.Models.DataBase.Repositories.Interfaces;
 using Todo.Core.Models.Entities;
 
@@ -8,35 +9,35 @@ namespace Todo.Core.Models.DataBase.Repositories
 {
     public class UserPictureRepository : IUserPictureRepository
     {
-        public void Create(UserPicture entity)
+        public async Task Create(UserPicture entity)
         {
             using (TodoContext db = new TodoContext())
             {
                 db.UserPictures.Add(entity);
                 db.Users.Attach(entity.User);
                 db.Entry(entity.User).State = EntityState.Unchanged;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
-        public void Delete(UserPicture entity)
+        public async Task Delete(UserPicture entity)
         {
             using (TodoContext db = new TodoContext())
             {
                 db.Users.Attach(entity.User);
                 db.Entry(entity.User).State = EntityState.Unchanged;
                 db.UserPictures.Remove(entity);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
-        public UserPicture Details(UserPicture entity)
+        public async Task<UserPicture> Details(UserPicture entity)
         {
             using (TodoContext db = new TodoContext())
             {
-                return db.UserPictures
+                return await db.UserPictures
                     .Include(x => x.User)
-                        .FirstOrDefault(x =>
+                        .FirstOrDefaultAsync(x =>
                             (
                                 (!entity.UserPictureID.HasValue || x.UserPictureID == entity.UserPictureID)
                                 && (!entity.PictureFromUserID.HasValue || x.PictureFromUserID == entity.PictureFromUserID)
@@ -45,28 +46,28 @@ namespace Todo.Core.Models.DataBase.Repositories
             }
         }
 
-        public List<UserPicture> Retrieve(UserPicture entity)
+        public async Task<IEnumerable<UserPicture>> Retrieve(UserPicture entity)
         {
             using (TodoContext db = new TodoContext())
             {
-                return db.UserPictures
+                return await db.UserPictures
                     .Where(x =>
                     (
                         (!entity.UserPictureID.HasValue || x.UserPictureID.Value == entity.UserPictureID.Value)
                         && (!entity.PictureFromUserID.HasValue || x.PictureFromUserID.Value == entity.PictureFromUserID.Value)
                     ))
-                    .ToList();
+                    .ToListAsync();
             }
         }
 
-        public void Update(UserPicture entity)
+        public async Task Update(UserPicture entity)
         {
             using (TodoContext db = new TodoContext())
             {
                 db.Users.Attach(entity.User);
                 db.Entry(entity.User).State = EntityState.Unchanged;
                 db.UserPictures.Update(entity);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
     }
