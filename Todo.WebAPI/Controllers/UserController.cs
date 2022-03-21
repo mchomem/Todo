@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Todo.Core.Models.DataBase.Repositories.Interfaces;
 using Todo.Core.Models.Dtos;
 using Todo.Core.Models.Entities;
+using Todo.Core.Services.Interfaces;
 using Todo.WebAPI.Helpers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,13 +17,13 @@ namespace Todo.WebAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IUserPictureRepository _userPictureRepository;
+        private readonly IUserService _userService;
+        private readonly IUserPictureService _userPictureService;
 
-        public UserController(IUserRepository userRepository, IUserPictureRepository userPictureRepository)
+        public UserController(IUserService userRepository, IUserPictureService userPictureRepository)
         {
-            _userRepository = userRepository;
-            _userPictureRepository = userPictureRepository;
+            _userService = userRepository;
+            _userPictureService = userPictureRepository;
         }
 
         // GET: api/<UserController>
@@ -35,8 +34,8 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                UserDto user = (UserDto)await _userRepository
-                    .Authenticate(new User() { Login = login, Password = password });
+                UserDto user = (UserDto)await _userService
+                    .AuthenticateAsync(login, password);
 
                 if (user == null)
                     return NotFound();
@@ -57,8 +56,8 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                User user = (User)await _userRepository
-                    .Details(new User() { UserID = id });
+                User user = (User)await _userService
+                    .DetailsAsync(new User() { UserID = id });
 
                 UserDto userDto = new UserDto()
                 {
@@ -83,10 +82,11 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                if (((IEnumerable<User>)await _userRepository.Retrieve(new User() { Login = user.Login })).Any())
+                // TODO: put in a service class.
+                if ((await _userService.RetrieveAsync(new User() { Login = user.Login })).Any())
                     throw new Exception("This user is already being used");
 
-                await _userRepository.Create(user);
+                await _userService.CreateAsync(user);
                 return Ok();
             }
             catch (Exception e)
@@ -101,8 +101,8 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                User userUpdate = (User)await _userRepository
-                    .Details(new User() { UserID = id });
+                User userUpdate = (User)await _userService
+                    .DetailsAsync(new User() { UserID = id });
 
                 if (userUpdate == null)
                     return NotFound();
@@ -112,8 +112,8 @@ namespace Todo.WebAPI.Controllers
                 if (userUpdate.Picture != null)
                 {
                     userPicture =
-                        await _userPictureRepository
-                            .Details(new UserPicture() { UserPictureID = userUpdate.Picture.UserPictureID });
+                        await _userPictureService
+                            .DetailsAsync(new UserPicture() { UserPictureID = userUpdate.Picture.UserPictureID });
                 }
                 else
                 {
@@ -129,15 +129,15 @@ namespace Todo.WebAPI.Controllers
                 // Do already exists the user picture?
                 if (userUpdate.Picture == null)
                 {
-                    await _userPictureRepository.Create(userPicture);
+                    await _userPictureService.CreateAsync(userPicture);
                 }
                 else
                 {
-                    await _userPictureRepository.Update(userPicture);
+                    await _userPictureService.UpdateAsync(userPicture);
                 }
 
                 userUpdate.Name = userDto.Name;
-                await _userRepository.Update(userUpdate);
+                await _userService.UpdateAsync(userUpdate);
 
                 return StatusCode(204);
             }
@@ -153,8 +153,8 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                await _userRepository
-                    .ChangePassword(new User()
+                await _userService
+                    .ChangePasswordAsync(new User()
                     {
                         UserID = userId
                         ,
@@ -181,19 +181,19 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                User user = (User)await _userRepository.Details(new User() { UserID = userId });
+                User user = (User)await _userService.DetailsAsync(new User() { UserID = userId });
 
                 if (user == null)
                     return NotFound("User not found.");
 
-                UserPicture userPicture = (UserPicture)await _userPictureRepository
-                    .Details(new UserPicture() { PictureFromUserID = userId });
+                UserPicture userPicture = (UserPicture)await _userPictureService
+                    .DetailsAsync(new UserPicture() { PictureFromUserID = userId });
 
                 if (userPicture == null)
                     return NotFound("User picture not found.");
 
-                await _userPictureRepository
-                    .Delete(userPicture);
+                await _userPictureService
+                    .DeleteAsync(userPicture);
 
                 return Ok();
             }

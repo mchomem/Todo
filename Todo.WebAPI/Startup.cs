@@ -10,6 +10,8 @@ using System;
 using System.Text;
 using Todo.Core.Models.DataBase.Repositories;
 using Todo.Core.Models.DataBase.Repositories.Interfaces;
+using Todo.Core.Services;
+using Todo.Core.Services.Interfaces;
 
 namespace Todo.WebAPI
 {
@@ -29,6 +31,9 @@ namespace Todo.WebAPI
 
             #region Dependency Injection setup
 
+            services.AddScoped<ITodoItemService, TodoItemService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserPictureService, UserPictureService>();
             services.AddScoped<ITodoItemRepository, TodoItemRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserPictureRepository, UserPictureRepository>();
