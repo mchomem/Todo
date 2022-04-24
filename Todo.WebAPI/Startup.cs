@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
+using Todo.Core.Models.DataBase;
 using Todo.Core.Models.DataBase.Repositories;
 using Todo.Core.Models.DataBase.Repositories.Interfaces;
 using Todo.Core.Services;
@@ -31,6 +32,7 @@ namespace Todo.WebAPI
 
             #region Dependency Injection setup
 
+            services.AddScoped<TodoContext, TodoContext>();
             services.AddScoped<ITodoItemService, TodoItemService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserPictureService, UserPictureService>();
