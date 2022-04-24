@@ -12,96 +12,85 @@ namespace Todo.Core.Models.DataBase.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly TodoContext _todoContext;
+
+        public UserRepository(TodoContext todoContext)
+        {
+            _todoContext = todoContext;
+        }
+
         public async Task Create(User entity)
         {
-            using (TodoContext db = new TodoContext())
-            {
-                entity.Password = Cypher.Encrypt(entity.Password);
-                db.Users.Add(entity);
-                await db.SaveChangesAsync();
-            }
+            entity.Password = Cypher.Encrypt(entity.Password);
+            _todoContext.Users.Add(entity);
+            await _todoContext.SaveChangesAsync();
         }
 
         public async Task Delete(User entity)
         {
-            using (TodoContext db = new TodoContext())
-            {
-                db.Users.Remove(entity);
-                await db.SaveChangesAsync();
-            }
+            _todoContext.Users.Remove(entity);
+            await _todoContext.SaveChangesAsync();
         }
 
         public async Task<User> Details(User entity)
         {
-            using (TodoContext db = new TodoContext())
-            {
-                User user = await db.Users
-                    .Include(x => x.Picture)
-                        .FirstOrDefaultAsync(x => x.UserID == entity.UserID);
+            User user = await _todoContext.Users
+                .Include(x => x.Picture)
+                    .FirstOrDefaultAsync(x => x.UserID == entity.UserID);
 
-                user.Password = Cypher.Decrypt(user.Password);
+            user.Password = Cypher.Decrypt(user.Password);
 
-                return user;
-            }
+            return user;
         }
 
         public async Task<IEnumerable<User>> Retrieve(User entity)
         {
             // TODO: apply paggination with take and skip and a object to represent a paggination.
-            using (TodoContext db = new TodoContext())
-            {
-                return await db.Users
-                    .Where(x =>
-                    (
-                        (!entity.UserID.HasValue || x.UserID.Value == entity.UserID.Value)
-                        && (string.IsNullOrEmpty(entity.Name) || x.Name.Contains(entity.Name))
-                        && (string.IsNullOrEmpty(entity.Login) || x.Name.Contains(entity.Login))
-                        && (string.IsNullOrEmpty(entity.Password) || x.Password == Cypher.Encrypt(entity.Password))
-                        && (!entity.IsActive.HasValue || x.IsActive.Value == entity.IsActive.Value)
-                    ))
-                    .ToListAsync();
-            }
+            return await _todoContext.Users
+                .Where(x =>
+                (
+                    (!entity.UserID.HasValue || x.UserID.Value == entity.UserID.Value)
+                    && (string.IsNullOrEmpty(entity.Name) || x.Name.Contains(entity.Name))
+                    && (string.IsNullOrEmpty(entity.Login) || x.Name.Contains(entity.Login))
+                    && (string.IsNullOrEmpty(entity.Password) || x.Password == Cypher.Encrypt(entity.Password))
+                    && (!entity.IsActive.HasValue || x.IsActive.Value == entity.IsActive.Value)
+                ))
+                .ToListAsync();
         }
 
         public async Task Update(User entity)
         {
-            using (TodoContext db = new TodoContext())
+            entity.Password = Cypher.Encrypt(entity.Password);
+
+            if (entity.Picture != null)
             {
-                entity.Password = Cypher.Encrypt(entity.Password);
-
-                if (entity.Picture != null)
-                {
-                    db.UserPictures.Attach(entity.Picture);
-                    db.Entry(entity.Picture).State = EntityState.Unchanged;
-                }
-
-                db.Users.Update(entity);
-                await db.SaveChangesAsync();
+                _todoContext.UserPictures.Attach(entity.Picture);
+                _todoContext.Entry(entity.Picture).State = EntityState.Unchanged;
             }
+
+            _todoContext.Users.Update(entity);
+            await _todoContext.SaveChangesAsync();
         }
 
         public async Task<UserDto> Authenticate(User entity)
         {
-            using (TodoContext db = new TodoContext())
+            User user = await _todoContext.Users
+                .Include(x => x.Picture)
+                .Where(x => x.Login == entity.Login
+                       && x.Password == Cypher.Encrypt(entity.Password)
+                       && x.IsActive.Value)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+                return null;
+
+            return new UserDto()
             {
-                User user = await db.Users
-                    .Include(x => x.Picture)
-                    .Where(x => x.Login == entity.Login
-                           && x.Password == Cypher.Encrypt(entity.Password)
-                           && x.IsActive.Value)
-                    .FirstOrDefaultAsync();
-
-                if (user == null)
-                    return null;
-
-                return new UserDto()
-                {
-                    UserID = user.UserID.Value,
-                    Name = user.Name,
-                    Picture = user.Picture?.Picture,
-                    IsActive = user.IsActive.Value
-                };
-            }
+                UserID = user.UserID.Value,
+                Name = user.Name,
+                Picture = user.Picture?.Picture,
+                IsActive = user.IsActive.Value
+            };
         }
 
         public async Task ChangePassword(User entity, string newPassword)

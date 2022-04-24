@@ -14,6 +14,12 @@ namespace Todo.Core.Models.DataBase
 
         #endregion
 
+        #region Constructors
+
+        public TodoContext() : base() {}
+
+        #endregion
+
         #region Events
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
