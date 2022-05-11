@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Todo.Core.Models.DataBase.Repositories.Interfaces
 {
-    public interface ICrud<E> where E : class
+    public interface IRepository<E> where E : class
     {
         public Task Create(E entity);
         public Task Delete(E entity);
