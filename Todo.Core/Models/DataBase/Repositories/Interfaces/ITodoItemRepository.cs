@@ -2,7 +2,7 @@
 
 namespace Todo.Core.Models.DataBase.Repositories.Interfaces
 {
-    public interface ITodoItemRepository : ICrud<TodoItem>
+    public interface ITodoItemRepository : IRepository<TodoItem>
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Todo.Core.Models.DataBase.Repositories.Interfaces
 {
-    public interface IUserPictureRepository : ICrud<UserPicture>
+    public interface IUserPictureRepository : IRepository<UserPicture>
     {
     }
 }

@@ -4,7 +4,7 @@ using Todo.Core.Models.Entities;
 
 namespace Todo.Core.Models.DataBase.Repositories.Interfaces
 {
-    public interface IUserRepository : ICrud<User>
+    public interface IUserRepository : IRepository<User>
     {
         public Task<UserDto> Authenticate(User entity);
 
