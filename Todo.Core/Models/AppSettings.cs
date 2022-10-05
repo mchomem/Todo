@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
 using System.IO;
 
 namespace Todo.Core.Models
@@ -8,19 +7,13 @@ namespace Todo.Core.Models
     {
         #region Properties
 
-        public static String StringConnection
-        {
-            get
-            {
-                return Get("SqlServerConnection");
-            }
-        }
+        public static string StringConnection => Get("SqlServerConnection");
 
         #endregion
 
         #region Methods
 
-        private static String Get(String key)
+        private static string Get(string key)
         {
             try
             {
