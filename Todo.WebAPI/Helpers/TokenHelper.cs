@@ -3,7 +3,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Todo.Core.Models.Dtos;
+using Todo.Domain.Dtos;
 
 namespace Todo.WebAPI.Helpers
 {

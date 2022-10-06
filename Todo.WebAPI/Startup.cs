@@ -8,11 +8,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
-using Todo.Core.Models.DataBase;
-using Todo.Core.Models.DataBase.Repositories;
-using Todo.Core.Models.DataBase.Repositories.Interfaces;
-using Todo.Core.Services;
-using Todo.Core.Services.Interfaces;
+using Todo.Infra.Contexts;
+using Todo.Infra.Repositories;
+using Todo.Infra.Repositories.Interfaces;
+using Todo.Service.Services;
+using Todo.Service.Services.Interfaces;
 
 namespace Todo.WebAPI
 {

@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Todo.Core.Models.Dtos;
-using Todo.Core.Models.Entities;
-using Todo.Core.Services.Interfaces;
+using Todo.Domain.Dtos;
+using Todo.Domain.Entities;
+using Todo.Service.Services.Interfaces;
 using Todo.WebAPI.Helpers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
