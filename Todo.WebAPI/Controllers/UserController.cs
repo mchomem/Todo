@@ -34,8 +34,7 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                UserDto user = (UserDto)await _userService
-                    .AuthenticateAsync(login, password);
+                UserDto user = await _userService.AuthenticateAsync(login, password);
 
                 if (user == null)
                     return NotFound();
@@ -56,8 +55,7 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                User user = (User)await _userService
-                    .DetailsAsync(new User() { UserID = id });
+                User user = await _userService.DetailsAsync(new User() { UserID = id });
 
                 UserDto userDto = new UserDto()
                 {
@@ -101,8 +99,7 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                User userUpdate = (User)await _userService
-                    .DetailsAsync(new User() { UserID = id });
+                User userUpdate = await _userService.DetailsAsync(new User() { UserID = id });
 
                 if (userUpdate == null)
                     return NotFound();
@@ -111,9 +108,7 @@ namespace Todo.WebAPI.Controllers
 
                 if (userUpdate.Picture != null)
                 {
-                    userPicture =
-                        await _userPictureService
-                            .DetailsAsync(new UserPicture() { UserPictureID = userUpdate.Picture.UserPictureID });
+                    userPicture = await _userPictureService.DetailsAsync(new UserPicture() { UserPictureID = userUpdate.Picture.UserPictureID });
                 }
                 else
                 {
@@ -156,8 +151,7 @@ namespace Todo.WebAPI.Controllers
                 await _userService
                     .ChangePasswordAsync(new User()
                     {
-                        UserID = userId
-                        ,
+                        UserID = userId,
                         Password = currentPassword
                     }, newPassword);
 
@@ -181,13 +175,12 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                User user = (User)await _userService.DetailsAsync(new User() { UserID = userId });
+                User user = await _userService.DetailsAsync(new User() { UserID = userId });
 
                 if (user == null)
                     return NotFound("User not found.");
 
-                UserPicture userPicture = (UserPicture)await _userPictureService
-                    .DetailsAsync(new UserPicture() { PictureFromUserID = userId });
+                UserPicture userPicture = await _userPictureService.DetailsAsync(new UserPicture() { PictureFromUserID = userId });
 
                 if (userPicture == null)
                     return NotFound("User picture not found.");
