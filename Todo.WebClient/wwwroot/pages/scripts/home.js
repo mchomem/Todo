@@ -283,6 +283,11 @@
         const tBody = self.$todosListing;
         tBody.innerHTML = '';
 
+        if (data.length === 0) {
+            Home._displayNoData(tBody);
+            return;
+        }
+
         Home._displayCount(data.length);
 
         const button = document.createElement('button');
@@ -347,6 +352,20 @@
         });
 
         todos = data;
+
+        self.$loader.style.display = 'none';
+        self.$listing.style.display = 'block';
+    }
+
+    , _displayNoData: function (tBody) {
+
+        let tr = tBody.insertRow();
+
+        let td1 = tr.insertCell(0);
+        td1.setAttribute("colspan", "5");
+        td1.appendChild(self.$noData);
+
+        self.$noData.setAttribute("style", "display:block");
 
         self.$loader.style.display = 'none';
         self.$listing.style.display = 'block';
