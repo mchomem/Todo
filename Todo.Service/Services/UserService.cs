@@ -29,7 +29,6 @@ namespace Todo.Service.Services
         public async Task<User> DetailsAsync(User entity)
         {
             User user = await _userRepository.DetailAsync(entity);
-            user.Password = CypherHelper.Decrypt(user.Password);
 
             return user;
         }

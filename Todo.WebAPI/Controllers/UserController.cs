@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Todo.Domain.Dtos;
 using Todo.Domain.Entities;
+using Todo.Service.Helpers;
 using Todo.Service.Services.Interfaces;
 using Todo.WebAPI.Helpers;
 
@@ -132,6 +133,8 @@ namespace Todo.WebAPI.Controllers
                 }
 
                 userUpdate.Name = userDto.Name;
+                userUpdate.Password = CypherHelper.Decrypt(userUpdate.Password);
+
                 await _userService.UpdateAsync(userUpdate);
 
                 return StatusCode(204);
