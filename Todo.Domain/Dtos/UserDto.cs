@@ -1,20 +1,19 @@
-﻿namespace Todo.Domain.Dtos
+﻿namespace Todo.Domain.Dtos;
+
+[Serializable]
+public class UserDto
 {
-    [Serializable]
-    public class UserDto
-    {
-        #region Propeties
+    #region Propeties
 
-        public int UserID { get; set; }
+    public int UserID { get; set; }
 
-        public string? Name { get; set; }
+    public string? Name { get; set; }
 
-        public bool IsActive { get; set; }
+    public bool IsActive { get; set; }
 
-        public byte[]? Picture { get; set; }
+    public byte[]? Picture { get; set; }
 
-        public string? Token { get; set; }
+    public string? Token { get; set; }
 
-        #endregion
-    }
+    #endregion
 }

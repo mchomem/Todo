@@ -6,90 +6,89 @@ using System.Threading.Tasks;
 using Todo.Domain.Entities;
 using Todo.Service.Services.Interfaces;
 
-namespace Todo.WebAPI.Controllers
+namespace Todo.WebAPI.Controllers;
+
+[Authorize]
+[Route("api/[controller]")]
+[ApiController]
+public class TodoItemController : ControllerBase
 {
-    [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TodoItemController : ControllerBase
+    private readonly ITodoItemService _todoItemService;
+
+    public TodoItemController(ITodoItemService todoItemService)
     {
-        private readonly ITodoItemService _todoItemService;
+        _todoItemService = todoItemService;
+    }
 
-        public TodoItemController(ITodoItemService todoItemService)
+    // GET: api/<TodoItemController>
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<TodoItem>>> Get(int userID)
+    {
+        try
         {
-            _todoItemService = todoItemService;
+            var items = await _todoItemService.RetrieveAsync(userID);                
+
+            return Ok(items);
         }
-
-        // GET: api/<TodoItemController>
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItem>>> Get(int userID)
+        catch (Exception e)
         {
-            try
-            {
-                var items = await _todoItemService.RetrieveAsync(userID);                
-
-                return Ok(items);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e);
-            }
+            return StatusCode(500, e);
         }
+    }
 
-        // POST api/<TodoItemController>
-        [HttpPost]
-        public async Task<ActionResult> Post(TodoItem todoItem)
+    // POST api/<TodoItemController>
+    [HttpPost]
+    public async Task<ActionResult> Post(TodoItem todoItem)
+    {
+        try
         {
-            try
-            {
-                await _todoItemService.CreateAsync(todoItem);
+            await _todoItemService.CreateAsync(todoItem);
 
-                return Ok(new { message = "Task created." });
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e);
-            }
+            return Ok(new { message = "Task created." });
         }
-
-        // PUT api/<TodoItemController>/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, TodoItem todoItem)
+        catch (Exception e)
         {
-            try
-            {
-                TodoItem todo = await _todoItemService.DetailsAsync(new TodoItem() { TodoItemID = id });
-                todo.Name = todoItem.Name;
-                todo.IsDone = todoItem.IsDone;
-                todo.DeadLine = todoItem.DeadLine;
-
-                if (todo == null)
-                    return NotFound();
-
-                await _todoItemService.UpdateAsync(todo);
-
-                return StatusCode(204);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e);
-            }
+            return StatusCode(500, e);
         }
+    }
 
-        // DELETE api/<TodoItemController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+    // PUT api/<TodoItemController>/5
+    [HttpPut("{id}")]
+    public async Task<ActionResult> Put(int id, TodoItem todoItem)
+    {
+        try
         {
-            try
-            {
-                await _todoItemService.DeleteAsync(id);
+            TodoItem todo = await _todoItemService.DetailsAsync(new TodoItem() { TodoItemID = id });
+            todo.Name = todoItem.Name;
+            todo.IsDone = todoItem.IsDone;
+            todo.DeadLine = todoItem.DeadLine;
 
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e);
-            }
+            if (todo == null)
+                return NotFound();
+
+            await _todoItemService.UpdateAsync(todo);
+
+            return StatusCode(204);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e);
+        }
+    }
+
+    // DELETE api/<TodoItemController>/5
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete(int id)
+    {
+        try
+        {
+            await _todoItemService.DeleteAsync(id);
+
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e);
         }
     }
 }

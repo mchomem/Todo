@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Todo.Infra.Mappings;
+using System.Reflection;
 using Todo.Domain.Entities;
 using Todo.Domain.Shareds;
 
@@ -17,7 +17,7 @@ namespace Todo.Infra.Contexts
 
         #region Constructors
 
-        public TodoContext() : base() {}
+        public TodoContext() : base() { }
 
         #endregion
 
@@ -27,11 +27,7 @@ namespace Todo.Infra.Contexts
             => options.UseSqlServer(AppSettings.StringConnection);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new UserMapping());
-            modelBuilder.ApplyConfiguration(new UserPictureMapping());
-            modelBuilder.ApplyConfiguration(new TodoItemMapping());
-        }
+            => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         #endregion
     }

@@ -1,16 +1,12 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Todo.Infra.Contexts;
-using Todo.Infra.Repositories.Interfaces;
-using Todo.Infra.Repositories;
-using Todo.Service.Services.Interfaces;
-using Todo.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using System;
+using Todo.Infra.Contexts;
+using Todo.Infra.Repositories;
+using Todo.Infra.Repositories.Interfaces;
+using Todo.Service.Services;
+using Todo.Service.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
