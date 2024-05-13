@@ -9,8 +9,6 @@ using Todo.Service.Helpers;
 using Todo.Service.Services.Interfaces;
 using Todo.WebAPI.Helpers;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Todo.WebAPI.Controllers
 {
     [Authorize]
@@ -81,7 +79,6 @@ namespace Todo.WebAPI.Controllers
         {
             try
             {
-                // TODO: put in a service class.
                 if ((await _userService.RetrieveAsync(new User() { Login = user.Login })).Any())
                     throw new Exception("This user is already being used");
 
@@ -188,8 +185,7 @@ namespace Todo.WebAPI.Controllers
                 if (userPicture == null)
                     return NotFound("User picture not found.");
 
-                await _userPictureService
-                    .DeleteAsync(userPicture);
+                await _userPictureService.DeleteAsync(userPicture);
 
                 return Ok();
             }

@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Todo.Domain.Entities;
 using Todo.Service.Services.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Todo.WebAPI.Controllers
 {
     [Authorize]
