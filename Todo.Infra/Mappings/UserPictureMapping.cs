@@ -9,7 +9,7 @@ public class UserPictureMapping : IEntityTypeConfiguration<UserPicture>
     public void Configure(EntityTypeBuilder<UserPicture> builder)
     {
         builder.
-            ToTable<UserPicture>("UserPicture")
+            ToTable("UserPicture")
             .HasKey(x => x.UserPictureID);
 
         builder

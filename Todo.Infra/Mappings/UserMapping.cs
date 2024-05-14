@@ -13,7 +13,7 @@ public class UserMapping : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
-            .ToTable<User>("User")
+            .ToTable("User")
             .HasKey(x => x.UserID);
 
         builder
@@ -46,7 +46,7 @@ public class UserMapping : IEntityTypeConfiguration<User>
             .HasDefaultValue(true);
 
         builder
-            .HasOne<UserPicture>(u => u.Picture)
+            .HasOne(u => u.Picture)
             .WithOne(up => up.User)
             .HasForeignKey<UserPicture>(u => u.PictureFromUserID);
     }

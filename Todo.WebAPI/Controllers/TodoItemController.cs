@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Todo.Application.Services.Interfaces;
 using Todo.Domain.Entities;
-using Todo.Service.Services.Interfaces;
 
 namespace Todo.WebAPI.Controllers;
 

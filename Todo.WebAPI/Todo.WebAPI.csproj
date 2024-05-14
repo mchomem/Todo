@@ -8,10 +8,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
@@ -19,7 +15,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Todo.Domain\Todo.Domain.csproj" />
 		<ProjectReference Include="..\Todo.Infra\Todo.Infra.csproj" />
-		<ProjectReference Include="..\Todo.Service\Todo.Service.csproj" />
+		<ProjectReference Include="..\Todo.Application\Todo.Application.csproj" />
 	</ItemGroup>
 
 </Project>

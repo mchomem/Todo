@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Todo.Application.Services;
+using Todo.Application.Services.Interfaces;
 using Todo.Infra.Contexts;
 using Todo.Infra.Repositories;
 using Todo.Infra.Repositories.Interfaces;
-using Todo.Service.Services;
-using Todo.Service.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
