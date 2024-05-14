@@ -1,10 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Todo.Domain.Dtos;
-
-namespace Todo.WebAPI.Helpers;
+﻿namespace Todo.API.Helpers;
 
 public static class TokenHelper
 {

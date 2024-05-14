@@ -1,4 +1,4 @@
-﻿namespace Todo.WebAPI.Controllers;
+﻿namespace Todo.API.Controllers;
 
 [Authorize]
 [Route("api/[controller]")]

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.WebAPI", "Todo.WebAPI\Todo.WebAPI.csproj", "{5E146141-FA05-44CC-8F52-73BBFCC7C7A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.API", "Todo.API\Todo.API.csproj", "{5E146141-FA05-44CC-8F52-73BBFCC7C7A2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.WebClient", "Todo.WebClient\Todo.WebClient.csproj", "{4E6E1EE2-946A-4034-917E-6164272AA884}"
 EndProject
