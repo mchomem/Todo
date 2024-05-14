@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.Domain", "Todo.Domain\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.Application", "Todo.Application\Todo.Application.csproj", "{270946E8-70AE-439D-9117-8D8CA71A503A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.Infra", "Todo.Infra\Todo.Infra.csproj", "{470F0B02-1387-4EA8-9010-FC40BDFFAD63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.Infra.Database", "Todo.Infra.Database\Todo.Infra.Database.csproj", "{470F0B02-1387-4EA8-9010-FC40BDFFAD63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

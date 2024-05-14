@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Todo.Infra.Contexts;
+using Todo.Infra.Database.Contexts;
 
 #nullable disable
 
-namespace Todo.Infra.Migrations
+namespace Todo.Infra.Database.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20221006030745_InitDb")]
-    partial class InitDb
+    partial class TodoContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

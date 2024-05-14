@@ -1,6 +1,6 @@
 ﻿using Todo.Application.Services.Interfaces;
 using Todo.Domain.Entities;
-using Todo.Infra.Repositories.Interfaces;
+using Todo.Infra.Database.Repositories.Interfaces;
 
 namespace Todo.Application.Services;
 

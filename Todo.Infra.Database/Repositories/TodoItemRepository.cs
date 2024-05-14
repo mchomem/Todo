@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Todo.Domain.Entities;
-using Todo.Infra.Contexts;
-using Todo.Infra.Repositories.Interfaces;
+using Todo.Infra.Database.Contexts;
+using Todo.Infra.Database.Repositories.Interfaces;
 
-namespace Todo.Infra.Repositories;
+namespace Todo.Infra.Database.Repositories;
 
 public class TodoItemRepository : ITodoItemRepository
 {
     private readonly TodoContext _todoContext;
 
     public TodoItemRepository(TodoContext todoContext)
-    {
-        _todoContext = todoContext;
-    }
+        => _todoContext = todoContext;
 
     public async Task CreateAsync(TodoItem entity)
     {
@@ -29,11 +27,9 @@ public class TodoItemRepository : ITodoItemRepository
     }
 
     public async Task<TodoItem> DetailAsync(TodoItem entity)
-    {
-        return await _todoContext.TodoItems
+        => await _todoContext.TodoItems
             .Include(x => x.CreatedBy)
             .FirstOrDefaultAsync(x => x.TodoItemID.Value == entity.TodoItemID.Value);
-    }
 
     public async Task<IEnumerable<TodoItem>> RetrieveAsync(TodoItem entity = null)
     {

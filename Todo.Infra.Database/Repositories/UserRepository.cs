@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Todo.Domain.Dtos;
 using Todo.Domain.Entities;
-using Todo.Infra.Contexts;
-using Todo.Infra.Repositories.Interfaces;
+using Todo.Infra.Database.Contexts;
+using Todo.Infra.Database.Repositories.Interfaces;
 
-namespace Todo.Infra.Repositories;
+namespace Todo.Infra.Database.Repositories;
 
 public class UserRepository : IUserRepository
 {

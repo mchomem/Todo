@@ -3,7 +3,7 @@ using System.Reflection;
 using Todo.Domain.Entities;
 using Todo.Domain.Shareds;
 
-namespace Todo.Infra.Contexts
+namespace Todo.Infra.Database.Contexts
 {
     public class TodoContext : DbContext
     {

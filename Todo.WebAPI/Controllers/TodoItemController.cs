@@ -13,9 +13,7 @@ public class TodoItemController : ControllerBase
     private readonly ITodoItemService _todoItemService;
 
     public TodoItemController(ITodoItemService todoItemService)
-    {
-        _todoItemService = todoItemService;
-    }
+        => _todoItemService = todoItemService;
 
     // GET: api/<TodoItemController>
     [HttpGet]
