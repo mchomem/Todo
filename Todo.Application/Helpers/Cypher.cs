@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace Todo.Application.Helpers;
+﻿namespace Todo.Application.Helpers;
 
 public static class CypherHelper
 {

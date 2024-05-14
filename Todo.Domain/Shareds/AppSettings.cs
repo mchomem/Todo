@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace Todo.Domain.Shareds;
+﻿namespace Todo.Domain.Shareds;
 
 public static class AppSettings
 {

@@ -1,18 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Todo.Domain.Entities;
-using Todo.Infra.Database.Contexts;
-using Todo.Infra.Database.Repositories.Interfaces;
-
-namespace Todo.Infra.Database.Repositories;
+﻿namespace Todo.Infra.Database.Repositories;
 
 public class UserPictureRepository : IUserPictureRepository
 {
     private readonly TodoContext _todoContext;
 
     public UserPictureRepository(TodoContext todoContext)
-    {
-        _todoContext = todoContext;
-    }
+        => _todoContext = todoContext;
 
     public async Task CreateAsync(UserPicture entity)
     {

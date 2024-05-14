@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Todo.Domain.Entities;
+﻿namespace Todo.Domain.Entities;
 
 [Serializable]
 public class UserPicture

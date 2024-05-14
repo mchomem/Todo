@@ -1,7 +1,4 @@
-﻿using Todo.Domain.Dtos;
-using Todo.Domain.Entities;
-
-namespace Todo.Application.Services.Interfaces;
+﻿namespace Todo.Application.Services.Interfaces;
 
 public interface IUserService
 {

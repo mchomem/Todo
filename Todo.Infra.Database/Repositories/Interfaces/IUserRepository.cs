@@ -1,7 +1,4 @@
-﻿using Todo.Domain.Dtos;
-using Todo.Domain.Entities;
-
-namespace Todo.Infra.Database.Repositories.Interfaces;
+﻿namespace Todo.Infra.Database.Repositories.Interfaces;
 
 public interface IUserRepository : IRepository<User>
 {

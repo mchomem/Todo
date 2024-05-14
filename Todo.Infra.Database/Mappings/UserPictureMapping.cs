@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Todo.Domain.Entities;
-
-namespace Todo.Infra.Mappings;
+﻿namespace Todo.Infra.Mappings;
 
 public class UserPictureMapping : IEntityTypeConfiguration<UserPicture>
 {

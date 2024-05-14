@@ -1,13 +1,3 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
-using Todo.Application.Services;
-using Todo.Application.Services.Interfaces;
-using Todo.Infra.Database.Contexts;
-using Todo.Infra.Database.Repositories;
-using Todo.Infra.Database.Repositories.Interfaces;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

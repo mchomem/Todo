@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Todo.Domain.Entities;
-using Todo.Infra.Database.Contexts;
-using Todo.Infra.Database.Repositories.Interfaces;
-
-namespace Todo.Infra.Database.Repositories;
+﻿namespace Todo.Infra.Database.Repositories;
 
 public class TodoItemRepository : ITodoItemRepository
 {

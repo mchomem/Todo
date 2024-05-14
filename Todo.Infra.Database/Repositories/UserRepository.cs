@@ -1,19 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Todo.Domain.Dtos;
-using Todo.Domain.Entities;
-using Todo.Infra.Database.Contexts;
-using Todo.Infra.Database.Repositories.Interfaces;
-
-namespace Todo.Infra.Database.Repositories;
+﻿namespace Todo.Infra.Database.Repositories;
 
 public class UserRepository : IUserRepository
 {
     private readonly TodoContext _todoContext;
 
     public UserRepository(TodoContext todoContext)
-    {
-        _todoContext = todoContext;
-    }
+        => _todoContext = todoContext;
 
     public async Task CreateAsync(User entity)
     {
@@ -82,12 +74,12 @@ public class UserRepository : IUserRepository
 
     public async Task ChangePasswordAsync(User entity, string newPassword)
     {
-        User user = (await this.RetrieveAsync(entity)).FirstOrDefault();
+        User user = (await RetrieveAsync(entity)).FirstOrDefault();
 
         if (user == null)
             throw new Exception("Incorrect user or password.");
 
         user.Password = newPassword;
-        await this.UpdateAsync(user);
+        await UpdateAsync(user);
     }
 }

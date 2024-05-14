@@ -1,0 +1,15 @@
+﻿global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.OpenApi.Models;
+global using System.Text;
+global using Todo.Application.Helpers;
+global using Todo.Application.Services;
+global using Todo.Application.Services.Interfaces;
+global using Todo.Domain.Dtos;
+global using Todo.Domain.Entities;
+global using Todo.Infra.Database.Contexts;
+global using Todo.Infra.Database.Repositories;
+global using Todo.Infra.Database.Repositories.Interfaces;
+global using Todo.WebAPI.Helpers;

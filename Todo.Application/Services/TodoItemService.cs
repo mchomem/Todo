@@ -1,8 +1,4 @@
-﻿using Todo.Application.Services.Interfaces;
-using Todo.Domain.Entities;
-using Todo.Infra.Database.Repositories.Interfaces;
-
-namespace Todo.Application.Services;
+﻿namespace Todo.Application.Services;
 
 public class TodoItemService : ITodoItemService
 {
