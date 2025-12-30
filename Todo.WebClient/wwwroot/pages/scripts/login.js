@@ -64,7 +64,9 @@
                     document.location.href = 'home.html';
                 }
             })
-            .catch(error => console.error('Error', error));
+            .catch(error => {
+                console.error('Error', error)
+            });
     }
 
 }

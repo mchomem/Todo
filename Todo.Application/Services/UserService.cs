@@ -40,12 +40,9 @@ public class UserService : IUserService
 
     public async Task<UserDto> AuthenticateAsync(string login, string password)
     {
-        var user = await _userRepository
-           .AuthenticateAsync(new User()
-           {
-               Login = login,
-               Password = CypherHelper.Encrypt(password)
-           });
+        var cypheredPassword = CypherHelper.Encrypt(password);
+
+        var user = await _userRepository.AuthenticateAsync(login, cypheredPassword);
 
         if (user is null)
             throw new Exception("User not found.");
@@ -66,6 +63,7 @@ public class UserService : IUserService
         if (user is null)
             throw new Exception("User not found.");
 
+        newPassword = CypherHelper.Encrypt(newPassword);
         user.Update(newPassword);
 
         await _userRepository.ChangePasswordAsync(user, newPassword);

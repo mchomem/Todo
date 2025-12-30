@@ -58,11 +58,14 @@ public class UserRepository : IUserRepository
         await _todoContext.SaveChangesAsync();
     }
 
-    public async Task<User> AuthenticateAsync(User entity)
+    public async Task<User> AuthenticateAsync(string login, string password)
     {
         var user = await _todoContext.Users
             .Include(x => x.Picture)
-            .Where(x => x.Login == entity.Login && x.IsActive.Value)
+            .Where(x =>
+                x.Login == login
+                && x.Password == password
+                && x.IsActive.Value)
             .SingleOrDefaultAsync();
 
         return user!;
