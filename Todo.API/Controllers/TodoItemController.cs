@@ -10,13 +10,12 @@ public class TodoItemController : ControllerBase
     public TodoItemController(ITodoItemService todoItemService)
         => _todoItemService = todoItemService;
 
-    // GET: api/<TodoItemController>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TodoItem>>> Get(int userID)
     {
         try
         {
-            var items = await _todoItemService.RetrieveAsync(userID);                
+            var items = await _todoItemService.RetrieveAsync(userID);
 
             return Ok(items);
         }
@@ -26,7 +25,6 @@ public class TodoItemController : ControllerBase
         }
     }
 
-    // POST api/<TodoItemController>
     [HttpPost]
     public async Task<ActionResult> Post(TodoItem todoItem)
     {
@@ -42,7 +40,6 @@ public class TodoItemController : ControllerBase
         }
     }
 
-    // PUT api/<TodoItemController>/5
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(int id, TodoItem todoItem)
     {
@@ -66,7 +63,6 @@ public class TodoItemController : ControllerBase
         }
     }
 
-    // DELETE api/<TodoItemController>/5
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
