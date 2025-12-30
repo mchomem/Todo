@@ -1,34 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using Todo.Domain.Entities;
-using Todo.Domain.Shareds;
+﻿namespace Todo.Infra.Database.Contexts;
 
-namespace Todo.Infra.Database.Contexts
+public class TodoContext : DbContext
 {
-    public class TodoContext : DbContext
-    {
-        #region Properties
+    #region Properties
 
-        public DbSet<TodoItem> TodoItems { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserPicture> UserPictures { get; set; }
+    public DbSet<TodoItem> TodoItems { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<UserPicture> UserPictures { get; set; }
 
-        #endregion
+    #endregion
 
-        #region Constructors
+    #region Constructors
 
-        public TodoContext() : base() { }
+    public TodoContext() : base() { }
 
-        #endregion
+    #endregion
 
-        #region Events
+    #region Events
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer(AppSettings.StringConnection);
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+        => options.UseSqlServer(AppSettings.StringConnection);
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-            => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+        => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-        #endregion
-    }
+    #endregion
 }
