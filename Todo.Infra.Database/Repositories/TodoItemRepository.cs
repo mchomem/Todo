@@ -21,6 +21,16 @@ public class TodoItemRepository : ITodoItemRepository
         await _todoContext.SaveChangesAsync();
     }
 
+    public async Task DeleteByCreatedUserIdAsync(int createdById)
+    {
+        _todoContext.TodoItems
+            .Where(x => x.CreatedByID == createdById)
+            .ToList()
+            .ForEach(x => _todoContext.TodoItems.Remove(x));
+        
+        await _todoContext.SaveChangesAsync();
+    }
+
     public async Task<TodoItem> DetailAsync(TodoItem entity)
         => await _todoContext.TodoItems
             .Include(x => x.CreatedBy)

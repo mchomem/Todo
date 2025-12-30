@@ -146,9 +146,18 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public ActionResult Delete([FromRoute] int id)
+    public async Task<ActionResult> Delete([FromRoute] int id)
     {
-        return Ok();
+        try
+        {
+            await _userService.DeleteAsync(id);
+
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e);
+        }
     }
 
     [HttpDelete, Route("delete-user-picture")]

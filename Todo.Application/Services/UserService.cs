@@ -3,10 +3,12 @@
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly ITodoItemRepository _todoItemRepository;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, ITodoItemRepository todoItemRepository)
     {
         _userRepository = userRepository;
+        _todoItemRepository = todoItemRepository;
     }
 
     public async Task CreateAsync(User entity)
@@ -15,14 +17,30 @@ public class UserService : IUserService
         await _userRepository.CreateAsync(entity);
     }
 
-    public async Task DeleteAsync(User entity)
+    public async Task DeleteAsync(int id)
     {
-        await _userRepository.DeleteAsync(entity);
+        var user = await _userRepository.DetailAsync(new User() { UserID = id });
+
+        if (user is null)
+            throw new Exception("User not found.");
+
+        var todos = await _todoItemRepository.RetrieveAsync(new TodoItem() { CreatedByID = id });
+
+        if(todos.Any())
+        {
+            await _todoItemRepository.DeleteByCreatedUserIdAsync(id);
+        }
+
+        await _userRepository.DeleteAsync(user);
     }
 
     public async Task<User> DetailsAsync(User entity)
     {
         var user = await _userRepository.DetailAsync(entity);
+
+        if (user is null)
+            throw new Exception("User not found.");
+
         return user;
     }
 

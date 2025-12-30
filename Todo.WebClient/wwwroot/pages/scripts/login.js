@@ -3,11 +3,11 @@
     self: this
 
     , init: function () {
-        this.addConstrol();
+        this.addControls();
         this.attachEvent();
     }
 
-    , addConstrol: function () {
+    , addControls: function () {
         self.$txtUser = document.getElementById('txtUser');
         self.$txtPassword = document.getElementById('txtPassword');
         self.$btnLogin = document.getElementById('btnLogin');

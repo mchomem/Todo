@@ -13,13 +13,13 @@
     , todos: []
 
     , init: function () {
-        this.addControl();
+        this.addControls();
         this.getUserData();
         this.attachEvent();
         this.getItems();
     }
 
-    , addControl: function () {
+    , addControls: function () {
         // Controls for header app.
         self.$spanUser = document.getElementById('spanUser');
         self.$btnEditUserAccount = document.getElementById('btnEditUserAccount');
@@ -38,6 +38,7 @@
         self.$btnLoadPicture = document.getElementById('btnLoadPicture');
         self.$btnDeletePicture = document.getElementById('btnDeletePicture');
         self.$txtUserName = document.getElementById('txtUserName');
+        self.$buttonDeleteMyAccount = document.getElementById('buttonDeleteMyAccount');
         self.$btnCloseEditUser = document.getElementById('btnCloseEditUser');
         self.$btnSaveEditUser = document.getElementById('btnSaveEditUser');
 
@@ -127,6 +128,10 @@
                 self.$iconNewPassword.classList.remove('fa-eye');
                 self.$txtNewPassword.setAttribute('type', 'password');
             }
+        });
+
+        self.$buttonDeleteMyAccount.addEventListener('click', function () {
+            Home.deleteUserAccount();
         });
 
         self.$btnCloseEditUser.addEventListener('click', function () {
@@ -380,6 +385,22 @@
 
         if (Home.userCache.picture != undefined && Home.userCache.picture.length != 0) {
             self.$imgUserPicture.setAttribute('src', 'data:image/png;base64,' + Home.userCache.picture);
+        }
+    }
+
+    , deleteUserAccount: function () {
+        let option = confirm('Do you want to delete your account? This action is irreversible.');
+
+        if (option) {
+            fetch(`${Home.uriUser}/${Home.userCache.userID}`, {
+                method: 'DELETE'
+                , headers: {
+                    'Authorization': `Bearer ${Home.userCache.token}`
+                    , 'Content-type': 'application/json; charset=utf-8'
+                }
+            }).then(() => {
+                document.location.href = 'account-deleted.html';
+            });
         }
     }
 
