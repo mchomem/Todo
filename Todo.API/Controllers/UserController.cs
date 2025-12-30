@@ -14,11 +14,10 @@ public class UserController : ControllerBase
         _userPictureService = userPictureRepository;
     }
 
-    // GET: api/<UserController>
     [AllowAnonymous]
     [HttpGet]
     [Route("authentication")]
-    public async Task<ActionResult<UserDto>> GetAuthentication(string login, string password)
+    public async Task<ActionResult<UserDto>> GetAuthentication([FromQuery] string login, [FromQuery] string password)
     {
         try
         {
@@ -37,9 +36,8 @@ public class UserController : ControllerBase
         }
     }
 
-    // GET api/<UserController>/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> Get(int id)
+    public async Task<ActionResult<UserDto>> Get([FromRoute] int id)
     {
         try
         {
@@ -61,10 +59,9 @@ public class UserController : ControllerBase
         }
     }
 
-    // POST api/<UserController>
     [AllowAnonymous]
     [HttpPost]
-    public async Task<ActionResult> Post(User user)
+    public async Task<ActionResult> Post([FromBody] User user)
     {
         try
         {
@@ -80,9 +77,8 @@ public class UserController : ControllerBase
         }
     }
 
-    // PUT api/<UserController>/5
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, UserDto userDto)
+    public async Task<ActionResult> Put([FromRoute] int id, [FromBody] UserDto userDto)
     {
         try
         {
@@ -133,7 +129,7 @@ public class UserController : ControllerBase
 
     [HttpPut]
     [Route("change-password")]
-    public async Task<ActionResult> ChangePassword(int userId, string currentPassword, string newPassword)
+    public async Task<ActionResult> ChangePassword([FromQuery] int userId, [FromQuery] string currentPassword, [FromQuery] string newPassword)
     {
         try
         {
@@ -152,15 +148,14 @@ public class UserController : ControllerBase
         }
     }
 
-    // DELETE api/<UserController>/5
     [HttpDelete("{id}")]
-    public ActionResult Delete(int id)
+    public ActionResult Delete([FromRoute] int id)
     {
         return Ok();
     }
 
     [HttpDelete, Route("delete-user-picture")]
-    public async Task<ActionResult> DeleteUserPicture(int userId)
+    public async Task<ActionResult> DeleteUserPicture([FromQuery] int userId)
     {
         try
         {
