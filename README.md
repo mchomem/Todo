@@ -20,3 +20,10 @@ Steps
 	PS: to remove the last migration file, run this command in Packag Manager Console:
 
 	remove-migration
+
+Update 2025
+
+* The line command to create a database is:
+
+    update-database -Context TodoContext -Project Todo.Infra.Database -StartupProject Todo.API
+
