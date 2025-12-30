@@ -1,329 +1,329 @@
 ﻿<!DOCTYPE html>
 
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="../assets/bootstrap-5.0.0-beta1-dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="../assets/icons/fontawesome-free-5.15.2-web/css/fontawesome.css" rel="stylesheet" />
-    <link href="../assets/icons/fontawesome-free-5.15.2-web/css/brands.css" rel="stylesheet" />
-    <link href="../assets/icons/fontawesome-free-5.15.2-web/css/solid.css" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="../assets/icons/paste_plain.png" />
-    <link href="styles/home.css" rel="stylesheet" />
-    <title>To-do</title>
-</head>
-<body>
-    <div class="container-fluid justify-content-sm-center mt-3" style="max-width:600px;">
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../assets/bootstrap-5.0.0-beta1-dist/css/bootstrap.css" rel="stylesheet" />
+        <link href="../assets/icons/fontawesome-free-5.15.2-web/css/fontawesome.css" rel="stylesheet" />
+        <link href="../assets/icons/fontawesome-free-5.15.2-web/css/brands.css" rel="stylesheet" />
+        <link href="../assets/icons/fontawesome-free-5.15.2-web/css/solid.css" rel="stylesheet" />
+        <link rel="icon" type="image/png" href="../assets/icons/paste_plain.png" />
+        <link href="styles/home.css" rel="stylesheet" />
+        <title>To-do</title>
+    </head>
+    <body>
+        <div class="container-fluid justify-content-sm-center mt-3" style="max-width:600px;">
 
-        <!--Main form-->
-        <div class="row mt-3">
-            <div class="col">
-                <form>
-                    <div class="card">
-                        <div class="card-header bg-primary bg-gradient text-white">
-                            Hello,<span id="spanUser" class="ms-2 fw-bold"></span>
-                            <button id="btnEditUserAccount"
-                                    class="btn btn-sm btn-secondary ms-2"
-                                    type="button"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#userModalEdit"
-                                    style="font-size: 9px;height:16px;padding-top:0px;">
-                                <b>Account</b>
-                            </button>
+            <!--Main form-->
+            <div class="row mt-3">
+                <div class="col">
+                    <form>
+                        <div class="card">
+                            <div class="card-header bg-primary bg-gradient text-white">
+                                Hello,<span id="spanUser" class="ms-2 fw-bold"></span>
+                                <button id="btnEditUserAccount"
+                                        class="btn btn-sm btn-secondary ms-2"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#userModalEdit"
+                                        style="font-size: 9px;height:16px;padding-top:0px;">
+                                    <b>Account</b>
+                                </button>
 
-                            <button id="btnChangePassword"
-                                    class="btn btn-sm btn-secondary ms-2"
-                                    type="button"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#userModalChangePassword"
-                                    style="font-size: 9px;height:16px;padding-top:0px;">
-                                <b>Change password</b>
-                            </button>
+                                <button id="btnChangePassword"
+                                        class="btn btn-sm btn-secondary ms-2"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#userModalChangePassword"
+                                        style="font-size: 9px;height:16px;padding-top:0px;">
+                                    <b>Change password</b>
+                                </button>
 
-                            <button id="btnExit"
-                                    class="btn btn-success btn-sm ms-2 float-end"
-                                    type="button">
-                                Exit
-                                <i class="fas fa-door-open ms-2"></i>
-                            </button>
+                                <button id="btnExit"
+                                        class="btn btn-success btn-sm ms-2 float-end"
+                                        type="button">
+                                    Exit
+                                    <i class="fas fa-door-open ms-2"></i>
+                                </button>
 
-                            <button id="toogleTheme"
-                                    class="btn btn-sm btn-success ms-2 float-end"
-                                    type="button">
-                                <i id="iconToogleTheme" class="fas fa-moon"></i>
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <label>Task<span class="text-danger ms-2">*</span></label>
-                                    <input id="add-name"
-                                           class="form-control form-control-sm"
-                                           type="text">
-                                </div>
+                                <button id="toogleTheme"
+                                        class="btn btn-sm btn-success ms-2 float-end"
+                                        type="button">
+                                    <i id="iconToogleTheme" class="fas fa-moon"></i>
+                                </button>
                             </div>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <label>Dead line</label>
-                                    <input id="txtDeadLine"
-                                           class="form-control form-control-sm"
-                                           type="date" />
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Task<span class="text-danger ms-2">*</span></label>
+                                        <input id="add-name"
+                                               class="form-control form-control-sm"
+                                               type="text">
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button id="btnAddName"
-                                    class="btn btn-sm btn-success float-end"
-                                    type="button"
-                                    value="Add"
-                                    title="Add">
-                                Add
-                                <i class="fas fa-plus-circle ms-2"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!--Modal for edit user-->
-        <div id="userModalEdit" class="modal fade" tabindex="-1" aria-labelledby="userModalEditLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary bg-gradient text-white">
-                        <h5 class="modal-title" id="userModalEditLabel">Edit your data</h5>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <img id="imgUserPicture"
-                                         src="../assets/images/user-default-picture.png"
-                                         style="background-color: gainsboro; height:100px; width:100px;cursor:pointer;" />
-                                    <input id="btnLoadPicture"
-                                           class="form-control"
-                                           type="file"
-                                           value="Load your picture"
-                                           style="font-size:10px; width:100px;display:none;" />
-                                </div>
-                            </div>
-                            <div class="row mt-1">
-                                <div class="col">
-                                    <button id="btnDeletePicture"
-                                            class="btn btn-sm btn-danger"
-                                            type="button" style="width:100px;">
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <input id="txtUserName"
-                                           class="form-control form-control-sm"
-                                           placeholder="User name"
-                                           type="text" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="btnCloseEditUser"
-                                type="button"
-                                class="btn btn-secondary"
-                                data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button id="btnSaveEditUser"
-                                type="button"
-                                class="btn btn-primary">
-                            Save
-                        </button>
-                    </div>
-                    <div id="success-message-user" class="alert alert-success m-3 d-none">Done!</div>
-                </div>
-            </div>
-        </div>
-
-        <!--Modal for change password-->
-        <div id="userModalChangePassword" class="modal fade" tabindex="-1" aria-labelledby="userModalChangePasswordLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary bg-gradient text-white">
-                        <h5 id="userModalChangePasswordLabel" class="modal-title">Change your password</h5>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mt-3">
-                            <div class="col">
-                                <div class="input-group">
-                                    <input id="txtCurrentPassword"
-                                           class="form-control form-control-sm"
-                                           placeholder="Current password"
-                                           type="password" />
-                                    <button id="btnShowHideCurrentPassword"
-                                            class="btn btn-sm btn-secondary"
-                                            style="width:60px;"
-                                            type="button">
-                                        <i id="iconCurrentPassword" class="fas fa-eye-slash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3">
-                            <div class="col">
-                                <div class="input-group">
-                                    <input id="txtNewPassword"
-                                           class="form-control form-control-sm"
-                                           placeholder="New password"
-                                           type="password" />
-                                    <button id="btnShowHideNewPassword"
-                                            class="btn btn-sm btn-secondary"
-                                            style="min-width:60px;"
-                                            type="button">
-                                        <i id="iconNewPassword" class="fas fa-eye-slash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="btnCloseChangePassword"
-                                type="button"
-                                class="btn btn-secondary"
-                                data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button id="btnSaveChangePassword"
-                                type="button"
-                                class="btn btn-primary">
-                            Save
-                        </button>
-                    </div>
-                    <div id="success-message-password-changed" class="alert alert-success m-3 d-none">Done!</div>
-                </div>
-            </div>
-        </div>
-
-        <!--Modal for edit todo-->
-        <div id="todoModalEdit" class="modal fade" tabindex="-1" aria-labelledby="todoModalEditLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary bg-gradient text-white">
-                        <h5 class="modal-title" id="todoModalEditLabel">Edit to-do</h5>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <label>Task</label>
-                                    <input id="edit-taskName" class="form-control form-control-sm" type="text">
-                                </div>
-                            </div>
-
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <label>Dead line</label>
-                                    <input id="edit-deadLine" class="form-control form-control-sm" type="date" />
-                                </div>
-                            </div>
-
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <input id="edit-id" type="hidden">
-                                    <div class="form-check">
-                                        <input id="edit-isComplete" class="form-check-input" type="checkbox">
-                                        <label class="form-check-label" for="edit-isComplete">Is completed?</label>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <label>Dead line</label>
+                                        <input id="txtDeadLine"
+                                               class="form-control form-control-sm"
+                                               type="date" />
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="btnClose"
-                                type="button"
-                                class="btn btn-secondary"
-                                data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button id="btnSaveEdit"
-                                type="button"
-                                class="btn btn-primary">
-                            Save
-                        </button>
-                    </div>
-                    <div id="success-message" class="alert alert-success m-3 d-none">Done!</div>
+                            <div class="card-footer">
+                                <button id="btnAddName"
+                                        class="btn btn-sm btn-success float-end"
+                                        type="button"
+                                        value="Add"
+                                        title="Add">
+                                    Add
+                                    <i class="fas fa-plus-circle ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>
 
-        <!--Loader-->
-        <div id="loader" class="row mt-3">
-            <div class="col">
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border text-primary" role="status" style="width:80px;height:80px;">
-                        <span class="visually-hidden">Loading...</span>
+            <!--Modal for edit user-->
+            <div id="userModalEdit" class="modal fade" tabindex="-1" aria-labelledby="userModalEditLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary bg-gradient text-white">
+                            <h5 class="modal-title" id="userModalEditLabel">Edit your data</h5>
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <img id="imgUserPicture"
+                                             src="../assets/images/user-default-picture.png"
+                                             style="background-color: gainsboro; height:100px; width:100px;cursor:pointer;" />
+                                        <input id="btnLoadPicture"
+                                               class="form-control"
+                                               type="file"
+                                               value="Load your picture"
+                                               style="font-size:10px; width:100px;display:none;" />
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col">
+                                        <button id="btnDeletePicture"
+                                                class="btn btn-sm btn-danger"
+                                                type="button" style="width:100px;">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <input id="txtUserName"
+                                               class="form-control form-control-sm"
+                                               placeholder="User name"
+                                               type="text" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btnCloseEditUser"
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button id="btnSaveEditUser"
+                                    type="button"
+                                    class="btn btn-primary">
+                                Save
+                            </button>
+                        </div>
+                        <div id="success-message-user" class="alert alert-success m-3 d-none">Done!</div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!--No data-->
-        <div id="noData" class="mt-3" style="display:none;">
-            <div class="col">
-                <div class="alert alert-warning text-center">
-                    No records
+            <!--Modal for change password-->
+            <div id="userModalChangePassword" class="modal fade" tabindex="-1" aria-labelledby="userModalChangePasswordLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary bg-gradient text-white">
+                            <h5 id="userModalChangePasswordLabel" class="modal-title">Change your password</h5>
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <input id="txtCurrentPassword"
+                                               class="form-control form-control-sm"
+                                               placeholder="Current password"
+                                               type="password" />
+                                        <button id="btnShowHideCurrentPassword"
+                                                class="btn btn-sm btn-secondary"
+                                                style="width:60px;"
+                                                type="button">
+                                            <i id="iconCurrentPassword" class="fas fa-eye-slash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <input id="txtNewPassword"
+                                               class="form-control form-control-sm"
+                                               placeholder="New password"
+                                               type="password" />
+                                        <button id="btnShowHideNewPassword"
+                                                class="btn btn-sm btn-secondary"
+                                                style="min-width:60px;"
+                                                type="button">
+                                            <i id="iconNewPassword" class="fas fa-eye-slash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btnCloseChangePassword"
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button id="btnSaveChangePassword"
+                                    type="button"
+                                    class="btn btn-primary">
+                                Save
+                            </button>
+                        </div>
+                        <div id="success-message-password-changed" class="alert alert-success m-3 d-none">Done!</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!--Listing-->
-        <div id="listing" class="row mt-3" style="display:none;">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header bg-primary bg-gradient text-white">
-                        To-do list
-                    </div>
-                    <div class="card-body">
-                        <!--Counter-->
-                        <span id="counter" class="badge bg-secondary mb-3"></span>
+            <!--Modal for edit todo-->
+            <div id="todoModalEdit" class="modal fade" tabindex="-1" aria-labelledby="todoModalEditLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary bg-gradient text-white">
+                            <h5 class="modal-title" id="todoModalEditLabel">Edit to-do</h5>
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <label>Task</label>
+                                        <input id="edit-taskName" class="form-control form-control-sm" type="text">
+                                    </div>
+                                </div>
 
-                        <!--Listing-->
-                        <table class="table table-sm">
-                            <tr>
-                                <th>Is Complete?</th>
-                                <th>Task</th>
-                                <th>Dead line</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            <tbody id="todosListing"></tbody>
-                        </table>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <label>Dead line</label>
+                                        <input id="edit-deadLine" class="form-control form-control-sm" type="date" />
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <input id="edit-id" type="hidden">
+                                        <div class="form-check">
+                                            <input id="edit-isComplete" class="form-check-input" type="checkbox">
+                                            <label class="form-check-label" for="edit-isComplete">Is completed?</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btnClose"
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button id="btnSaveEdit"
+                                    type="button"
+                                    class="btn btn-primary">
+                                Save
+                            </button>
+                        </div>
+                        <div id="success-message" class="alert alert-success m-3 d-none">Done!</div>
                     </div>
                 </div>
             </div>
+
+            <!--Loader-->
+            <div id="loader" class="row mt-3">
+                <div class="col">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-primary" role="status" style="width:80px;height:80px;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--No data-->
+            <div id="noData" class="mt-3" style="display:none;">
+                <div class="col">
+                    <div class="alert alert-warning text-center">
+                        No records
+                    </div>
+                </div>
+            </div>
+
+            <!--Listing-->
+            <div id="listing" class="row mt-3" style="display:none;">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header bg-primary bg-gradient text-white">
+                            Remaining tasks
+                        </div>
+                        <div class="card-body">
+                            <!--Counter-->
+                            <span id="counter" class="badge bg-secondary mb-3"></span>
+
+                            <!--Listing-->
+                            <table class="table table-sm">
+                                <tr>
+                                    <th>Is Complete?</th>
+                                    <th>Task</th>
+                                    <th>Dead line</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                <tbody id="todosListing"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-    </div>
-
-    <script src="../assets/bootstrap-5.0.0-beta1-dist/js/bootstrap.js"></script>
-    <script src="../assets/moment/moment.min.js"></script>
-    <script src="scripts/home.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            Home.init();
-        });
-    </script>
-</body>
+        <script src="../assets/bootstrap-5.0.0-beta1-dist/js/bootstrap.js"></script>
+        <script src="../assets/moment/moment.min.js"></script>
+        <script src="scripts/home.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Home.init();
+            });
+        </script>
+    </body>
 </html>
