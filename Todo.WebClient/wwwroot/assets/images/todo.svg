@@ -2,20 +2,20 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="300"
    height="200"
    viewBox="0 0 79.374998 52.916668"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="todo.svg">
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="todo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2">
     <inkscape:perspective
@@ -33,20 +33,23 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="367.00282"
-     inkscape:cy="63.873677"
+     inkscape:zoom="2"
+     inkscape:cx="178"
+     inkscape:cy="110.25"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
-     inkscape:window-x="-8"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     units="px" />
+     units="px"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -55,7 +58,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -64,43 +67,55 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-244.08332)">
-    <g
-       id="g19"
-       transform="translate(136.07247,156.48333)">
-      <rect
-         y="87.601196"
-         x="-136.07143"
-         height="52.916668"
-         width="79.375"
-         id="rect3713"
-         style="fill:#d7f4d7;stroke:none;stroke-width:0.91209573;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <text
-         id="text4522"
-         y="122.9837"
-         x="-121.84062"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.57777786px;font-family:Impact;-inkscape-font-specification:Impact;stroke-width:0.26458332"
-           y="122.9837"
-           x="-121.84062"
-           id="tspan4520"
-           sodipodi:role="line">TO DO</tspan></text>
-      <text
-         id="text4526"
-         y="131.63542"
-         x="-83.98159"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-         xml:space="preserve"><tspan
-           style="font-size:7.05555534px;stroke-width:0.26458332"
-           y="131.63542"
-           x="-83.98159"
-           id="tspan4524"
-           sodipodi:role="line">app</tspan></text>
-      <path
-         inkscape:connector-curvature="0"
-         id="path4528"
-         d="m -71.059519,125.02083 h -50.648811 v 0"
-         style="fill:none;stroke:#000000;stroke-width:1.29421806;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    </g>
+    <rect
+       y="244.08453"
+       x="0.0010436084"
+       height="52.916668"
+       width="79.375"
+       id="rect3713"
+       style="fill:#d7f4d7;stroke:none;stroke-width:0.912096;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       id="text4526-0"
+       y="256.37152"
+       x="13.873271"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         style="font-size:7.05556px;stroke-width:0.264583"
+         y="256.37152"
+         x="13.873271"
+         id="tspan4524-9"
+         sodipodi:role="line">simple</tspan></text>
+    <text
+       id="text4522"
+       y="279.46704"
+       x="14.255445"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:Impact;-inkscape-font-specification:Impact;stroke-width:0.264583"
+         y="279.46704"
+         x="14.255445"
+         id="tspan4520"
+         sodipodi:role="line">TO DO</tspan></text>
+    <text
+       id="text4526"
+       y="288.11874"
+       x="52.090881"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         style="font-size:7.05556px;stroke-width:0.264583"
+         y="288.11874"
+         x="52.090881"
+         id="tspan4524"
+         sodipodi:role="line">app</tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="path4528"
+       d="M 65.012949,281.50416 H 14.364138 v 0"
+       style="fill:none;stroke:#000000;stroke-width:1.29422;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path1"
+       d="M 65.012949,259.27902 H 14.364138 v 0"
+       style="fill:none;stroke:#000000;stroke-width:1.29422;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>
