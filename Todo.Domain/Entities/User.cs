@@ -17,4 +17,9 @@ public class User
     public UserPicture? Picture { get; set; }
 
     #endregion
+
+    public void Update(string password)
+    {
+        Password = password;
+    }
 }

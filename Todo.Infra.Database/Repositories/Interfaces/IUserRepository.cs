@@ -2,7 +2,7 @@
 
 public interface IUserRepository : IRepository<User>
 {
-    public Task<UserDto> AuthenticateAsync(User entity);
+    public Task<User> AuthenticateAsync(User entity);
 
     public Task ChangePasswordAsync(User entity, string newPassword);
 }

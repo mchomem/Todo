@@ -23,9 +23,6 @@ public class UserController : ControllerBase
         {
             UserDto user = await _userService.AuthenticateAsync(login, password);
 
-            if (user == null)
-                return NotFound();
-
             user.Token = TokenHelper.Generate(user);
 
             return Ok(user);

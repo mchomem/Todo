@@ -10,7 +10,7 @@ global using Todo.API.Helpers;
 global using Todo.Application.Helpers;
 global using Todo.Application.Services;
 global using Todo.Application.Services.Interfaces;
-global using Todo.Domain.Dtos;
+global using Todo.Application.Dtos;
 global using Todo.Domain.Entities;
 global using Todo.Infra.Database.Contexts;
 global using Todo.Infra.Database.Repositories;

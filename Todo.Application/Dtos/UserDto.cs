@@ -1,6 +1,5 @@
-﻿namespace Todo.Domain.Dtos;
+﻿namespace Todo.Application.Dtos;
 
-[Serializable]
 public class UserDto
 {
     #region Propeties
