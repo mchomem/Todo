@@ -1,4 +1,4 @@
-﻿NewAccount = {
+﻿const NewAccount = {
 
     self: this
 

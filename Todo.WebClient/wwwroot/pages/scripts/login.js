@@ -1,4 +1,4 @@
-﻿Login = {
+﻿const Login = {
 
     self: this
 

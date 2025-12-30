@@ -1,4 +1,4 @@
-﻿Home = {
+﻿const Home = {
 
     self: this
 
