@@ -5,20 +5,34 @@ public class TodoItemService : ITodoItemService
     private readonly ITodoItemRepository _todoItemRepository;
 
     public TodoItemService(ITodoItemRepository todoItemRepository)
-        => _todoItemRepository = todoItemRepository;
+    {
+        _todoItemRepository = todoItemRepository;
+    }
 
     public async Task CreateAsync(TodoItem entity)
-        => await _todoItemRepository.CreateAsync(entity);
+    {
+        await _todoItemRepository.CreateAsync(entity);
+    }
 
     public async Task DeleteAsync(int id)
-        => await _todoItemRepository.DeleteAsync(new TodoItem() { TodoItemID = id });
+    {
+        await _todoItemRepository.DeleteAsync(new TodoItem() { TodoItemID = id });
+    }
 
     public async Task<TodoItem> DetailsAsync(TodoItem entity)
-        => await _todoItemRepository.DetailAsync(entity);
+    {
+        var todoItem = await _todoItemRepository.GetAsync(entity);
+        return todoItem;
+    }
 
     public async Task<IEnumerable<TodoItem>> RetrieveAsync(int userID)
-        => await _todoItemRepository.RetrieveAsync(new TodoItem() { CreatedBy = new User() { UserID = userID } });
+    {
+        var todoItems = await _todoItemRepository.GetAllAsync(new TodoItem() { CreatedBy = new User() { UserID = userID } });
+        return todoItems;
+    }
 
     public async Task UpdateAsync(TodoItem entity)
-        => await _todoItemRepository.UpdateAsync(entity);
+    {
+        await _todoItemRepository.UpdateAsync(entity);
+    }
 }

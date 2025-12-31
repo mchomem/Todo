@@ -2,8 +2,6 @@
 
 public class UserDto
 {
-    #region Propeties
-
     public int UserID { get; set; }
 
     public string? Name { get; set; }
@@ -13,6 +11,19 @@ public class UserDto
     public byte[]? Picture { get; set; }
 
     public string? Token { get; set; }
+}
 
-    #endregion
+public class UserInsertDto
+{
+    public string Name { get; set; } = string.Empty;
+    public string Login { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+}
+
+public class UserUpdateDto
+{
+    public int UserID { get; set; }
+    public string? Name { get; set; }
+    public bool IsActive { get; set; }
+    public byte[]? Picture { get; set; }
 }

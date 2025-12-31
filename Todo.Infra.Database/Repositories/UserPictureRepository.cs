@@ -23,7 +23,7 @@ public class UserPictureRepository : IUserPictureRepository
         await _todoContext.SaveChangesAsync();
     }
 
-    public async Task<UserPicture> DetailAsync(UserPicture entity)
+    public async Task<UserPicture> GetAsync(UserPicture entity)
     {
         return await _todoContext.UserPictures
             .Include(x => x.User)
@@ -35,7 +35,7 @@ public class UserPictureRepository : IUserPictureRepository
                 );
     }
 
-    public async Task<IEnumerable<UserPicture>> RetrieveAsync(UserPicture entity)
+    public async Task<IEnumerable<UserPicture>> GetAllAsync(UserPicture entity)
     {
         return await _todoContext.UserPictures
             .Where(x =>

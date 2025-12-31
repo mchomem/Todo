@@ -8,7 +8,9 @@ public class TodoItemController : ControllerBase
     private readonly ITodoItemService _todoItemService;
 
     public TodoItemController(ITodoItemService todoItemService)
-        => _todoItemService = todoItemService;
+    {
+        _todoItemService = todoItemService;
+    }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TodoItem>>> Get(int userID)

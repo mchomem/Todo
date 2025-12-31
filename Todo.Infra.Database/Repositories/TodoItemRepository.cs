@@ -31,12 +31,12 @@ public class TodoItemRepository : ITodoItemRepository
         await _todoContext.SaveChangesAsync();
     }
 
-    public async Task<TodoItem> DetailAsync(TodoItem entity)
+    public async Task<TodoItem> GetAsync(TodoItem entity)
         => await _todoContext.TodoItems
             .Include(x => x.CreatedBy)
             .FirstOrDefaultAsync(x => x.TodoItemID.Value == entity.TodoItemID.Value);
 
-    public async Task<IEnumerable<TodoItem>> RetrieveAsync(TodoItem entity = null)
+    public async Task<IEnumerable<TodoItem>> GetAllAsync(TodoItem entity = null)
     {
         if (entity != null)
             return await _todoContext.TodoItems

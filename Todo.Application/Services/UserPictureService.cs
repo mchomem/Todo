@@ -13,11 +13,11 @@ public class UserPictureService : IUserPictureService
     public async Task DeleteAsync(UserPicture entity)
         => await _userPictureRepository.DeleteAsync(entity);
 
-    public async Task<UserPicture> DetailsAsync(UserPicture entity)
-        => await _userPictureRepository.DetailAsync(entity);
+    public async Task<UserPicture> GetAsync(UserPicture entity)
+        => await _userPictureRepository.GetAsync(entity);
 
     public async Task<IEnumerable<UserPicture>> RetrieveAsync(UserPicture entity)
-        => await _userPictureRepository.RetrieveAsync(entity);
+        => await _userPictureRepository.GetAllAsync(entity);
 
     public async Task UpdateAsync(UserPicture entity)
         => await _userPictureRepository.UpdateAsync(entity);

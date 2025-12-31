@@ -22,9 +22,7 @@ public class UserController : ControllerBase
         try
         {
             UserDto user = await _userService.AuthenticateAsync(login, password);
-
             user.Token = TokenHelper.Generate(user);
-
             return Ok(user);
         }
         catch (Exception e)
@@ -38,17 +36,8 @@ public class UserController : ControllerBase
     {
         try
         {
-            User user = await _userService.DetailsAsync(new User() { UserID = id });
-
-            UserDto userDto = new UserDto()
-            {
-                UserID = user.UserID.Value,
-                Name = user.Name,
-                Picture = user.Picture?.Picture,
-                IsActive = user.IsActive.Value
-            };
-
-            return Ok(userDto);
+            var user = await _userService.GetAsync(id);
+            return Ok(user);
         }
         catch (Exception e)
         {
@@ -58,13 +47,10 @@ public class UserController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] User user)
+    public async Task<ActionResult> Post([FromBody] UserInsertDto user)
     {
         try
         {
-            if ((await _userService.RetrieveAsync(new User() { Login = user.Login })).Any())
-                throw new Exception("This user is already being used");
-
             await _userService.CreateAsync(user);
             return Ok();
         }
@@ -75,47 +61,11 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put([FromRoute] int id, [FromBody] UserDto userDto)
+    public async Task<ActionResult> Put([FromRoute] int id, [FromBody] UserUpdateDto userDto)
     {
         try
         {
-            User userUpdate = await _userService.DetailsAsync(new User() { UserID = id });
-
-            if (userUpdate == null)
-                return NotFound();
-
-            UserPicture userPicture;
-
-            if (userUpdate.Picture != null)
-            {
-                userPicture = await _userPictureService.DetailsAsync(new UserPicture() { UserPictureID = userUpdate.Picture.UserPictureID });
-            }
-            else
-            {
-                userPicture = new UserPicture()
-                {
-                    PictureFromUserID = userUpdate.UserID,
-                    User = userUpdate
-                };
-            }
-
-            userPicture.Picture = userDto.Picture;
-
-            // Do already exists the user picture?
-            if (userUpdate.Picture == null)
-            {
-                await _userPictureService.CreateAsync(userPicture);
-            }
-            else
-            {
-                await _userPictureService.UpdateAsync(userPicture);
-            }
-
-            userUpdate.Name = userDto.Name;
-            userUpdate.Password = CypherHelper.Decrypt(userUpdate.Password);
-
-            await _userService.UpdateAsync(userUpdate);
-
+            await _userService.UpdateAsync(userDto);
             return StatusCode(204);
         }
         catch (Exception e)
@@ -161,16 +111,16 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete, Route("delete-user-picture")]
-    public async Task<ActionResult> DeleteUserPicture([FromQuery] int userId)
+    public async Task<ActionResult> DeleteUserPicture([FromQuery] int id)
     {
         try
         {
-            User user = await _userService.DetailsAsync(new User() { UserID = userId });
+            var user = await _userService.GetAsync(id);
 
             if (user == null)
                 return NotFound("User not found.");
 
-            UserPicture userPicture = await _userPictureService.DetailsAsync(new UserPicture() { PictureFromUserID = userId });
+            UserPicture userPicture = await _userPictureService.GetAsync(new UserPicture() { PictureFromUserID = id });
 
             if (userPicture == null)
                 return NotFound("User picture not found.");

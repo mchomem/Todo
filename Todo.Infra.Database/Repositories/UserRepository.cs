@@ -21,7 +21,7 @@ public class UserRepository : IUserRepository
         await _todoContext.SaveChangesAsync();
     }
 
-    public async Task<User> DetailAsync(User entity)
+    public async Task<User> GetAsync(User entity)
     {
         var user = await _todoContext.Users
             .Include(x => x.Picture)
@@ -30,10 +30,11 @@ public class UserRepository : IUserRepository
         return user!;
     }
 
-    public async Task<IEnumerable<User>> RetrieveAsync(User entity)
+    public async Task<IEnumerable<User>> GetAllAsync(User entity)
     {
-        // TODO: apply paggination with take and skip and a object to represent a paggination.
+        
         var users = await _todoContext.Users
+                // TODO: transfer this where clause to Service layer.
                 .Where(x =>
                 (
                     (!entity.UserID.HasValue || x.UserID.Value == entity.UserID.Value)
@@ -42,6 +43,7 @@ public class UserRepository : IUserRepository
                     && (!entity.IsActive.HasValue || x.IsActive.Value == entity.IsActive.Value)
                 ))
                 .ToListAsync();
+        // TODO: apply paggination with take and skip and a object to represent a paggination.
 
         return users;
     }
@@ -71,7 +73,7 @@ public class UserRepository : IUserRepository
         return user!;
     }
 
-    public async Task ChangePasswordAsync(User entity, string newPassword)
+    public async Task ChangePasswordAsync(User entity)
     {
         await UpdateAsync(entity);
     }

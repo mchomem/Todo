@@ -18,7 +18,12 @@ public class User
 
     #endregion
 
-    public void Update(string password)
+    public void Update(string name)
+    {
+        Name = name;
+    }
+
+    public void ChangePassword(string password)
     {
         Password = password;
     }
