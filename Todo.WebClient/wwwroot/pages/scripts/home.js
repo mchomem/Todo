@@ -384,7 +384,8 @@
         self.$txtUserName.value = Home.userCache.name;
 
         if (Home.userCache.picture != undefined && Home.userCache.picture.length != 0) {
-            self.$imgUserPicture.setAttribute('src', 'data:image/png;base64,' + Home.userCache.picture);
+            self.$imgUserPicture.setAttribute('src', `data:image/png;base64,${Home.userCache.picture}`);
+            self.$userPicture = Home.userCache.picture;
         }
     }
 
