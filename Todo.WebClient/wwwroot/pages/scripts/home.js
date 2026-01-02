@@ -100,8 +100,11 @@
         });
 
         self.$btnDeletePicture.addEventListener('click', function () {
-            self.$imgUserPicture.setAttribute('src', '../assets/images/user-default-picture.png');
-            Home.deletePicture();
+            let option = confirm('Do you want to delete your picture?');
+
+            if (option) {
+                Home.deletePicture();
+            }
         });
 
         self.$btnShowHideCurrentPassword.addEventListener('click', function () {
@@ -482,7 +485,7 @@
     }
 
     , deletePicture: function () {
-        fetch(`${Home.uriUser}/delete-user-picture/?userId=${Home.userCache.userID}`, {
+        fetch(`${Home.uriUser}/delete-user-picture/${Home.userCache.userID}`, {
             method: 'DELETE'
             , headers: {
                 'Authorization': `Bearer ${Home.userCache.token}`
@@ -492,6 +495,7 @@
                 let user = Home.userCache;
                 Home.userCache.picture = null;
                 sessionStorage.setItem('user', JSON.stringify(user));
+                self.$imgUserPicture.setAttribute('src', '../assets/images/user-default-picture.png');
                 alert('User picture delete!');
             })
             .catch(error => {

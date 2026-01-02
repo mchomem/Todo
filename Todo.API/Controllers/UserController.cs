@@ -22,7 +22,6 @@ public class UserController : ControllerBase
         try
         {
             UserDto user = await _userService.AuthenticateAsync(login, password);
-            user.Token = TokenHelper.Generate(user);
             return Ok(user);
         }
         catch (Exception e)
@@ -101,7 +100,6 @@ public class UserController : ControllerBase
         try
         {
             await _userService.DeleteAsync(id);
-
             return Ok();
         }
         catch (Exception e)
@@ -110,23 +108,12 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpDelete, Route("delete-user-picture")]
-    public async Task<ActionResult> DeleteUserPicture([FromQuery] int id)
+    [HttpDelete, Route("delete-user-picture/{userId}")]
+    public async Task<ActionResult> DeleteUserPicture([FromRoute] int userId)
     {
         try
         {
-            var user = await _userService.GetAsync(id);
-
-            if (user == null)
-                return NotFound("User not found.");
-
-            UserPicture userPicture = await _userPictureService.GetAsync(new UserPicture() { PictureFromUserID = id });
-
-            if (userPicture == null)
-                return NotFound("User picture not found.");
-
-            await _userPictureService.DeleteAsync(userPicture);
-
+            await _userPictureService.DeleteByUserIdAsync(userId);
             return Ok();
         }
         catch (Exception e)

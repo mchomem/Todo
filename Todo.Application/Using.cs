@@ -1,4 +1,8 @@
-﻿global using System.Security.Cryptography;
+﻿global using Microsoft.IdentityModel.Tokens;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Security.Cryptography;
+global using System.Text;
 global using Todo.Application.Dtos;
 global using Todo.Application.Helpers;
 global using Todo.Application.Services.Interfaces;

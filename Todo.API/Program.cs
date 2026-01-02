@@ -15,6 +15,7 @@ builder.Services.AddScoped<IUserPictureService, UserPictureService>();
 builder.Services.AddScoped<ITodoItemRepository, TodoItemRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserPictureRepository, UserPictureRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 #endregion
 

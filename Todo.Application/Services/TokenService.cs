@@ -1,8 +1,8 @@
-﻿namespace Todo.API.Helpers;
+﻿namespace Todo.Application.Services;
 
-public static class TokenHelper
+public class TokenService : ITokenService
 {
-    public static string Generate(UserDto user)
+    public string Generate(string userName)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes("+WsLhdwMcCnW&cJW4a5hm^jFemE&?V?Y?z9eMdcN_X3DktLE7W9nS#Z2&vpakM6v");
@@ -10,7 +10,7 @@ public static class TokenHelper
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Name, userName),
                 new Claim(ClaimTypes.DateOfBirth, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffffff"))
             }),
             Expires = DateTime.UtcNow.AddDays(30),

@@ -5,12 +5,14 @@ public class UserService : IUserService
     private readonly IUserRepository _userRepository;
     private readonly ITodoItemRepository _todoItemRepository;
     private readonly IUserPictureRepository _userPictureRepository;
+    private readonly ITokenService _tokenService;
 
-    public UserService(IUserRepository userRepository, ITodoItemRepository todoItemRepository, IUserPictureRepository userPictureRepository)
+    public UserService(IUserRepository userRepository, ITodoItemRepository todoItemRepository, IUserPictureRepository userPictureRepository, ITokenService tokenService)
     {
         _userRepository = userRepository;
         _todoItemRepository = todoItemRepository;
         _userPictureRepository = userPictureRepository;
+        _tokenService = tokenService;
     }
 
     public async Task CreateAsync(UserInsertDto entity)
@@ -123,13 +125,16 @@ public class UserService : IUserService
         if (user is null)
             throw new Exception("User not found.");
 
+        var token = _tokenService.Generate(user.Name);
+
         // TODO: user mapping as Mapster or AutoMapper
         return new UserDto()
         {
             UserID = user.UserID!.Value,
             Name = user.Name,
             Picture = user.Picture?.Picture,
-            IsActive = user.IsActive!.Value
+            IsActive = user.IsActive!.Value,
+            Token  = token
         };
     }
 
