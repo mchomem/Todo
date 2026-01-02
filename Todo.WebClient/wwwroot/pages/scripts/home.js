@@ -315,7 +315,7 @@
             editButton.setAttribute('title', 'Edit this!');
             editButton.appendChild(iconEdit);
             editButton.setAttribute('onclick', `Home.displayEditForm(${item.todoItemID})`);
-            editButton.classList.add('btn', 'btn-sm', 'btn-primary');
+            editButton.classList.add('btn', 'btn-sm', 'btn-primary', 'me-2');
             editButton.setAttribute('data-bs-toggle', 'modal');
             editButton.setAttribute('data-bs-target', '#todoModalEdit');
 
@@ -339,24 +339,29 @@
                 isDone.append(spanIsLate);
             }
 
+            // Column Is Complete?
             let td1 = tr.insertCell(0);
+            td1.classList.add('text-center');
             td1.appendChild(isDone);
 
             let charLimit = 15;
 
+            // Column Task
             let td2 = tr.insertCell(1);
             let task = document.createTextNode(item.name.length > charLimit ? `${item.name.substring(0, charLimit)} ...` : item.name);
             td2.appendChild(task);
 
+            // Column Dead line
             let td3 = tr.insertCell(2);
+            td3.classList.add('text-center');
             let deadLine = document.createTextNode(item.deadLine !== null ? moment(item.deadLine).format('DD[/]MM[/]yyyy') : '-');
             td3.appendChild(deadLine);
 
+            // Column Actions
             let td4 = tr.insertCell(3);
+            td4.classList.add('text-center');
             td4.appendChild(editButton);
-
-            let td5 = tr.insertCell(4);
-            td5.appendChild(deleteButton);
+            td4.appendChild(deleteButton);
         });
 
         todos = data;
@@ -366,14 +371,12 @@
     }
 
     , _displayNoData: function (tBody) {
-
         let tr = tBody.insertRow();
-
         let td1 = tr.insertCell(0);
-        td1.setAttribute("colspan", "5");
+        td1.setAttribute('colspan', '4');
         td1.appendChild(self.$noData);
 
-        self.$noData.setAttribute("style", "display:block");
+        self.$noData.setAttribute('style', 'display:block');
 
         self.$loader.style.display = 'none';
         self.$listing.style.display = 'block';
