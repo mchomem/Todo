@@ -21,7 +21,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            UserDto user = await _userService.AuthenticateAsync(login, password);
+            var user = await _userService.AuthenticateAsync(login, password);
             return Ok(user);
         }
         catch (Exception e)

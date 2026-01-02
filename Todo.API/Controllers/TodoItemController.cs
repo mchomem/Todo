@@ -18,7 +18,6 @@ public class TodoItemController : ControllerBase
         try
         {
             var items = await _todoItemService.RetrieveAsync(userID);
-
             return Ok(items);
         }
         catch (Exception e)
@@ -33,7 +32,6 @@ public class TodoItemController : ControllerBase
         try
         {
             await _todoItemService.CreateAsync(todoItem);
-
             return Ok(new { message = "Task created." });
         }
         catch (Exception e)
@@ -47,16 +45,7 @@ public class TodoItemController : ControllerBase
     {
         try
         {
-            TodoItem todo = await _todoItemService.DetailsAsync(new TodoItem() { TodoItemID = id });
-            todo.Name = todoItem.Name;
-            todo.IsDone = todoItem.IsDone;
-            todo.DeadLine = todoItem.DeadLine;
-
-            if (todo == null)
-                return NotFound();
-
-            await _todoItemService.UpdateAsync(todo);
-
+            await _todoItemService.UpdateAsync(id, todoItem);
             return StatusCode(204);
         }
         catch (Exception e)
@@ -71,7 +60,6 @@ public class TodoItemController : ControllerBase
         try
         {
             await _todoItemService.DeleteAsync(id);
-
             return Ok();
         }
         catch (Exception e)

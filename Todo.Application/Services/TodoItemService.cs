@@ -31,8 +31,17 @@ public class TodoItemService : ITodoItemService
         return todoItems;
     }
 
-    public async Task UpdateAsync(TodoItem entity)
+    public async Task UpdateAsync(int id, TodoItem entity)
     {
-        await _todoItemRepository.UpdateAsync(entity);
+        var todo = await _todoItemRepository.GetAsync(new TodoItem() { TodoItemID = id });
+
+        if(todo is null)
+            throw new Exception("Todo item not found.");
+
+        todo.Name = entity.Name;
+        todo.IsDone = entity.IsDone;
+        todo.DeadLine = entity.DeadLine;
+
+        await _todoItemRepository.UpdateAsync(todo);
     }
 }
