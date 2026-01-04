@@ -380,7 +380,7 @@
             }
 
             let iconEdit = document.createElement('i');
-            iconEdit.classList.add('fas', 'fa-marker');
+            iconEdit.classList.add('fas', 'fa-edit');
 
             let editButton = button.cloneNode(false);
             editButton.setAttribute('title', 'Edit this!');
