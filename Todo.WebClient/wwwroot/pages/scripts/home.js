@@ -173,14 +173,26 @@
             .then(response => response.json())
             .then(data => Home._displayItems(data))
             .catch(error => {
-                alert('Unable to get items.');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Unable to get items.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
                 console.error('Unable to get items.', error);
+
+                self.$loader.style.display = 'none';
             });
     }
 
     , addItem: function () {
         if (self.$addName.value.length === 0) {
-            alert('Type a value');
+            Swal.fire({
+                title: 'Warning',
+                text: 'Type a value',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            });
             return;
         }
 
@@ -207,7 +219,12 @@
                 Home.getItems();
                 self.$addName.value = '';
                 self.$txtDeadLine.value = '';
-                alert('New record added.');
+                Swal.fire({
+                    title: 'Information',
+                    text: 'New record added.',
+                    icon: 'info',
+                    confirmButtonText: 'Ok'
+                });
             })
             .catch(error => console.error('Unable to add item.', error));
     }
@@ -420,7 +437,13 @@
                 Home.userCache.name = user.name;
                 sessionStorage.setItem('user', JSON.stringify(user));
                 Home.getUserData();
-                alert('User updated.');
+
+                Swal.fire({
+                    title: 'Informartion',
+                    text: 'User updated.',
+                    icon: 'info',
+                    confirmButtonText: 'Ok'
+                });
             });
 
         self.$btnCloseEditUser.click();
@@ -432,7 +455,12 @@
 
         if (self.$txtCurrentPassword.value.length === 0
             || self.$txtNewPassword.value.length === 0) {
-            alert('Fill the required filds.');
+            Swal.fire({
+                title: 'Warning',
+                text: 'Fill the required filds.',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            });
             return;
         }
 
@@ -444,12 +472,23 @@
         })
             .then(() => {
                 Home.clearUserChangePasswordForm();
-                alert('Password changed;');
-                self.$btnCloseEditUser.click();
+                Swal.fire({
+                    title: 'Information',
+                    text: 'Password changed.',
+                    icon: 'info',
+                    confirmButtonText: 'Ok'
+                });
+                self.btnCloseChangePassword.click();
             })
             .catch(error => {
+                Swal.fire({
+                    title: 'Error',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+
                 console.error(`${error}`)
-                alert(error);
             });
     }
 
@@ -487,11 +526,21 @@
                 Home.userCache.picture = null;
                 sessionStorage.setItem('user', JSON.stringify(user));
                 self.$imgUserPicture.setAttribute('src', '../assets/images/user-default-picture.png');
-                alert('User picture delete!');
+                Swal.fire({
+                    title: 'Information',
+                    text: 'User picture delete!',
+                    icon: 'info',
+                    confirmButtonText: 'Ok'
+                });
             })
             .catch(error => {
                 console.error(`${error}`)
-                alert(error);
+                Swal.fire({
+                    title: 'Error',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
             });
     }
 

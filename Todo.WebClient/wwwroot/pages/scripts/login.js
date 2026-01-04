@@ -58,7 +58,12 @@
                 if (data.status == 404) {
                     self.$signInLabel.style.display = 'block';
                     self.$loader.style.display = 'none';
-                    alert('User not found. Do you forget your password?');
+                    Swal.fire({
+                        title: 'Warning',
+                        text: 'User not found. Do you forget your password?',
+                        icon: 'warning',
+                        confirmButtonText: 'Ok'
+                    });
                 } else {
                     sessionStorage.setItem('user', JSON.stringify(data));
                     document.location.href = 'home.html';
@@ -66,6 +71,12 @@
             })
             .catch(error => {
                 console.error('Error', error)
+                Swal.fire({
+                    title: 'Error',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
             });
     }
 
