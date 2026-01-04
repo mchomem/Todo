@@ -375,10 +375,6 @@
             completeTaskButton.setAttribute('onclick', `Home.completeTask(${item.todoItemID})`);
             completeTaskButton.classList.add('btn', 'btn-sm', 'btn-success', 'me-2');
 
-            if (item.isDone) {
-                completeTaskButton.setAttribute('disabled', 'disabled');
-            }
-
             let iconEdit = document.createElement('i');
             iconEdit.classList.add('fas', 'fa-edit');
 
@@ -389,6 +385,11 @@
             editButton.classList.add('btn', 'btn-sm', 'btn-primary', 'me-2');
             editButton.setAttribute('data-bs-toggle', 'modal');
             editButton.setAttribute('data-bs-target', '#todoModalEdit');
+
+            if (item.isDone) {
+                completeTaskButton.setAttribute('disabled', 'disabled');
+                editButton.setAttribute('disabled', 'disabled');
+            }
 
             let iconDelete = document.createElement('i');
             iconDelete.classList.add('fas', 'fa-minus-circle');
