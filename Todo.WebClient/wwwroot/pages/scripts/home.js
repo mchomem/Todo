@@ -93,12 +93,21 @@
             Home.upLoadPicture();
         });
 
-        self.$btnDeletePicture.addEventListener('click', function () {
-            let option = confirm('Do you want to delete your picture?');
+        self.$btnDeletePicture.addEventListener('click', async function () {
+            let confirm = await Swal.fire({
+                title: 'Question',
+                text: 'Do you want to delete your picture?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            });
 
-            if (option) {
-                Home.deletePicture();
+            if (!confirm.isConfirmed) {
+                return;
             }
+
+            Home.deletePicture();
         });
 
         self.$btnShowHideCurrentPassword.addEventListener('click', function () {
