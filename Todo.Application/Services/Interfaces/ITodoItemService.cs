@@ -7,4 +7,5 @@ public interface ITodoItemService
     public Task<TodoItemDto> GetAsync(int id);
     public Task<IEnumerable<TodoItemDto>> GetAllByUserIdAsync(int userID);
     public Task UpdateAsync(int id, TodoItemUpdateDto entity);
+    public Task MarkTaskAsComplete(int id);
 }

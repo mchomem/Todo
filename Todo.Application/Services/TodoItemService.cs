@@ -88,4 +88,15 @@ public class TodoItemService : ITodoItemService
 
         await _todoItemRepository.UpdateAsync(todo);
     }
+
+    public async Task MarkTaskAsComplete(int id)
+    {
+        var todo = await _todoItemRepository.GetAsync(new TodoItem() { TodoItemID = id });
+        
+        if(todo is null)
+            throw new Exception("Todo item not found.");
+
+        todo.IsDone = true;
+        await _todoItemRepository.UpdateAsync(todo);
+    }
 }

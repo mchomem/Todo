@@ -227,6 +227,37 @@
             .catch(error => console.error('Unable to add item.', error));
     }
 
+    , completeTask: async function (id) {
+        let confirm = await Swal.fire({
+            title: 'Question',
+            text: 'Do you want to mark this task as complete?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        });
+
+        if (!confirm.isConfirmed) {
+            return;
+        }
+
+        fetch(`${Home.uriTodoItem}/complete/${id}`, {
+            method: 'PUT'
+            , headers: {
+                'Accept': 'application/json'
+                , 'Content-Type': 'application/json'
+                , 'Authorization': `Bearer ${Home.userCache.token}`
+            }
+        })
+            .then(response => {
+                response.json();
+            })
+            .then(() => {
+                Home.getItems();
+            })
+            .catch(error => console.error('Unable to process item.', error));
+    }
+
     , deleteItem: async function (id) {
 
         let confirm = await Swal.fire({
@@ -329,12 +360,24 @@
 
         data.forEach(item => {
             let isDone = document.createElement('div');
-
             let innerSpan = document.createElement('span');
             innerSpan.classList.add('badge', 'mt-1', item.isDone ? 'bg-success' : 'bg-danger');
             innerSpan.innerHTML = item.isDone ? 'Yes' : 'No';
             innerSpan.style.width = '40px';
             isDone.append(innerSpan);
+
+            let iconCompleteTask = document.createElement('i');
+            iconCompleteTask.classList.add('fas', 'fa-check');
+
+            let completeTaskButton = button.cloneNode(false);
+            completeTaskButton.setAttribute('title', 'Complete Task');
+            completeTaskButton.appendChild(iconCompleteTask);
+            completeTaskButton.setAttribute('onclick', `Home.completeTask(${item.todoItemID})`);
+            completeTaskButton.classList.add('btn', 'btn-sm', 'btn-success', 'me-2');
+
+            if (item.isDone) {
+                completeTaskButton.setAttribute('disabled', 'disabled');
+            }
 
             let iconEdit = document.createElement('i');
             iconEdit.classList.add('fas', 'fa-marker');
@@ -388,6 +431,7 @@
             // Column Actions
             let td4 = tr.insertCell(3);
             td4.classList.add('text-center');
+            td4.appendChild(completeTaskButton);
             td4.appendChild(editButton);
             td4.appendChild(deleteButton);
         });

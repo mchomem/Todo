@@ -54,6 +54,20 @@ public class TodoItemController : ControllerBase
         }
     }
 
+    [HttpPut("complete/{id}")]
+    public async Task<ActionResult> PutMarkTaskAsComplete(int id)
+    {
+        try
+        {
+            await _todoItemService.MarkTaskAsComplete(id);
+            return StatusCode(204);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e);
+        }
+    }
+
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
