@@ -229,10 +229,18 @@
             .catch(error => console.error('Unable to add item.', error));
     }
 
-    , deleteItem: function (id) {
-        var option = confirm('Do you want to delete this record?');
+    , deleteItem: async function (id) {
 
-        if (!option) {
+        let confirm = await Swal.fire({
+            title: 'Question',
+            text: 'Do you want to delete this record?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        });
+
+        if (!confirm.isConfirmed) {
             return;
         }
 
@@ -242,8 +250,24 @@
                 'Authorization': `Bearer ${Home.userCache.token}`
             }
         })
-            .then(() => Home.getItems())
-            .catch(error => console.error('Unable to delete item.', error));
+        .then(() => {
+            Home.getItems();
+            Swal.fire({
+                title: 'Information',
+                text: 'Todo item deleted.',
+                icon: 'info',
+                confirmButtonText: 'Ok'
+            });
+        })
+        .catch(error => {
+            console.error('Unable to delete item.', error)
+            Swal.fire({
+                title: 'Error',
+                text: error,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+        });
     }
 
     , displayEditForm: function (id) {
@@ -307,6 +331,7 @@
 
         data.forEach(item => {
             let isDone = document.createElement('div');
+
             let innerSpan = document.createElement('span');
             innerSpan.classList.add('badge', 'mt-1', item.isDone ? 'bg-success' : 'bg-danger');
             innerSpan.innerHTML = item.isDone ? 'Yes' : 'No';
