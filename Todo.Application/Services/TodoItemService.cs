@@ -60,6 +60,7 @@ public class TodoItemService : ITodoItemService
     {
         var todoItems = await _todoItemRepository.GetAllAsync(new TodoItem() { CreatedBy = new User() { UserID = userID } });
 
+        // TODO: user mapping as Mapster or AutoMapper
         var todoItemsDto = todoItems.Select(todoItem => new TodoItemDto
         {
             TodoItemID = todoItem.TodoItemID,
@@ -80,6 +81,7 @@ public class TodoItemService : ITodoItemService
         if(todo is null)
             throw new Exception("Todo item not found.");
 
+        // TODO: user mapping as Mapster or AutoMapper
         todo.Name = entity.Name;
         todo.IsDone = entity.IsDone;
         todo.DeadLine = entity.DeadLine;
