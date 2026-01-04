@@ -106,8 +106,7 @@
                 self.$iconCurrentPassword.classList.remove('fa-eye-slash');
                 self.$iconCurrentPassword.classList.add('fa-eye');
                 self.$txtCurrentPassword.setAttribute('type', 'text');
-            }
-            else {
+            } else {
                 self.$iconCurrentPassword.classList.add('fa-eye-slash');
                 self.$iconCurrentPassword.classList.remove('fa-eye');
                 self.$txtCurrentPassword.setAttribute('type', 'password');
@@ -119,16 +118,15 @@
                 self.$iconNewPassword.classList.remove('fa-eye-slash');
                 self.$iconNewPassword.classList.add('fa-eye');
                 self.$txtNewPassword.setAttribute('type', 'text');
-            }
-            else {
+            } else {
                 self.$iconNewPassword.classList.add('fa-eye-slash');
                 self.$iconNewPassword.classList.remove('fa-eye');
                 self.$txtNewPassword.setAttribute('type', 'password');
             }
         });
 
-        self.$buttonDeleteMyAccount.addEventListener('click', function () {
-            Home.deleteUserAccount();
+        self.$buttonDeleteMyAccount.addEventListener('click', async function () {
+            await Home.deleteUserAccount();
         });
 
         self.$btnCloseEditUser.addEventListener('click', function () {
@@ -425,20 +423,29 @@
         }
     }
 
-    , deleteUserAccount: function () {
-        let option = confirm('Do you want to delete your account? This action is irreversible.');
+    , deleteUserAccount: async function () {
+        let confirm = await Swal.fire({
+            title: 'Question',
+            text: 'o you want to delete your account? This action is irreversible.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        });
 
-        if (option) {
-            fetch(`${Home.uriUser}/${Home.userCache.userID}`, {
-                method: 'DELETE'
-                , headers: {
-                    'Authorization': `Bearer ${Home.userCache.token}`
-                    , 'Content-type': 'application/json; charset=utf-8'
-                }
-            }).then(() => {
-                document.location.href = 'account-deleted.html';
-            });
+        if (!confirm.isConfirmed) {
+            return;
         }
+
+        fetch(`${Home.uriUser}/${Home.userCache.userID}`, {
+            method: 'DELETE'
+            , headers: {
+                'Authorization': `Bearer ${Home.userCache.token}`
+                , 'Content-type': 'application/json; charset=utf-8'
+            }
+        }).then(() => {
+            document.location.href = 'account-deleted.html';
+        });
     }
 
     , saveUser: function () {
