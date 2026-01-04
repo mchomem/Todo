@@ -1,15 +1,9 @@
 ﻿const Home = {
-
     self: this
-
     , userCache: JSON.parse(sessionStorage.getItem('user'))
-
     , uriTodoItem: 'https://localhost:44332/api/TodoItem'
-
     , uriUser: 'https://localhost:44332/api/user'
-
     , imagePicture: undefined
-
     , todos: []
 
     , init: function () {
@@ -170,7 +164,7 @@
     }
 
     , getItems: function () {
-        fetch(Home.uriTodoItem + '/?userId=' + Home.userCache.userID, {
+        fetch(`${Home.uriTodoItem}/?userId=${Home.userCache.userID}`, {
             method: 'GET'
             , headers: {
                 'Authorization': `Bearer ${Home.userCache.token}`
@@ -219,9 +213,9 @@
     }
 
     , deleteItem: function (id) {
-        var op = confirm('Do you want to delete this record?');
+        var option = confirm('Do you want to delete this record?');
 
-        if (!op) {
+        if (!option) {
             return;
         }
 
