@@ -17,6 +17,7 @@ public class TodoItemInsertDto
     public bool? IsDone { get; set; }
     public DateTime? DeadLine { get; set; }
     public int CreatedByID { get; set; }
+    public DateTime? CreatedIn { get; set; }
 }
 
 public class TodoItemUpdateDto

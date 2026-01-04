@@ -190,17 +190,11 @@
             return;
         }
 
-        let user = {
-            userID: Home.userCache.userID
-            , name: Home.userCache.name
-            , isActive: Home.userCache.isActive
-        }
-
         const todoItem = {
             isDone: false,
             name: self.$addName.value.trim(),
             deadLine: (self.$txtDeadLine.value.length === 0 ? null : self.$txtDeadLine.value),
-            createdBy: user
+            createdByID: Home.userCache.userID,
         };
 
         fetch(Home.uriTodoItem, {

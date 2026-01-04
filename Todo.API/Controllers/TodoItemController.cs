@@ -13,11 +13,11 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TodoItem>>> Get(int userID)
+    public async Task<ActionResult<IEnumerable<TodoItemDto>>> Get(int userID)
     {
         try
         {
-            var items = await _todoItemService.RetrieveAsync(userID);
+            var items = await _todoItemService.GetAllByUserIdAsync(userID);
             return Ok(items);
         }
         catch (Exception e)
@@ -27,7 +27,7 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Post(TodoItem todoItem)
+    public async Task<ActionResult> Post(TodoItemInsertDto todoItem)
     {
         try
         {
@@ -41,7 +41,7 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, TodoItem todoItem)
+    public async Task<ActionResult> Put(int id, TodoItemUpdateDto todoItem)
     {
         try
         {
