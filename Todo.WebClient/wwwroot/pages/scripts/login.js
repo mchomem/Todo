@@ -1,5 +1,4 @@
 ﻿const Login = {
-
     self: this
 
     , init: function () {
@@ -34,7 +33,6 @@
     }
 
     , getAuthentication: function () {
-
         if (self.$txtUser.value.length === 0
             || self.$txtPassword.value.length === 0) {
             Swal.fire({
@@ -46,7 +44,7 @@
             return
         }
 
-        let url = `https://localhost:44332/api/user/authentication?login=${self.$txtUser.value}&password=${self.$txtPassword.value}`;
+        let url = `https://localhost:44332/api/auth/authentication?login=${self.$txtUser.value}&password=${self.$txtPassword.value}`;
 
         self.$signInLabel.style.display = 'none';
         self.$loader.style.display = 'block';
@@ -85,5 +83,4 @@
                 });
             });
     }
-
 }

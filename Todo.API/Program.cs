@@ -9,6 +9,7 @@ builder.Services.AddSwaggerGen();
 #region Dependency Injection setup
 
 builder.Services.AddScoped<TodoContext, TodoContext>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITodoItemService, TodoItemService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserPictureService, UserPictureService>();
@@ -112,4 +113,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

@@ -14,22 +14,6 @@ public class UserController : ControllerBase
         _userPictureService = userPictureRepository;
     }
 
-    [AllowAnonymous]
-    [HttpGet]
-    [Route("authentication")]
-    public async Task<ActionResult<UserDto>> GetAuthentication([FromQuery] string login, [FromQuery] string password)
-    {
-        try
-        {
-            var user = await _userService.AuthenticateAsync(login, password);
-            return Ok(user);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
-    }
-
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDto>> Get([FromRoute] int id)
     {
