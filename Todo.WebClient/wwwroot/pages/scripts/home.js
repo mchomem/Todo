@@ -480,7 +480,7 @@
     , deleteUserAccount: async function () {
         let confirm = await Swal.fire({
             title: 'Question',
-            text: 'o you want to delete your account? This action is irreversible.',
+            text: 'Do you want to delete your account? This action is irreversible.',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Yes',
