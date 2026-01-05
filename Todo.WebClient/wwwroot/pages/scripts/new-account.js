@@ -49,7 +49,12 @@
         if (self.$txtName.value.length === 0
             || self.$txtLogin.value.length === 0
             || self.$txtPassword.value.length === 0) {
-            alert('Type the required information.');
+            Swal.fire({
+                title: 'Warning',
+                text: 'Type the required information.',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            });
             return;
         }
 
@@ -79,6 +84,12 @@
             .catch(error => {
                 console.error('Unable to add item.', error)
                 alert('Error');
+                Swal.fire({
+                    title: 'Error',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
             });
     }
 }

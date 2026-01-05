@@ -35,8 +35,14 @@
 
     , getAuthentication: function () {
 
-        if (self.$txtUser.value.length === 0 || self.$txtPassword.value.length === 0) {
-            alert('Login and password required.');
+        if (self.$txtUser.value.length === 0
+            || self.$txtPassword.value.length === 0) {
+            Swal.fire({
+                title: 'Warning',
+                text: 'Login and password required.',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            });
             return
         }
 
