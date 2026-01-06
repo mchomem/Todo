@@ -10,6 +10,20 @@ The project is divided into two parts: the backend, written in C#.net and access
 
 ## Steps
 
+## Update 2025
+
+Since this solution involves initialization in more than one project, the following command line should be used to build the database.
+
+* The line command to create a migration is:
+
+	add-migration DbInit -Context TodoContext -Project Todo.Infra.Database -StartupProject Todo.API
+
+* The line command to create a database is:
+
+    update-database -Context TodoContext -Project Todo.Infra.Database -StartupProject Todo.API
+
+## Old instructions
+
 1. Select Todo.Core project;
 2. Open the Packag Manager Console panel and type the follow code:
 
@@ -29,11 +43,5 @@ The project is divided into two parts: the backend, written in C#.net and access
 
 	remove-migration
 
-## Update 2025
 
-Since this solution involves initialization in more than one project, the following command line should be used to build the database.
-
-* The line command to create a database is:
-
-    update-database -Context TodoContext -Project Todo.Infra.Database -StartupProject Todo.API
 
