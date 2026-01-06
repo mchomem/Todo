@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Todo.Infra.Database.Migrations
 {
-    public partial class InitDb : Migration
+    /// <inheritdoc />
+    public partial class DbInit : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -61,7 +63,7 @@ namespace Todo.Infra.Database.Migrations
                 {
                     table.PrimaryKey("PK_UserPicture", x => x.UserPictureID);
                     table.ForeignKey(
-                        name: "FK_UserPicture_User_PictureFromUserID",
+                        name: "FK_User_UserPicture_PictureFromUserID",
                         column: x => x.PictureFromUserID,
                         principalTable: "User",
                         principalColumn: "UserID");
@@ -86,6 +88,7 @@ namespace Todo.Infra.Database.Migrations
                 filter: "[PictureFromUserID] IS NOT NULL");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

@@ -12,17 +12,18 @@ using Todo.Infra.Database.Contexts;
 namespace Todo.Infra.Database.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20221006030745_InitDb")]
-    partial class InitDb
+    [Migration("20260106003012_DbInit")]
+    partial class DbInit
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Todo.Domain.Entities.TodoItem", b =>
                 {
@@ -30,7 +31,7 @@ namespace Todo.Infra.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TodoItemID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("TodoItemID"));
 
                     b.Property<int>("CreatedByID")
                         .HasColumnType("int");
@@ -68,7 +69,7 @@ namespace Todo.Infra.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserID"));
 
                     b.Property<bool?>("IsActive")
                         .IsRequired()
@@ -105,7 +106,7 @@ namespace Todo.Infra.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserPictureID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserPictureID"));
 
                     b.Property<byte[]>("Picture")
                         .HasColumnType("varbinary(max)");
@@ -137,15 +138,16 @@ namespace Todo.Infra.Database.Migrations
                 {
                     b.HasOne("Todo.Domain.Entities.User", "User")
                         .WithOne("Picture")
-                        .HasForeignKey("Todo.Domain.Entities.UserPicture", "PictureFromUserID");
+                        .HasForeignKey("Todo.Domain.Entities.UserPicture", "PictureFromUserID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasConstraintName("FK_User_UserPicture_PictureFromUserID");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Todo.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Picture")
-                        .IsRequired();
+                    b.Navigation("Picture");
 
                     b.Navigation("TodoItems");
                 });

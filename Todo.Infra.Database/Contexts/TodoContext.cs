@@ -4,8 +4,8 @@ public class TodoContext : DbContext
 {
     #region Properties
 
-    public DbSet<TodoItem> TodoItems { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<TodoItem> TodoItems { get; set; }
     public DbSet<UserPicture> UserPictures { get; set; }
 
     #endregion
@@ -18,8 +18,8 @@ public class TodoContext : DbContext
 
     #region Events
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlServer(AppSettings.StringConnection);
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer(AppSettings.StringConnection);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

@@ -44,6 +44,8 @@ public class UserMapping : IEntityTypeConfiguration<User>
         builder
             .HasOne(u => u.Picture)
             .WithOne(up => up.User)
-            .HasForeignKey<UserPicture>(u => u.PictureFromUserID);
+            .HasForeignKey<UserPicture>(u => u.PictureFromUserID)
+            .HasConstraintName("FK_User_UserPicture_PictureFromUserID")
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }
