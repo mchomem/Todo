@@ -91,7 +91,6 @@ builder.Services.AddCors(options =>
 
 #endregion
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -102,15 +101,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseRouting();
-
 app.UseCors();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 await app.RunAsync();
