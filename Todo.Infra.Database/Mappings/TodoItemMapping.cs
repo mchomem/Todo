@@ -1,9 +1,5 @@
 ﻿namespace Todo.Infra.Mappings;
 
-// TODO revisar
-// como configurar nomes para constraints
-// relacionamento entre a entidade User via Fluente API.
-
 public class TodoItemMapping : IEntityTypeConfiguration<TodoItem>
 {
     public void Configure(EntityTypeBuilder<TodoItem> builder)
