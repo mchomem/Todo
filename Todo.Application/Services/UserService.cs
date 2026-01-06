@@ -5,14 +5,12 @@ public class UserService : IUserService
     private readonly IUserRepository _userRepository;
     private readonly ITodoItemRepository _todoItemRepository;
     private readonly IUserPictureRepository _userPictureRepository;
-    private readonly ITokenService _tokenService;
 
-    public UserService(IUserRepository userRepository, ITodoItemRepository todoItemRepository, IUserPictureRepository userPictureRepository, ITokenService tokenService)
+    public UserService(IUserRepository userRepository, ITodoItemRepository todoItemRepository, IUserPictureRepository userPictureRepository)
     {
         _userRepository = userRepository;
         _todoItemRepository = todoItemRepository;
         _userPictureRepository = userPictureRepository;
-        _tokenService = tokenService;
     }
 
     public async Task CreateAsync(UserInsertDto entity)
