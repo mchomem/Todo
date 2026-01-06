@@ -32,7 +32,6 @@ public class UserRepository : IUserRepository
 
     public async Task<IEnumerable<User>> GetAllAsync(User entity)
     {
-        
         var users = await _todoContext.Users
                 // TODO: transfer this where clause to Service layer.
                 .Where(x =>

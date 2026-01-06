@@ -32,9 +32,13 @@ public class TodoItemRepository : ITodoItemRepository
     }
 
     public async Task<TodoItem> GetAsync(TodoItem entity)
-        => await _todoContext.TodoItems
+    {
+        var todoItem = await _todoContext.TodoItems
             .Include(x => x.CreatedBy)
             .FirstOrDefaultAsync(x => x.TodoItemID.Value == entity.TodoItemID.Value);
+
+        return todoItem;
+    }
 
     public async Task<IEnumerable<TodoItem>> GetAllAsync(TodoItem entity = null)
     {

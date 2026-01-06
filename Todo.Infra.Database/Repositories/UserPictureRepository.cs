@@ -25,25 +25,29 @@ public class UserPictureRepository : IUserPictureRepository
 
     public async Task<UserPicture> GetAsync(UserPicture entity)
     {
-        return await _todoContext.UserPictures
+        var userPicture = await _todoContext.UserPictures
             .Include(x => x.User)
-                .FirstOrDefaultAsync(x =>
-                    (
-                        (!entity.UserPictureID.HasValue || x.UserPictureID == entity.UserPictureID)
-                        && (!entity.PictureFromUserID.HasValue || x.PictureFromUserID == entity.PictureFromUserID)
-                    )
-                );
+            .FirstOrDefaultAsync(x =>
+                (
+                    (!entity.UserPictureID.HasValue || x.UserPictureID == entity.UserPictureID)
+                    && (!entity.PictureFromUserID.HasValue || x.PictureFromUserID == entity.PictureFromUserID)
+                )
+            );
+
+        return userPicture!;
     }
 
     public async Task<IEnumerable<UserPicture>> GetAllAsync(UserPicture entity)
-    {
-        return await _todoContext.UserPictures
+    {        
+        var userPicturies = await _todoContext.UserPictures
             .Where(x =>
             (
                 (!entity.UserPictureID.HasValue || x.UserPictureID.Value == entity.UserPictureID.Value)
                 && (!entity.PictureFromUserID.HasValue || x.PictureFromUserID.Value == entity.PictureFromUserID.Value)
             ))
             .ToListAsync();
+
+        return userPicturies;
     }
 
     public async Task UpdateAsync(UserPicture entity)
