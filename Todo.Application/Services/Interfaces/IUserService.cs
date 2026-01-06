@@ -7,5 +7,5 @@ public interface IUserService
     public Task<UserDto> GetAsync(int id);
     public Task<IEnumerable<User>> GetAllAsync(User entity); // TODO: change User to USerDto and User to UseFilter
     public Task UpdateAsync(UserUpdateDto entity);
-    public Task ChangePasswordAsync(User entity, string newPassword); // TODO: change to UserChangePasswordDto
+    public Task ChangePasswordAsync(UserChangePasswordDto userChangePassword);
 }

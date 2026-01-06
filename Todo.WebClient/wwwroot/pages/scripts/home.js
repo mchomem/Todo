@@ -550,11 +550,19 @@
             return;
         }
 
-        fetch(`${Home.uriUser}/change-password/?userId=${Home.userCache.userID}&currentPassword=${currentPassword}&newPassword=${newPassword}`, {
+        const userChangePassword = {
+            userId: Home.userCache.userID,
+            currentPassword: currentPassword,
+            newPassword: newPassword
+        };
+
+        fetch(`${Home.uriUser}/change-password`, {
             method: 'PUT'
             , headers: {
                 'Authorization': `Bearer ${Home.userCache.token}`
-            }
+                , 'Content-type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(userChangePassword)
         })
             .then(() => {
                 Home.clearUserChangePasswordForm();

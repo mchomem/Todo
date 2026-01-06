@@ -59,17 +59,11 @@ public class UserController : ControllerBase
 
     [HttpPut]
     [Route("change-password")]
-    public async Task<ActionResult> ChangePassword([FromQuery] int userId, [FromQuery] string currentPassword, [FromQuery] string newPassword)
+    public async Task<ActionResult> ChangePassword([FromBody] UserChangePasswordDto userChangePassword)
     {
         try
         {
-            await _userService
-                .ChangePasswordAsync(new User()
-                {
-                    UserID = userId,
-                    Password = currentPassword
-                }, newPassword);
-
+            await _userService.ChangePasswordAsync(userChangePassword);
             return StatusCode(204, new { message = "Password changed successfully" });
         }
         catch (Exception e)

@@ -116,14 +116,19 @@ public class UserService : IUserService
         await _userRepository.UpdateAsync(user);
     }
 
-    public async Task ChangePasswordAsync(User entity, string newPassword)
+    public async Task ChangePasswordAsync(UserChangePasswordDto userChangePassword)
     {
-        var user = await _userRepository.GetAsync(entity);
+        var user = await _userRepository.GetAsync(new User() { UserID = userChangePassword.UserID});
 
         if (user is null)
             throw new Exception("User not found.");
 
-        newPassword = CypherHelper.Encrypt(newPassword);
+        userChangePassword.CurrentPassword = CypherHelper.Encrypt(userChangePassword.CurrentPassword);
+
+        if (user.Password != userChangePassword.CurrentPassword)
+            throw new Exception("Current password is incorrect.");
+
+        var newPassword = CypherHelper.Encrypt(userChangePassword.NewPassword);
         user.ChangePassword(newPassword);
 
         await _userRepository.ChangePasswordAsync(user);
