@@ -56,7 +56,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <label>Task<span class="text-danger ms-2">*</span></label>
+                                        <label class="form-label" for="add-name">Task<span class="text-danger ms-2">*</span></label>
                                         <input id="add-name"
                                                class="form-control form-control-sm"
                                                type="text">
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col">
-                                        <label>Dead line</label>
+                                        <label class="form-label" for="txtDeadLine">Dead line</label>
                                         <input id="txtDeadLine"
                                                class="form-control form-control-sm"
                                                type="date" />
@@ -218,7 +218,7 @@
                 </div>
             </div>
 
-            <!--Modal for edit todo-->
+            <!--Modal for edit to do-->
             <div id="todoModalEdit" class="modal fade" tabindex="-1" aria-labelledby="todoModalEditLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -233,14 +233,14 @@
                             <form>
                                 <div class="row mt-3">
                                     <div class="col">
-                                        <label>Task</label>
+                                        <label class="form-label" for="edit-taskName">Task</label>
                                         <input id="edit-taskName" class="form-control form-control-sm" type="text">
                                     </div>
                                 </div>
 
                                 <div class="row mt-3">
                                     <div class="col">
-                                        <label>Dead line</label>
+                                        <label class="form-label" for="edit-deadLine">Dead line</label>
                                         <input id="edit-deadLine" class="form-control form-control-sm" type="date" />
                                     </div>
                                 </div>
@@ -278,9 +278,9 @@
             <div id="loader" class="row mt-3">
                 <div class="col">
                     <div class="d-flex justify-content-center">
-                        <div class="spinner-border text-primary" role="status" style="width:80px;height:80px;">
+                        <output class="spinner-border text-primary" style="width:80px;height:80px;">
                             <span class="visually-hidden">Loading...</span>
-                        </div>
+                        </output>
                     </div>
                 </div>
             </div>
