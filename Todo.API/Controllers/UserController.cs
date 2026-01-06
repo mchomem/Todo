@@ -15,7 +15,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> Get([FromRoute] int id)
+    public async Task<ActionResult<UserDto>> GetAsync([FromRoute] int id)
     {
         try
         {
@@ -30,7 +30,7 @@ public class UserController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] UserInsertDto user)
+    public async Task<ActionResult> PostAsync([FromBody] UserInsertDto user)
     {
         try
         {
@@ -44,7 +44,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put([FromRoute] int id, [FromBody] UserUpdateDto userDto)
+    public async Task<ActionResult> PutAsync([FromRoute] int id, [FromBody] UserUpdateDto userDto)
     {
         try
         {
@@ -59,7 +59,7 @@ public class UserController : ControllerBase
 
     [HttpPut]
     [Route("change-password")]
-    public async Task<ActionResult> ChangePassword([FromBody] UserChangePasswordDto userChangePassword)
+    public async Task<ActionResult> ChangePasswordAsync([FromBody] UserChangePasswordDto userChangePassword)
     {
         try
         {
@@ -73,7 +73,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete([FromRoute] int id)
+    public async Task<ActionResult> DeleteAsync([FromRoute] int id)
     {
         try
         {
@@ -87,7 +87,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete, Route("delete-user-picture/{userId}")]
-    public async Task<ActionResult> DeleteUserPicture([FromRoute] int userId)
+    public async Task<ActionResult> DeleteUserPictureAsync([FromRoute] int userId)
     {
         try
         {

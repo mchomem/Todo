@@ -13,7 +13,7 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TodoItemDto>>> Get(int userID)
+    public async Task<ActionResult<IEnumerable<TodoItemDto>>> GetAsync(int userID)
     {
         try
         {
@@ -27,7 +27,7 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Post(TodoItemInsertDto todoItem)
+    public async Task<ActionResult> PostAsync(TodoItemInsertDto todoItem)
     {
         try
         {
@@ -41,7 +41,7 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, TodoItemUpdateDto todoItem)
+    public async Task<ActionResult> PutAsync(int id, TodoItemUpdateDto todoItem)
     {
         try
         {
@@ -55,7 +55,7 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpPut("complete/{id}")]
-    public async Task<ActionResult> PutMarkTaskAsComplete(int id)
+    public async Task<ActionResult> PutMarkTaskAsCompleteAsync(int id)
     {
         try
         {
@@ -69,7 +69,7 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> DeleteAsync(int id)
     {
         try
         {

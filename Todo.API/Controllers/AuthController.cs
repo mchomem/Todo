@@ -14,7 +14,7 @@ public class AuthController : ControllerBase
     [AllowAnonymous]
     [HttpGet]
     [Route("authentication")]
-    public async Task<ActionResult<UserDto>> GetAuthentication([FromQuery] string login, [FromQuery] string password)
+    public async Task<ActionResult<UserDto>> GetAuthenticationAsync([FromQuery] string login, [FromQuery] string password)
     {
         try
         {
