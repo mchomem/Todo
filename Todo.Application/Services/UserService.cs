@@ -5,43 +5,44 @@ public class UserService : IUserService
     private readonly IUserRepository _userRepository;
     private readonly ITodoItemRepository _todoItemRepository;
     private readonly IUserPictureRepository _userPictureRepository;
+    private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository, ITodoItemRepository todoItemRepository, IUserPictureRepository userPictureRepository)
+    public UserService(IUserRepository userRepository,
+        ITodoItemRepository todoItemRepository,
+        IUserPictureRepository userPictureRepository,
+        IMapper mapper)
     {
         _userRepository = userRepository;
         _todoItemRepository = todoItemRepository;
         _userPictureRepository = userPictureRepository;
+        _mapper = mapper;
     }
 
     public async Task CreateAsync(UserInsertDto entity)
     {
-        if ((await _userRepository.GetAllAsync(new User() { Login = entity.Login })).Any())
+        var exists = await _userRepository.CheckIfExists(x => x.Login.Equals(entity.Login));
+
+        if (exists)
             throw new Exception("This user is already being used");
 
-        entity.Password = CypherHelper.Encrypt(entity.Password);
+        var cypheredPassword = CypherHelper.Encrypt(entity.Password);
+        var newUser = new User(entity.Name, entity.Login, cypheredPassword);
 
-        // TODO: user mapping as Mapster or AutoMapper
-        var user = new User()
-        {
-            Name = entity.Name,
-            Login = entity.Login,
-            Password = entity.Password,
-            IsActive = true
-        };
-
-        await _userRepository.CreateAsync(user);
+        await _userRepository.CreateAsync(newUser);
     }
 
     public async Task DeleteAsync(int id)
     {
-        var user = await _userRepository.GetAsync(new User() { UserID = id });
+        var user = await _userRepository.GetAsync(id);
 
         if (user is null)
             throw new Exception("User not found.");
 
-        var todos = await _todoItemRepository.GetAllAsync(new TodoItem() { CreatedByID = id });
+        Expression<Func<TodoItem, bool>> expressionFilter = x => x.CreatedByID == id;
 
-        if(todos.Any())
+        var todos = await _todoItemRepository.GetAllAsync(expressionFilter);
+
+        if (todos.Any())
         {
             await _todoItemRepository.DeleteByCreatedUserIdAsync(id);
         }
@@ -52,52 +53,49 @@ public class UserService : IUserService
 
     public async Task<UserDto> GetAsync(int id)
     {
-        var user = await _userRepository.GetAsync(new User() { UserID = id });
+        var user = await _userRepository.GetAsync(id);
 
         if (user is null)
             throw new Exception("User not found.");
 
-        // TODO: user mapping as Mapster or AutoMapper
-        UserDto userDto = new UserDto()
-        {
-            UserID = user.UserID.Value,
-            Name = user.Name,
-            Picture = user.Picture?.Picture,
-            IsActive = user.IsActive.Value
-        };
-
+        var userDto = _mapper.Map<UserDto>(user);
         return userDto;
     }
 
-    public async Task<IEnumerable<User>> GetAllAsync(User entity)
+    public async Task<IEnumerable<UserDto>> GetAllAsync(UserFilter filter)
     {
-        var users = await _userRepository.GetAllAsync(entity);
-        return users;
+        Expression<Func<User, bool>> expressionFilter =
+            x => (
+                (!filter.UserId.HasValue || x.UserID == filter.UserId.Value)
+                && (string.IsNullOrEmpty(filter.Name) || x.Name.Contains(filter.Name))
+                && (string.IsNullOrEmpty(filter.Login) || x.Login == filter.Name)
+                && x.IsActive
+            );
+
+        IEnumerable<User> users = await _userRepository.GetAllAsync(expressionFilter);
+
+        return _mapper.Map<IEnumerable<UserDto>>(users);
     }
 
     public async Task UpdateAsync(UserUpdateDto entity)
     {
-        var user = await _userRepository.GetAsync(new User() { UserID = entity.UserID });
+        var user = await _userRepository.GetAsync(entity.UserID);
 
-        if(user is null)
+        if (user is null)
             throw new Exception("User not found.");
 
         UserPicture userPicture;
 
-        if(user.Picture != null)
+        if (user.Picture != null)
         {
-            userPicture = await _userPictureRepository.GetAsync(new UserPicture() { UserPictureID = user.Picture.UserPictureID });
+            userPicture = await _userPictureRepository.GetAsync(user.Picture.UserPictureID);
         }
         else
         {
-            userPicture = new UserPicture()
-            {
-                PictureFromUserID = user.UserID,
-                User = user
-            };
+            userPicture = new UserPicture(entity.Picture, user.UserID, user);
         }
 
-        userPicture.Picture = entity.Picture;
+        userPicture.Update(entity.Picture);
 
         // Do already exists the user picture?
         if (user.Picture is null)
@@ -116,7 +114,7 @@ public class UserService : IUserService
 
     public async Task ChangePasswordAsync(UserChangePasswordDto userChangePassword)
     {
-        var user = await _userRepository.GetAsync(new User() { UserID = userChangePassword.UserID});
+        var user = await _userRepository.GetAsync(userChangePassword.UserID);
 
         if (user is null)
             throw new Exception("User not found.");

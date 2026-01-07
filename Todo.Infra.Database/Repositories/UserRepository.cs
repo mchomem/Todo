@@ -9,6 +9,17 @@ public class UserRepository : IUserRepository
         _todoContext = todoContext;
     }
 
+    public async Task<bool> CheckIfExists(Expression<Func<User, bool>> filter)
+    {
+        IQueryable<User> query = _todoContext.Users
+            .AsQueryable()
+            .Where(filter)
+            .AsNoTracking();
+
+        var result = await query.AnyAsync();
+        return result;
+    }
+
     public async Task CreateAsync(User entity)
     {
         _todoContext.Users.Add(entity);
@@ -21,30 +32,31 @@ public class UserRepository : IUserRepository
         await _todoContext.SaveChangesAsync();
     }
 
-    public async Task<User> GetAsync(User entity)
+    public async Task<User> GetAsync(int id)
     {
         var user = await _todoContext.Users
             .Include(x => x.Picture)
-                .FirstOrDefaultAsync(x => x.UserID == entity.UserID);
+            .SingleOrDefaultAsync(x => x.UserID == id);
 
         return user!;
     }
 
-    public async Task<IEnumerable<User>> GetAllAsync(User entity)
+    public async Task<IEnumerable<User>> GetAllAsync(Expression<Func<User, bool>> filter
+        , IEnumerable<Expression<Func<User, object>>>? includes = null
+        , IEnumerable<(Expression<Func<User, object>> keySelector, bool asceding)>? orderBy = null)
     {
-        var users = await _todoContext.Users
-                // TODO: transfer this where clause to Service layer.
-                .Where(x =>
-                (
-                    (!entity.UserID.HasValue || x.UserID.Value == entity.UserID.Value)
-                    && (string.IsNullOrEmpty(entity.Name) || x.Name.Contains(entity.Name))
-                    && (string.IsNullOrEmpty(entity.Login) || x.Name.Contains(entity.Login))
-                    && (!entity.IsActive.HasValue || x.IsActive.Value == entity.IsActive.Value)
-                ))
-                .ToListAsync();
-        // TODO: apply paggination with take and skip and a object to represent a paggination.
+            IQueryable<User> query = _todoContext.Users
+            .AsQueryable()
+            .AsNoTracking()
+            .Where(filter);
 
-        return users;
+        if (includes != null)
+        {
+            foreach (var include in includes)
+                query = query.Include(include);
+        }
+
+        return await query.ToListAsync();
     }
 
     public async Task UpdateAsync(User entity)
@@ -66,7 +78,7 @@ public class UserRepository : IUserRepository
             .Where(x =>
                 x.Login == login
                 && x.Password == password
-                && x.IsActive.Value)
+                && x.IsActive)
             .SingleOrDefaultAsync();
 
         return user!;

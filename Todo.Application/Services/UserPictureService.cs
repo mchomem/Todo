@@ -4,24 +4,28 @@ public class UserPictureService : IUserPictureService
 {
     private readonly IUserPictureRepository _userPictureRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
-    public UserPictureService(IUserPictureRepository userPictureRepository, IUserRepository userRepository)
+    public UserPictureService(IUserPictureRepository userPictureRepository, IUserRepository userRepository, IMapper mapper)
     {
         _userPictureRepository = userPictureRepository;
         _userRepository = userRepository;
+        _mapper = mapper;
     }
 
     public async Task CreateAsync(UserPicture entity)
-        => await _userPictureRepository.CreateAsync(entity);
+    {
+         await _userPictureRepository.CreateAsync(entity);
+    }
 
     public async Task DeleteByUserIdAsync(int userId)
     {
-        var user = await _userRepository.GetAsync(new User { UserID = userId });
+        var user = await _userRepository.GetAsync(userId);
 
         if (user is null)
             throw new Exception("User not found.");
 
-        var userPicture = await _userPictureRepository.GetAsync(new UserPicture { PictureFromUserID = userId });
+        var userPicture = await _userPictureRepository.GetByUserId(userId);
 
         if (userPicture is null)
             throw new Exception("User picture not found.");
@@ -30,11 +34,26 @@ public class UserPictureService : IUserPictureService
     }
 
     public async Task<UserPicture> GetAsync(UserPicture entity)
-        => await _userPictureRepository.GetAsync(entity);
+    {
+        var userPicture = await _userPictureRepository.GetAsync(entity.UserPictureID);
+        return userPicture;
+    }
 
-    public async Task<IEnumerable<UserPicture>> GetAllAsync(UserPicture entity)
-        => await _userPictureRepository.GetAllAsync(entity);
+    public async Task<IEnumerable<UserPictureDto>> GetAllAsync(UserPictureFilter filter)
+    {
+        Expression<Func<UserPicture, bool>> expressionFilter =
+            x => (
+                (!filter.UserPictureID.HasValue || x.UserPictureID == filter.UserPictureID.Value)
+                && (!filter.PictureFromUserID.HasValue || x.PictureFromUserID.Value == filter.PictureFromUserID.Value)
+            );
+
+        var userPicturies = await _userPictureRepository.GetAllAsync(expressionFilter);
+        var userPicturiesDto = _mapper.Map<IEnumerable<UserPictureDto>>(userPicturies);
+        return userPicturiesDto;
+    }
 
     public async Task UpdateAsync(UserPicture entity)
-        => await _userPictureRepository.UpdateAsync(entity);
+    {
+        await _userPictureRepository.UpdateAsync(entity);
+    }
 }

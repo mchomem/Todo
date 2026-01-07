@@ -35,35 +35,41 @@ public class TodoItemRepository : ITodoItemRepository
     {
         var todoItem = await _todoContext.TodoItems
             .Include(x => x.CreatedBy)
-            .FirstOrDefaultAsync(x => x.TodoItemID.Value == entity.TodoItemID.Value);
+            .FirstOrDefaultAsync(x => x.TodoItemID == entity.TodoItemID);
 
         return todoItem;
     }
 
-    public async Task<IEnumerable<TodoItem>> GetAllAsync(TodoItem entity = null)
+    public async Task<TodoItem> GetAsync(int id)
     {
-        if (entity != null)
-            return await _todoContext.TodoItems
-                .Include(x => x.CreatedBy)
-                .Where(x =>
-                (
-                    (!entity.TodoItemID.HasValue || x.TodoItemID.Value == entity.TodoItemID.Value)
-                    && (string.IsNullOrEmpty(entity.Name) || x.Name.Contains(entity.Name))
-                    && (!entity.IsDone.HasValue || x.IsDone.Value == entity.IsDone.Value)
-                    && (!entity.DeadLine.HasValue || x.DeadLine.Value == entity.DeadLine.Value)
-                    && (entity.CreatedBy == null || x.CreatedBy.UserID == entity.CreatedBy.UserID)
-                ))
-                .ToListAsync();
-        else
-            return await _todoContext.TodoItems
-                .Include(x => x.CreatedBy)
-                .ToListAsync();
+        var todoItem = await _todoContext.TodoItems
+            .Include(x => x.CreatedBy)
+            .SingleOrDefaultAsync(x => x.TodoItemID == id);
+
+        return todoItem;
+    }
+
+    public async Task<IEnumerable<TodoItem>> GetAllAsync(Expression<Func<TodoItem, bool>> filter
+        , IEnumerable<Expression<Func<TodoItem, object>>>? includes = null
+        , IEnumerable<(Expression<Func<TodoItem, object>> keySelector, bool asceding)>? orderBy = null)
+    {
+        IQueryable<TodoItem> query = _todoContext.TodoItems
+            .AsQueryable()
+            .AsNoTracking()
+            .Where(filter);
+
+        if (includes != null)
+        {
+            foreach (var include in includes)
+                query = query.Include(include);
+        }
+
+        return await query.ToListAsync();
     }
 
     public async Task UpdateAsync(TodoItem entity)
     {
         _todoContext.Users.Attach(entity.CreatedBy);
-        entity.CreatedByID = entity.CreatedBy.UserID.Value;
         _todoContext.Entry(entity).State = EntityState.Modified;
         await _todoContext.SaveChangesAsync();
     }

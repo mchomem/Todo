@@ -320,9 +320,9 @@
         const itemId = self.$editId.value;
 
         const item = {
-            todoItemID: parseInt(itemId, 10),
+            todoItemID: Number.parseInt(itemId, 10),
             name: self.$editTaskName.value.trim(),
-            deadLine: self.$editDeadLine.value,
+            deadLine: self.$editDeadLine.value.length > 0 ? self.$editDeadLine.value : null,
             isDone: self.$editIsComplete.checked
         };
 

@@ -4,7 +4,10 @@ public static class ProfileMapping
 {
     public static void RegisterMappings(TypeAdapterConfig config)
     {
-        config.NewConfig<User, UserDto>().TwoWays();
+        config.NewConfig<User, UserDto>()
+            .Map(dest => dest.Picture, src => src.Picture != null ? src.Picture.Picture : null)
+            .TwoWays();
+
         config.NewConfig<User, UserInsertDto>().TwoWays();
         config.NewConfig<User, UserUpdateDto>().TwoWays();
         config.NewConfig<User, UserChangePasswordDto>().TwoWays();
@@ -14,5 +17,6 @@ public static class ProfileMapping
         config.NewConfig<TodoItem, TodoItemUpdateDto>().TwoWays();
 
         config.NewConfig<UserPicture, UserPictureDto>().TwoWays();
+        config.NewConfig<UserPicture, UserPictureInsertDto>().TwoWays();
     }
 }

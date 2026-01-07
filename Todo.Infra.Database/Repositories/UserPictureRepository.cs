@@ -23,31 +23,38 @@ public class UserPictureRepository : IUserPictureRepository
         await _todoContext.SaveChangesAsync();
     }
 
-    public async Task<UserPicture> GetAsync(UserPicture entity)
+    public async Task<UserPicture> GetByUserId(int userId)
     {
         var userPicture = await _todoContext.UserPictures
             .Include(x => x.User)
-            .FirstOrDefaultAsync(x =>
-                (
-                    (!entity.UserPictureID.HasValue || x.UserPictureID == entity.UserPictureID)
-                    && (!entity.PictureFromUserID.HasValue || x.PictureFromUserID == entity.PictureFromUserID)
-                )
-            );
-
+            .SingleOrDefaultAsync(x => x.PictureFromUserID == userId);
         return userPicture!;
     }
 
-    public async Task<IEnumerable<UserPicture>> GetAllAsync(UserPicture entity)
-    {        
-        var userPicturies = await _todoContext.UserPictures
-            .Where(x =>
-            (
-                (!entity.UserPictureID.HasValue || x.UserPictureID.Value == entity.UserPictureID.Value)
-                && (!entity.PictureFromUserID.HasValue || x.PictureFromUserID.Value == entity.PictureFromUserID.Value)
-            ))
-            .ToListAsync();
+    public async Task<UserPicture> GetAsync(int id)
+    {
+        var userPicture = await _todoContext.UserPictures
+            .Include(x => x.User)
+            .SingleOrDefaultAsync(x => x.UserPictureID == id);
+        return userPicture!;
+    }
 
-        return userPicturies;
+    public async Task<IEnumerable<UserPicture>> GetAllAsync(Expression<Func<UserPicture, bool>> filter
+        , IEnumerable<Expression<Func<UserPicture, object>>>? includes = null
+        , IEnumerable<(Expression<Func<UserPicture, object>> keySelector, bool asceding)>? orderBy = null)
+    {
+        IQueryable<UserPicture> query = _todoContext.UserPictures
+            .AsQueryable()
+            .AsNoTracking()
+            .Where(filter);
+
+        if (includes != null)
+        {
+            foreach (var include in includes)
+                query = query.Include(include);
+        }
+
+        return await query.ToListAsync();
     }
 
     public async Task UpdateAsync(UserPicture entity)

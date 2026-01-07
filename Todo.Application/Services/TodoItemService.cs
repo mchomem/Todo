@@ -4,99 +4,76 @@ public class TodoItemService : ITodoItemService
 {
     private readonly ITodoItemRepository _todoItemRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
-    public TodoItemService(ITodoItemRepository todoItemRepository, IUserRepository userRepository)
+    public TodoItemService(ITodoItemRepository todoItemRepository, IUserRepository userRepository, IMapper mapper)
     {
         _todoItemRepository = todoItemRepository;
         _userRepository = userRepository;
+        _mapper = mapper;
     }
 
     public async Task CreateAsync(TodoItemInsertDto todoItemDto)
     {
-        var user = await _userRepository.GetAsync(new User() { UserID = todoItemDto.CreatedByID });
+        var user = await _userRepository.GetAsync(todoItemDto.CreatedByID);
 
         if(user is null)
             throw new Exception("User not found.");
 
-        var todoItem = new TodoItem
-        {
-            Name = todoItemDto.Name,
-            IsDone = todoItemDto.IsDone ?? false,
-            DeadLine = todoItemDto.DeadLine,
-            CreatedByID = todoItemDto.CreatedByID,
-            CreatedBy = user
-        };
-
+        var todoItem = new TodoItem(todoItemDto.Name, todoItemDto.DeadLine, todoItemDto.CreatedByID, user);
         await _todoItemRepository.CreateAsync(todoItem);
     }
 
     public async Task DeleteAsync(int id)
     {
-        await _todoItemRepository.DeleteAsync(new TodoItem() { TodoItemID = id });
-    }
-
-    public async Task<TodoItemDto> GetAsync(int id)
-    {
-        var todoItem = await _todoItemRepository.GetAsync(new TodoItem() { TodoItemID = id });
+        var todoItem = await _todoItemRepository.GetAsync(id);
 
         if(todoItem is null)
             throw new Exception("Todo item not found.");
 
-        // TODO: user mapping as Mapster or AutoMapper
-        var todoItemDto = new TodoItemDto
-        {
-            TodoItemID = todoItem.TodoItemID,
-            Name = todoItem.Name,
-            IsDone = todoItem.IsDone,
-            DeadLine = todoItem.DeadLine,
-            CreatedByID = todoItem.CreatedByID,
-            CreatedIn = todoItem.CreatedIn
-        };
+        await _todoItemRepository.DeleteAsync(todoItem);
+    }
 
+    public async Task<TodoItemDto> GetAsync(int id)
+    {
+        var todoItem = await _todoItemRepository.GetAsync(id);
+
+        if(todoItem is null)
+            throw new Exception("Todo item not found.");
+
+        var todoItemDto = _mapper.Map<TodoItemDto>(todoItem);
         return todoItemDto;
     }
 
     public async Task<IEnumerable<TodoItemDto>> GetAllByUserIdAsync(int userID)
     {
-        var todoItems = await _todoItemRepository.GetAllAsync(new TodoItem() { CreatedBy = new User() { UserID = userID } });
+        Expression<Func<TodoItem, bool>> expressionFilter = x => x.CreatedByID == userID;
 
-        // TODO: user mapping as Mapster or AutoMapper
-        var todoItemsDto = todoItems.Select(todoItem => new TodoItemDto
-        {
-            TodoItemID = todoItem.TodoItemID,
-            Name = todoItem.Name,
-            IsDone = todoItem.IsDone,
-            DeadLine = todoItem.DeadLine,
-            CreatedByID = todoItem.CreatedByID,
-            CreatedIn = todoItem.CreatedIn
-        });
-
+        var todoItems = await _todoItemRepository.GetAllAsync(expressionFilter);
+        var todoItemsDto = _mapper.Map<IEnumerable<TodoItemDto>>(todoItems);
         return todoItemsDto;
     }
 
     public async Task UpdateAsync(int id, TodoItemUpdateDto entity)
     {
-        var todo = await _todoItemRepository.GetAsync(new TodoItem() { TodoItemID = id });
+        var todo = await _todoItemRepository.GetAsync(id);
 
         if(todo is null)
             throw new Exception("Todo item not found.");
 
-        // TODO: user mapping as Mapster or AutoMapper
-        todo.Name = entity.Name;
-        todo.IsDone = entity.IsDone;
-        todo.DeadLine = entity.DeadLine;
+        todo.Update(entity.Name, entity.IsDone, todo.DeadLine);
 
         await _todoItemRepository.UpdateAsync(todo);
     }
 
     public async Task MarkTaskAsComplete(int id)
     {
-        var todo = await _todoItemRepository.GetAsync(new TodoItem() { TodoItemID = id });
+        var todo = await _todoItemRepository.GetAsync(id);
         
         if(todo is null)
             throw new Exception("Todo item not found.");
 
-        todo.IsDone = true;
+        todo.MaskAsDone();
         await _todoItemRepository.UpdateAsync(todo);
     }
 }

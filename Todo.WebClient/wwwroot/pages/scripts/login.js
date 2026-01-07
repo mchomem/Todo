@@ -75,6 +75,10 @@
             })
             .catch(error => {
                 console.error('Error', error)
+
+                self.$loader.style.display = 'none';
+                self.$signInLabel.style.display = 'block';
+
                 Swal.fire({
                     title: 'Error',
                     text: error,

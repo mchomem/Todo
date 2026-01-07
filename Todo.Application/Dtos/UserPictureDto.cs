@@ -6,4 +6,10 @@
         public byte[]? Picture { get; set; }
         public int? PictureFromUserID { get; set; }
     }
+
+    public class UserPictureInsertDto
+    {
+        public byte[]? Picture { get; set; }
+        public int? PictureFromUserID { get; set; }
+    }
 }
