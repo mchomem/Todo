@@ -4,18 +4,11 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Todo.Domain\Todo.Domain.csproj" />
-		<ProjectReference Include="..\Todo.Application\Todo.Application.csproj" />
-		<ProjectReference Include="..\Todo.Infra.Database\Todo.Infra.Database.csproj" />
+	  <ProjectReference Include="..\Todo.Infrastructure.IoC\Todo.Infrastructure.IoC.csproj" />
 	</ItemGroup>
 
 </Project>

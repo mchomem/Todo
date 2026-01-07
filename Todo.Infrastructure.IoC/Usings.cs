@@ -1,0 +1,15 @@
+﻿global using Mapster;
+global using MapsterMapper;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.OpenApi.Models;
+global using System.Text;
+global using Todo.Application.ProfileMappings;
+global using Todo.Application.Services;
+global using Todo.Application.Services.Interfaces;
+global using Todo.Infra.Database.Contexts;
+global using Todo.Infra.Database.Repositories;
+global using Todo.Infra.Database.Repositories.Interfaces;

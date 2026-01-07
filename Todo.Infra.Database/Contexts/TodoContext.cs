@@ -12,14 +12,11 @@ public class TodoContext : DbContext
 
     #region Constructors
 
-    public TodoContext() : base() { }
+    public TodoContext(DbContextOptions<TodoContext> options) : base(options) { }
 
     #endregion
 
     #region Events
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(AppSettings.StringConnection);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
