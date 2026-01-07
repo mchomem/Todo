@@ -83,7 +83,6 @@
             })
             .catch(error => {
                 console.error('Unable to add item.', error)
-                alert('Error');
                 Swal.fire({
                     title: 'Error',
                     text: error,
