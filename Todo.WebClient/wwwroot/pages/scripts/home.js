@@ -503,6 +503,17 @@
     }
 
     , saveUser: function () {
+        if (self.$txtUserName.value.length === 0) {
+            Swal.fire({
+                title: 'Warningg',
+                text: 'Type a name.',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            });
+
+            return;
+        }
+
         let user = {
             userId: Home.userCache.userID
             , name: self.$txtUserName.value
