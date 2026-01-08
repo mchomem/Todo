@@ -16,11 +16,11 @@ Since this solution involves initialization in more than one project, the follow
 
 * The line command to create a migration is:
 
-	add-migration DbInit -Context TodoContext -Project Todo.Infra.Database -StartupProject Todo.API
+	`add-migration DbInit -Context TodoContext -Project Todo.Infra.Database -StartupProject Todo.API`
 
 * The line command to create a database is:
 
-    update-database -Context TodoContext -Project Todo.Infra.Database -StartupProject Todo.API
+    `update-database -Context TodoContext -Project Todo.Infra.Database -StartupProject Todo.API`
 
 ## Old instructions
 
