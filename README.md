@@ -1,6 +1,10 @@
 # Presentation
 
 This project is a software for simplified registration of tasks that a person needs to perform.
+This project serves as a study object and an application of best practices.
+On the frontend, the project uses HTML, Bootstrap CSS, and vanilla JavaScript, with minimal use of external libraries.
+On the backend, C#.NET is used, and SQL Server is used for the database.
+
 
 # Architecture
 
