@@ -1,7 +1,7 @@
 ﻿namespace Todo.API.Controllers;
 
 /// <summary>
-/// Controller responsible for managing todo items operations including creation, retrieval, update, and deletion.
+/// Controller responsible for managing to do items operations including creation, retrieval, update, and deletion.
 /// </summary>
 [Authorize]
 [Route("api/[controller]")]
@@ -13,18 +13,18 @@ public class TodoItemController : ControllerBase
     /// <summary>
     /// Initializes a new instance of the <see cref="TodoItemController"/> class.
     /// </summary>
-    /// <param name="todoItemService">The todo item service.</param>
+    /// <param name="todoItemService">The to do item service.</param>
     public TodoItemController(ITodoItemService todoItemService)
     {
         _todoItemService = todoItemService;
     }
 
     /// <summary>
-    /// Retrieves all todo items for a specific user.
+    /// Retrieves all to do items for a specific user.
     /// </summary>
     /// <param name="userID">The identifier of the user.</param>
-    /// <returns>Returns a collection of todo items belonging to the specified user.</returns>
-    /// <response code="200">Returns the list of todo items.</response>
+    /// <returns>Returns a collection of to do items belonging to the specified user.</returns>
+    /// <response code="200">Returns the list of to do items.</response>
     /// <response code="500">If an error occurs while retrieving the items.</response>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TodoItemDto>>> GetAsync(int userID)
@@ -41,9 +41,9 @@ public class TodoItemController : ControllerBase
     }
 
     /// <summary>
-    /// Creates a new todo item.
+    /// Creates a new to do item.
     /// </summary>
-    /// <param name="todoItem">The todo item data to create.</param>
+    /// <param name="todoItem">The to do item data to create.</param>
     /// <returns>Returns a success message if the task is created successfully.</returns>
     /// <response code="200">Returns a success message.</response>
     /// <response code="500">If an error occurs while creating the task.</response>
@@ -62,12 +62,12 @@ public class TodoItemController : ControllerBase
     }
 
     /// <summary>
-    /// Updates an existing todo item.
+    /// Updates an existing to do item.
     /// </summary>
-    /// <param name="id">The identifier of the todo item to update.</param>
-    /// <param name="todoItem">The updated todo item data.</param>
+    /// <param name="id">The identifier of the to do item to update.</param>
+    /// <param name="todoItem">The updated to do item data.</param>
     /// <returns>Returns no content if the update is successful.</returns>
-    /// <response code="204">If the todo item was updated successfully.</response>
+    /// <response code="204">If the to do item was updated successfully.</response>
     /// <response code="500">If an error occurs while updating the item.</response>
     [HttpPut("{id}")]
     public async Task<ActionResult> PutAsync(int id, TodoItemUpdateDto todoItem)
@@ -84,9 +84,9 @@ public class TodoItemController : ControllerBase
     }
 
     /// <summary>
-    /// Marks a todo item as complete.
+    /// Marks a to do item as complete.
     /// </summary>
-    /// <param name="id">The identifier of the todo item to mark as complete.</param>
+    /// <param name="id">The identifier of the to do item to mark as complete.</param>
     /// <returns>Returns no content if the task is marked as complete successfully.</returns>
     /// <response code="204">If the task was marked as complete successfully.</response>
     /// <response code="500">If an error occurs while marking the task as complete.</response>
@@ -105,11 +105,11 @@ public class TodoItemController : ControllerBase
     }
 
     /// <summary>
-    /// Deletes a todo item.
+    /// Deletes a to do item.
     /// </summary>
-    /// <param name="id">The identifier of the todo item to delete.</param>
+    /// <param name="id">The identifier of the to do item to delete.</param>
     /// <returns>Returns success if the item is deleted.</returns>
-    /// <response code="200">If the todo item was deleted successfully.</response>
+    /// <response code="200">If the to do item was deleted successfully.</response>
     /// <response code="500">If an error occurs while deleting the item.</response>
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteAsync(int id)
