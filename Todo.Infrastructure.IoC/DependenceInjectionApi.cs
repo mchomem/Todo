@@ -130,9 +130,9 @@ public static class DependenceInjectionApi
         {
             options.AddPolicy
             (
-                name: configuration.GetSection("Cors:PolicyName").Value,
+                name: configuration.GetSection("Cors:PolicyName").Value!,
                 policy => policy
-                    .WithOrigins(configuration.GetSection("Frontend:Url").Value)
+                    .WithOrigins(configuration.GetSection("Frontend:Url").Value!)
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()
