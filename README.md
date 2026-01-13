@@ -5,6 +5,13 @@ This project serves as a study object and an application of best practices.
 On the frontend, the project uses HTML, Bootstrap CSS, and vanilla JavaScript, with minimal use of external libraries.
 On the backend, C#.NET is used, and SQL Server is used for the database.
 
+# Some images
+
+![TO DO login](Docs/Images/todo-login.png)
+
+![TO DO tasks](Docs/Images/todo-home.png)
+
+![TO DO tasks](Docs/Images/todo-create-new-account.png)
 
 # Architecture
 
