@@ -12,6 +12,9 @@
         self.$btnLogin = document.getElementById('btnLogin');
         self.$signInLabel = document.getElementById('signInLabel');
         self.$loader = document.getElementById('loader');
+        self.$spanYear = document.getElementById('spanYear');
+
+        self.$spanYear.innerHTML = new Date().getFullYear();
     }
 
     , attachEvent: function () {
