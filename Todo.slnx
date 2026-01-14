@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/1 - Core/">
+    <Project Path="Todo.Application/Todo.Application.csproj" />
+    <Project Path="Todo.Domain/Todo.Domain.csproj" />
+  </Folder>
+  <Folder Name="/2 - Infrastructure/">
+    <Project Path="Todo.Infra.Database/Todo.Infra.Database.csproj" />
+    <Project Path="Todo.Infrastructure.IoC/Todo.Infrastructure.IoC.csproj" />
+  </Folder>
+  <Folder Name="/3 - Presentation/">
+    <Project Path="Todo.API/Todo.API.csproj" />
+    <Project Path="Todo.WebClient/Todo.WebClient.csproj" />
+  </Folder>
+</Solution>
