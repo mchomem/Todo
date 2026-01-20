@@ -17,8 +17,8 @@ public class TodoItemService : ITodoItemService
     {
         var user = await _userRepository.GetAsync(todoItemDto.CreatedByID);
 
-        if(user is null)
-            throw new Exception("User not found.");
+        if (user is null)
+            throw new UserNotFoundException();
 
         var todoItem = new TodoItem(todoItemDto.Name, todoItemDto.DeadLine, todoItemDto.CreatedByID, user);
         await _todoItemRepository.CreateAsync(todoItem);
@@ -29,7 +29,7 @@ public class TodoItemService : ITodoItemService
         var todoItem = await _todoItemRepository.GetAsync(id);
 
         if(todoItem is null)
-            throw new Exception("Todo item not found.");
+            throw new TodoItemNotFoundException();
 
         await _todoItemRepository.DeleteAsync(todoItem);
     }
@@ -39,7 +39,7 @@ public class TodoItemService : ITodoItemService
         var todoItem = await _todoItemRepository.GetAsync(id);
 
         if(todoItem is null)
-            throw new Exception("Todo item not found.");
+            throw new TodoItemNotFoundException();
 
         var todoItemDto = _mapper.Map<TodoItemDto>(todoItem);
         return todoItemDto;
@@ -59,7 +59,7 @@ public class TodoItemService : ITodoItemService
         var todo = await _todoItemRepository.GetAsync(id);
 
         if(todo is null)
-            throw new Exception("Todo item not found.");
+            throw new TodoItemNotFoundException();
 
         todo.Update(entity.Name, entity.IsDone, todo.DeadLine);
 
@@ -71,7 +71,7 @@ public class TodoItemService : ITodoItemService
         var todo = await _todoItemRepository.GetAsync(id);
         
         if(todo is null)
-            throw new Exception("Todo item not found.");
+            throw new TodoItemNotFoundException();
 
         todo.MaskAsDone();
         await _todoItemRepository.UpdateAsync(todo);

@@ -61,20 +61,25 @@
         })
             .then(response => response.json())
             .then(data => {
-                // TODO: apply best pratice to better response when user not found!
-                if (data.status == 404) {
+
+                let responseApi = data.Data;
+
+                if (!data.Success) {
                     self.$signInLabel.style.display = 'block';
                     self.$loader.style.display = 'none';
                     Swal.fire({
                         title: 'Warning',
-                        text: 'User not found. Do you forget your password?',
+                        text: responseApi,
                         icon: 'warning',
                         confirmButtonText: 'Ok'
                     });
-                } else {
-                    sessionStorage.setItem('user', JSON.stringify(data));
-                    document.location.href = 'home.html';
+
+                    return;
                 }
+
+                let apiReponse = data.data;
+                sessionStorage.setItem('user', JSON.stringify(apiReponse));
+                document.location.href = 'home.html';
             })
             .catch(error => {
                 console.error('Error', error)

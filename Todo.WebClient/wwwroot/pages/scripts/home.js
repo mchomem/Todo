@@ -178,7 +178,10 @@
             }
         })
             .then(response => response.json())
-            .then(data => Home._displayItems(data))
+            .then(data => {
+                let responseApi = data.data;
+                Home._displayItems(responseApi)
+            })
             .catch(error => {
                 Swal.fire({
                     title: 'Error!',
@@ -220,20 +223,31 @@
             body: JSON.stringify(todoItem)
         })
             .then(response => {
-                response.json();
+                return response.json();
             })
-            .then(() => {
+            .then(data => {
+                let responseApi = data.data;
+
                 Home.getItems();
                 self.$addName.value = '';
                 self.$txtDeadLine.value = '';
                 Swal.fire({
                     title: 'Information',
-                    text: 'New record added.',
+                    text: responseApi,
                     icon: 'info',
                     confirmButtonText: 'Ok'
                 });
             })
-            .catch(error => console.error('Unable to add item.', error));
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Fail on add items.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+
+                console.error('Unable to add item.', error)
+            });
     }
 
     , completeTask: async function (id) {
@@ -575,11 +589,15 @@
             },
             body: JSON.stringify(userChangePassword)
         })
-            .then(() => {
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                let responseApi = data.data;
                 Home.clearUserChangePasswordForm();
                 Swal.fire({
                     title: 'Information',
-                    text: 'Password changed.',
+                    text: responseApi,
                     icon: 'info',
                     confirmButtonText: 'Ok'
                 });

@@ -23,12 +23,12 @@ public class UserPictureService : IUserPictureService
         var user = await _userRepository.GetAsync(userId);
 
         if (user is null)
-            throw new Exception("User not found.");
+            throw new UserNotFoundException();
 
         var userPicture = await _userPictureRepository.GetByUserId(userId);
 
         if (userPicture is null)
-            throw new Exception("User picture not found.");
+            throw new UserPictureNotFoundException();
 
         await _userPictureRepository.DeleteAsync(userPicture);
     }

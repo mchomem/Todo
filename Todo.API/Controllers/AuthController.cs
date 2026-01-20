@@ -29,16 +29,10 @@ public class AuthController : ControllerBase
     [AllowAnonymous]
     [HttpGet]
     [Route("authentication")]
-    public async Task<ActionResult<UserDto>> GetAuthenticationAsync([FromQuery] string login, [FromQuery] string password)
+    public async Task<IActionResult> GetAuthenticationAsync([FromQuery] string login, [FromQuery] string password)
     {
-        try
-        {
-            var user = await _authService.AuthenticateAsync(login, password);
-            return Ok(user);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        var user = await _authService.AuthenticateAsync(login, password);
+        var response = new ApiResponse<UserDto>(user);
+        return Ok(response);
     }
 }

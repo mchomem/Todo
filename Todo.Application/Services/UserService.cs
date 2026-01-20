@@ -23,7 +23,7 @@ public class UserService : IUserService
         var exists = await _userRepository.CheckIfExists(x => x.Login.Equals(entity.Login));
 
         if (exists)
-            throw new Exception("This user is already being used");
+            throw new UserAlreadyExistsException();
 
         var cypheredPassword = CypherHelper.Encrypt(entity.Password);
         var newUser = new User(entity.Name, entity.Login, cypheredPassword);
@@ -36,7 +36,7 @@ public class UserService : IUserService
         var user = await _userRepository.GetAsync(id);
 
         if (user is null)
-            throw new Exception("User not found.");
+            throw new UserNotFoundException();
 
         Expression<Func<TodoItem, bool>> expressionFilter = x => x.CreatedByID == id;
 
@@ -56,7 +56,7 @@ public class UserService : IUserService
         var user = await _userRepository.GetAsync(id);
 
         if (user is null)
-            throw new Exception("User not found.");
+            throw new UserNotFoundException();
 
         var userDto = _mapper.Map<UserDto>(user);
         return userDto;
@@ -82,7 +82,7 @@ public class UserService : IUserService
         var user = await _userRepository.GetAsync(entity.UserID);
 
         if (user is null)
-            throw new Exception("User not found.");
+            throw new UserNotFoundException();
 
         UserPicture userPicture;
 
@@ -117,12 +117,12 @@ public class UserService : IUserService
         var user = await _userRepository.GetAsync(userChangePassword.UserID);
 
         if (user is null)
-            throw new Exception("User not found.");
+            throw new UserNotFoundException();
 
         userChangePassword.CurrentPassword = CypherHelper.Encrypt(userChangePassword.CurrentPassword);
 
         if (user.Password != userChangePassword.CurrentPassword)
-            throw new Exception("Current password is incorrect.");
+            throw new UserPasswordsNotMatchException();
 
         var newPassword = CypherHelper.Encrypt(userChangePassword.NewPassword);
         user.ChangePassword(newPassword);

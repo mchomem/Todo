@@ -19,7 +19,7 @@ public class AuthService : IAuthService
         var user = await _userRepository.AuthenticateAsync(login, cypheredPassword);
 
         if (user is null)
-            throw new Exception("User not found.");
+            throw new AuthenticationPasswordOrAccountIncorrectException();
 
         var userDto = _mapper.Map<UserDto>(user);
         userDto.Token = _tokenService.Generate(user.Name!);

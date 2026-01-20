@@ -30,17 +30,11 @@ public class UserController : ControllerBase
     /// <response code="200">Returns the user data.</response>
     /// <response code="500">If an error occurs while retrieving the user.</response>
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> GetAsync([FromRoute] int id)
+    public async Task<IActionResult> GetAsync([FromRoute] int id)
     {
-        try
-        {
-            var user = await _userService.GetAsync(id);
-            return Ok(user);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        var user = await _userService.GetAsync(id);
+        var response = new ApiResponse<UserDto>(user);
+        return Ok(response);
     }
 
     /// <summary>
@@ -52,17 +46,10 @@ public class UserController : ControllerBase
     /// <response code="500">If an error occurs while creating the user.</response>
     [AllowAnonymous]
     [HttpPost]
-    public async Task<ActionResult> PostAsync([FromBody] UserInsertDto user)
+    public async Task<IActionResult> PostAsync([FromBody] UserInsertDto user)
     {
-        try
-        {
-            await _userService.CreateAsync(user);
-            return Ok();
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        await _userService.CreateAsync(user);
+        return Ok();
     }
 
     /// <summary>
@@ -74,17 +61,10 @@ public class UserController : ControllerBase
     /// <response code="204">If the user was updated successfully.</response>
     /// <response code="500">If an error occurs while updating the user.</response>
     [HttpPut("{id}")]
-    public async Task<ActionResult> PutAsync([FromRoute] int id, [FromBody] UserUpdateDto userDto)
+    public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] UserUpdateDto userDto)
     {
-        try
-        {
-            await _userService.UpdateAsync(userDto);
-            return StatusCode(204);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        await _userService.UpdateAsync(userDto);
+        return StatusCode(204);
     }
 
     /// <summary>
@@ -96,17 +76,11 @@ public class UserController : ControllerBase
     /// <response code="500">If an error occurs while changing the password.</response>
     [HttpPut]
     [Route("change-password")]
-    public async Task<ActionResult> ChangePasswordAsync([FromBody] UserChangePasswordDto userChangePassword)
+    public async Task<IActionResult> ChangePasswordAsync([FromBody] UserChangePasswordDto userChangePassword)
     {
-        try
-        {
-            await _userService.ChangePasswordAsync(userChangePassword);
-            return StatusCode(204, new { message = "Password changed successfully" });
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, new { message = e });
-        }
+        await _userService.ChangePasswordAsync(userChangePassword);
+        var reponse = new ApiResponse<string>("Password changed successfully");
+        return Ok(reponse);
     }
 
     /// <summary>
@@ -117,17 +91,10 @@ public class UserController : ControllerBase
     /// <response code="200">If the user was deleted successfully.</response>
     /// <response code="500">If an error occurs while deleting the user.</response>
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteAsync([FromRoute] int id)
+    public async Task<IActionResult> DeleteAsync([FromRoute] int id)
     {
-        try
-        {
-            await _userService.DeleteAsync(id);
-            return Ok();
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        await _userService.DeleteAsync(id);
+        return Ok();
     }
 
     /// <summary>
@@ -138,16 +105,9 @@ public class UserController : ControllerBase
     /// <response code="200">If the user picture was deleted successfully.</response>
     /// <response code="500">If an error occurs while deleting the picture.</response>
     [HttpDelete, Route("delete-user-picture/{userId}")]
-    public async Task<ActionResult> DeleteUserPictureAsync([FromRoute] int userId)
+    public async Task<IActionResult> DeleteUserPictureAsync([FromRoute] int userId)
     {
-        try
-        {
-            await _userPictureService.DeleteByUserIdAsync(userId);
-            return Ok();
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        await _userPictureService.DeleteByUserIdAsync(userId);
+        return Ok();
     }
 }

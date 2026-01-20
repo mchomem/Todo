@@ -27,17 +27,11 @@ public class TodoItemController : ControllerBase
     /// <response code="200">Returns the list of to do items.</response>
     /// <response code="500">If an error occurs while retrieving the items.</response>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TodoItemDto>>> GetAsync(int userID)
+    public async Task<IActionResult> GetAsync(int userID)
     {
-        try
-        {
-            var items = await _todoItemService.GetAllByUserIdAsync(userID);
-            return Ok(items);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        var items = await _todoItemService.GetAllByUserIdAsync(userID);
+        var response = new ApiResponse<IEnumerable<TodoItemDto>>(items);
+        return Ok(response);
     }
 
     /// <summary>
@@ -48,17 +42,11 @@ public class TodoItemController : ControllerBase
     /// <response code="200">Returns a success message.</response>
     /// <response code="500">If an error occurs while creating the task.</response>
     [HttpPost]
-    public async Task<ActionResult> PostAsync(TodoItemInsertDto todoItem)
+    public async Task<IActionResult> PostAsync(TodoItemInsertDto todoItem)
     {
-        try
-        {
-            await _todoItemService.CreateAsync(todoItem);
-            return Ok(new { message = "Task created." });
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        await _todoItemService.CreateAsync(todoItem);
+        var response = new ApiResponse<string>("A new task created.");
+        return Ok(response);
     }
 
     /// <summary>
@@ -70,17 +58,10 @@ public class TodoItemController : ControllerBase
     /// <response code="204">If the to do item was updated successfully.</response>
     /// <response code="500">If an error occurs while updating the item.</response>
     [HttpPut("{id}")]
-    public async Task<ActionResult> PutAsync(int id, TodoItemUpdateDto todoItem)
+    public async Task<IActionResult> PutAsync(int id, TodoItemUpdateDto todoItem)
     {
-        try
-        {
-            await _todoItemService.UpdateAsync(id, todoItem);
-            return StatusCode(204);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        await _todoItemService.UpdateAsync(id, todoItem);
+        return StatusCode(204);
     }
 
     /// <summary>
@@ -91,17 +72,10 @@ public class TodoItemController : ControllerBase
     /// <response code="204">If the task was marked as complete successfully.</response>
     /// <response code="500">If an error occurs while marking the task as complete.</response>
     [HttpPut("complete/{id}")]
-    public async Task<ActionResult> PutMarkTaskAsCompleteAsync(int id)
+    public async Task<IActionResult> PutMarkTaskAsCompleteAsync(int id)
     {
-        try
-        {
-            await _todoItemService.MarkTaskAsComplete(id);
-            return StatusCode(204);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        await _todoItemService.MarkTaskAsComplete(id);
+        return StatusCode(204);
     }
 
     /// <summary>
@@ -112,16 +86,9 @@ public class TodoItemController : ControllerBase
     /// <response code="200">If the to do item was deleted successfully.</response>
     /// <response code="500">If an error occurs while deleting the item.</response>
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteAsync(int id)
+    public async Task<IActionResult> DeleteAsync(int id)
     {
-        try
-        {
-            await _todoItemService.DeleteAsync(id);
-            return Ok();
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e);
-        }
+        await _todoItemService.DeleteAsync(id);
+        return Ok();
     }
 }
