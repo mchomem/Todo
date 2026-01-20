@@ -62,9 +62,9 @@
             .then(response => response.json())
             .then(data => {
 
-                let responseApi = data.Data;
+                let responseApi = data.data;
 
-                if (!data.Success) {
+                if (!data.success) {
                     self.$signInLabel.style.display = 'block';
                     self.$loader.style.display = 'none';
                     Swal.fire({
