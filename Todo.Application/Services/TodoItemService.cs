@@ -61,7 +61,7 @@ public class TodoItemService : ITodoItemService
         if(todo is null)
             throw new TodoItemNotFoundException();
 
-        todo.Update(entity.Name, entity.IsDone, todo.DeadLine);
+        todo.Update(entity.Name, entity.IsDone, entity.DeadLine);
 
         await _todoItemRepository.UpdateAsync(todo);
     }
