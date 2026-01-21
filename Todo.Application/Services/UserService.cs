@@ -47,7 +47,11 @@ public class UserService : IUserService
             await _todoItemRepository.DeleteByCreatedUserIdAsync(id);
         }
 
-        await _userPictureRepository.DeleteAsync(user.Picture);
+        if(user.Picture != null)
+        {
+            await _userPictureRepository.DeleteAsync(user.Picture);
+        }
+
         await _userRepository.DeleteAsync(user);
     }
 

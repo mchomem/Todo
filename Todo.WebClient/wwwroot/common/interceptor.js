@@ -1,7 +1,7 @@
 ﻿const originalFetch = window.fetch;
 
 window.fetch = async (input, init) => {
-    // Proteção contra sessionStorage vazio
+    // Protection against session. Empty storage.
     const userSession = sessionStorage.getItem('user');
     let token = null;
 
@@ -14,7 +14,7 @@ window.fetch = async (input, init) => {
         }
     }
 
-    // Inicializar headers se não existir
+    // Initialize headers if they do not exist
     init = init || {};
     init.headers = {
         ...(init.headers || {}),
@@ -25,7 +25,8 @@ window.fetch = async (input, init) => {
         const response = await originalFetch(input, init);
 
         if (response.status === 401) {
-            sessionStorage.removeItem('user'); // Limpar corretamente
+            // Clean properly
+            sessionStorage.removeItem('user');
             window.location.href = '/pages/login.html';
             return Promise.reject(new Error('Unauthorized'));
         }
