@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+
+<html lang="es-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Session expired</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/bootstrap-5.0.0-beta1-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="../assets/icons/fontawesome-free-5.15.2-web/css/fontawesome.css" rel="stylesheet" />
+    <link href="../assets/icons/fontawesome-free-5.15.2-web/css/solid.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="../assets/icons/paste_plain.png" />
+
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .form-session-expired {
+            width: 100%;
+            max-width: 450px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body class="text-center">
+    <main class="form-session-expired">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-5">
+                <div class="mb-4">
+                    <i class="fas fa-clock fa-4x text-warning"></i>
+                </div>
+
+                <h1 class="h3 mb-3 fw-bold text-dark">Your session has expired</h1>
+
+                <p class="text-muted mb-4">
+                    For security reasons, your session has timed out.
+                    Please log in again to continue.
+                </p>
+
+                <div class="d-grid gap-2">
+                    <a href="login.html" class="btn btn-primary btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>
+                        Go to Login
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-footer bg-light text-center py-3">
+                <small class="text-muted">
+                    <i class="fas fa-shield-alt me-1"></i>
+                    Your data is safe with us
+                </small>
+            </div>
+        </div>
+
+        <p class="mt-5 mb-3 text-muted">&copy; <span id="spanYear">0000</span></p>
+    </main>
+
+    <script src="../assets/bootstrap-5.0.0-beta1-dist/js/bootstrap.js"></script>
+    <script>
+        document.getElementById('spanYear').innerHTML = new Date().getFullYear();
+    </script>
+</body>
+</html>
