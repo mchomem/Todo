@@ -47,7 +47,7 @@
             return
         }
 
-        let url = `https://localhost:44332/api/auth/authentication?login=${self.$txtUser.value}&password=${self.$txtPassword.value}`;
+        const url = `https://localhost:44332/api/auth/authentication?login=${self.$txtUser.value}&password=${self.$txtPassword.value}`;
 
         self.$signInLabel.style.display = 'none';
         self.$loader.style.display = 'block';
@@ -62,7 +62,7 @@
             .then(response => response.json())
             .then(data => {
 
-                let responseApi = data.data;
+                const responseApi = data.data;
 
                 if (!data.success) {
                     self.$signInLabel.style.display = 'block';
@@ -77,7 +77,7 @@
                     return;
                 }
 
-                let apiReponse = data.data;
+                const apiReponse = data.data;
                 sessionStorage.setItem('user', JSON.stringify(apiReponse));
                 document.location.href = 'home.html';
             })

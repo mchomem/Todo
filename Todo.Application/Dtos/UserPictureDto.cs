@@ -9,7 +9,7 @@
 
     public class UserPictureInsertDto
     {
-        public byte[]? Picture { get; set; }
-        public int? PictureFromUserID { get; set; }
+        public required byte[] Picture { get; init; }
+        public required int PictureFromUserID { get; init; }
     }
 }

@@ -94,7 +94,7 @@
         });
 
         self.$btnDeletePicture.addEventListener('click', async function () {
-            let confirm = await Swal.fire({
+            const confirm = await Swal.fire({
                 title: 'Question',
                 text: 'Do you want to delete your picture?',
                 icon: 'question',
@@ -226,7 +226,7 @@
                 return response.json();
             })
             .then(data => {
-                let responseApi = data.data;
+                const responseApi = data.data;
 
                 Home.getItems();
                 self.$addName.value = '';
@@ -251,7 +251,7 @@
     }
 
     , completeTask: async function (id) {
-        let confirm = await Swal.fire({
+        const confirm = await Swal.fire({
             title: 'Question',
             text: 'Do you want to mark this task as complete?',
             icon: 'question',
@@ -273,17 +273,34 @@
             }
         })
             .then(response => {
-                response.json();
+                return response.json();
             })
-            .then(() => {
+            .then(data => {
+                const responseApi = data.data;
+
+                Swal.fire({
+                    title: 'Information',
+                    text: responseApi,
+                    icon: 'info',
+                    confirmButtonText: 'Ok'
+                });
+
                 Home.getItems();
             })
-            .catch(error => console.error('Unable to process item.', error));
+            .catch(error => {
+                console.error('Unable to process item.', error)
+
+                Swal.fire({
+                    title: 'Error',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            });
     }
 
     , deleteItem: async function (id) {
-
-        let confirm = await Swal.fire({
+        const confirm = await Swal.fire({
             title: 'Question',
             text: 'Do you want to delete this record?',
             icon: 'question',
@@ -302,24 +319,29 @@
                 'Authorization': `Bearer ${Home.userCache.token}`
             }
         })
-        .then(() => {
-            Home.getItems();
-            Swal.fire({
-                title: 'Information',
-                text: 'Todo item deleted.',
-                icon: 'info',
-                confirmButtonText: 'Ok'
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                const responseApi = data.data;;
+
+                Home.getItems();
+                Swal.fire({
+                    title: 'Information',
+                    text: responseApi,
+                    icon: 'info',
+                    confirmButtonText: 'Ok'
+                });
+            })
+            .catch(error => {
+                console.error('Unable to delete item.', error)
+                Swal.fire({
+                    title: 'Error',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
             });
-        })
-        .catch(error => {
-            console.error('Unable to delete item.', error)
-            Swal.fire({
-                title: 'Error',
-                text: error,
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
-        });
     }
 
     , displayEditForm: function (id) {
@@ -349,18 +371,33 @@
             },
             body: JSON.stringify(item)
         })
-            .then(() => Home.getItems())
-            .catch(error => console.error('Unable to update item.', error));
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                const responseApi = data.data;
 
-        var successMessage = document.getElementById('success-message');
-        successMessage.classList.remove('d-none');
+                Home.getItems()
 
-        setTimeout(function () {
-            self.$btnClose.click();
-            successMessage.classList.add('d-none');
-        }, 2000);
+                let successMessage = document.getElementById('success-message');
+                successMessage.classList.remove('d-none');
+                successMessage.innerHTML = `Done! ${responseApi}`;
 
-        return false;
+                setTimeout(function () {
+                    self.$btnClose.click();
+                    successMessage.classList.add('d-none');
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('Unable to update item.', error)
+
+                Swal.fire({
+                    title: 'Error',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            });
     }
 
     , _displayCount: function (itemCount) {
@@ -519,7 +556,7 @@
     , saveUser: function () {
         if (self.$txtUserName.value.length === 0) {
             Swal.fire({
-                title: 'Warningg',
+                title: 'Warning',
                 text: 'Type a name.',
                 icon: 'warning',
                 confirmButtonText: 'Ok'

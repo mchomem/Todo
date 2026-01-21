@@ -45,7 +45,7 @@ public class TodoItemController : ControllerBase
     public async Task<IActionResult> PostAsync(TodoItemInsertDto todoItem)
     {
         await _todoItemService.CreateAsync(todoItem);
-        var response = new ApiResponse<string>("A new task created.");
+        var response = new ApiResponse<string>("A new todo created.");
         return Ok(response);
     }
 
@@ -61,7 +61,8 @@ public class TodoItemController : ControllerBase
     public async Task<IActionResult> PutAsync(int id, TodoItemUpdateDto todoItem)
     {
         await _todoItemService.UpdateAsync(id, todoItem);
-        return StatusCode(204);
+        var response = new ApiResponse<string>("Todo item updated successfully.");
+        return Ok(response);
     }
 
     /// <summary>
@@ -75,7 +76,8 @@ public class TodoItemController : ControllerBase
     public async Task<IActionResult> PutMarkTaskAsCompleteAsync(int id)
     {
         await _todoItemService.MarkTaskAsComplete(id);
-        return StatusCode(204);
+        var response = new ApiResponse<string>("Todo item marked as complete successfully.");
+        return Ok(response);
     }
 
     /// <summary>
@@ -89,6 +91,7 @@ public class TodoItemController : ControllerBase
     public async Task<IActionResult> DeleteAsync(int id)
     {
         await _todoItemService.DeleteAsync(id);
-        return Ok();
+        var response = new ApiResponse<string>("Todo item deleted successfully.");
+        return Ok(response);
     }
 }

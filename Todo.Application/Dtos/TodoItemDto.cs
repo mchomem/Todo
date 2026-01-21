@@ -13,16 +13,16 @@ public class TodoItemDto
 
 public class TodoItemInsertDto
 {
-    public string Name { get; set; }
-    public bool IsDone { get; set; }
+    public required string Name { get; init; }
+    public required bool IsDone { get; init; }
     public DateTime? DeadLine { get; set; }
-    public int CreatedByID { get; set; }
+    public required int CreatedByID { get; init; }
 }
 
 public class TodoItemUpdateDto
 {
-    public int TodoItemID { get; set; }
-    public string Name { get; set; }
-    public bool IsDone { get; set; }
+    public required int TodoItemID { get; init; }
+    public required string Name { get; init; }
+    public required bool IsDone { get; init; }
     public DateTime? DeadLine { get; set; }
 }

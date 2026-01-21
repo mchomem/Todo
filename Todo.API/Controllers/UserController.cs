@@ -64,7 +64,8 @@ public class UserController : ControllerBase
     public async Task<IActionResult> PutAsync([FromRoute] int id, [FromBody] UserUpdateDto userDto)
     {
         await _userService.UpdateAsync(userDto);
-        return StatusCode(204);
+        var response = new ApiResponse<string>("User updated successfully.");
+        return Ok(response);
     }
 
     /// <summary>

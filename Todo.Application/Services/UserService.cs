@@ -47,7 +47,7 @@ public class UserService : IUserService
             await _todoItemRepository.DeleteByCreatedUserIdAsync(id);
         }
 
-        if(user.Picture != null)
+        if (user.Picture != null)
         {
             await _userPictureRepository.DeleteAsync(user.Picture);
         }
@@ -99,7 +99,7 @@ public class UserService : IUserService
             userPicture = new UserPicture(entity.Picture, user.UserID, user);
         }
 
-        userPicture.Update(entity.Picture);
+        userPicture.Update(entity.Picture!);
 
         // Do already exists the user picture?
         if (user.Picture is null)
@@ -123,9 +123,9 @@ public class UserService : IUserService
         if (user is null)
             throw new UserNotFoundException();
 
-        userChangePassword.CurrentPassword = CypherHelper.Encrypt(userChangePassword.CurrentPassword);
+        var cypheredCurrentPassword = CypherHelper.Decrypt(userChangePassword.CurrentPassword);
 
-        if (user.Password != userChangePassword.CurrentPassword)
+        if (user.Password != cypheredCurrentPassword)
             throw new UserPasswordsNotMatchException();
 
         var newPassword = CypherHelper.Encrypt(userChangePassword.NewPassword);
