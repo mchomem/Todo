@@ -1,4 +1,4 @@
-﻿namespace Todo.Infra.Database.Contexts;
+﻿namespace Todo.Infrastructure.Persistence.Contexts;
 
 public class TodoContext : DbContext
 {

@@ -1,4 +1,4 @@
-﻿namespace Todo.Infra.Database.Repositories;
+﻿namespace Todo.Infrastructure.Persistence.Repositories;
 
 public class TodoItemRepository : ITodoItemRepository
 {

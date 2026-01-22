@@ -9,9 +9,9 @@
 	<ItemGroup>
 		<PackageReference Include="Mapster" Version="7.4.0" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-		<ProjectReference Include="..\Todo.Infra.Database\Todo.Infra.Database.csproj" />
+	  <ProjectReference Include="..\Todo.Infrastructure.Persistence\Todo.Infrastructure.Persistence.csproj" />
 	</ItemGroup>
 
 </Project>

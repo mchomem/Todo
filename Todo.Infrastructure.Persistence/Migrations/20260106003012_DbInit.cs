@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Todo.Infra.Database.Migrations
+namespace Todo.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class DbInit : Migration

@@ -1,4 +1,4 @@
-﻿namespace Todo.Infra.Database.Repositories.Interfaces;
+﻿namespace Todo.Infrastructure.Persistence.Repositories.Interfaces;
 
 public interface ITodoItemRepository : IRepository<TodoItem>
 {

@@ -4,7 +4,7 @@
     <Project Path="Todo.Domain/Todo.Domain.csproj" />
   </Folder>
   <Folder Name="/2 - Infrastructure/">
-    <Project Path="Todo.Infra.Database/Todo.Infra.Database.csproj" />
+    <Project Path="Todo.Infrastructure.Persistence/Todo.Infrastructure.Persistence.csproj" />
     <Project Path="Todo.Infrastructure.IoC/Todo.Infrastructure.IoC.csproj" />
   </Folder>
   <Folder Name="/3 - Presentation/">

@@ -1,4 +1,4 @@
-﻿namespace Todo.Infra.Mappings;
+﻿namespace Todo.Infrastructure.Persistence.Mappings;
 
 public class UserMapping : IEntityTypeConfiguration<User>
 {

@@ -15,4 +15,4 @@ global using Todo.Domain.Exceptions.Authentication;
 global using Todo.Domain.Exceptions.TodoItem;
 global using Todo.Domain.Exceptions.User;
 global using Todo.Domain.Exceptions.UserPicture;
-global using Todo.Infra.Database.Repositories.Interfaces;
+global using Todo.Infrastructure.Persistence.Repositories.Interfaces;
