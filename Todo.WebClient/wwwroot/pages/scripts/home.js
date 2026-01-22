@@ -60,6 +60,7 @@
         self.$noData = document.getElementById('noData');
         self.$counter = document.getElementById('counter');
         self.$todosListing = document.getElementById('todosListing');
+        self.$buttomRefresh = document.getElementById('buttomRefresh');
     }
 
     , attachEvent: function () {
@@ -161,6 +162,10 @@
         self.$btnSaveEdit.addEventListener('click', function () {
             Home.updateItem();
         });
+
+        self.$buttomRefresh.addEventListener('click', function () {
+            Home.getItems();
+        });
     }
 
     , getUserData: function () {
@@ -171,6 +176,11 @@
     }
 
     , getItems: function () {
+        self.$loader.style.display = 'block';
+        self.$listing.style.display = 'none';
+
+        self.$buttomRefresh.disabled = true;
+
         fetch(`${Home.uriTodoItem}/?userId=${Home.userCache.userID}`, {
             method: 'GET'
             , headers: {
@@ -181,8 +191,11 @@
             .then(data => {
                 let responseApi = data.data;
                 Home._displayItems(responseApi)
+                self.$buttomRefresh.disabled = false;
             })
             .catch(error => {
+                self.$buttomRefresh.disabled = false;
+
                 Swal.fire({
                     title: 'Error!',
                     text: 'Unable to get items.',
