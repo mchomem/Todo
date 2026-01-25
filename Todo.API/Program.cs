@@ -1,4 +1,4 @@
-/***************************************************************************************
+﻿/***************************************************************************************
 *                                                                                      *
 *    Posso todas as coisas em Cristo que me fortalece                                  *
 *                                                                                      *
@@ -41,3 +41,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 await app.RunAsync();
+
+// Torna a classe Program acessível para testes de integração
+public partial class Program { }

@@ -1,0 +1,11 @@
+﻿global using FluentAssertions;
+global using MapsterMapper;
+global using Moq;
+global using Todo.Application.Dtos;
+global using Todo.Application.Helpers;
+global using Todo.Application.Services;
+global using Todo.Domain.Entities;
+global using Todo.Domain.Exceptions.TodoItem;
+global using Todo.Domain.Exceptions.User;
+global using Todo.Infrastructure.Persistence.Repositories.Interfaces;
+global using Xunit;

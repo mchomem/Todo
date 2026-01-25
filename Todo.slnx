@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/0 - Test/">
+    <Project Path="Todo.FunctionalTests/Todo.FunctionalTests.csproj" />
+    <Project Path="Todo.IntegrationTests/Todo.IntegrationTests.csproj" />
+    <Project Path="Todo.UnitTests/Todo.UnitTests.csproj" />
+  </Folder>
   <Folder Name="/1 - Core/">
     <Project Path="Todo.Application/Todo.Application.csproj" />
     <Project Path="Todo.Domain/Todo.Domain.csproj" />

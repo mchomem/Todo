@@ -1,0 +1,9 @@
+﻿global using FluentAssertions;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Mvc.Testing;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.DependencyInjection;
+global using System.Net.Http.Json;
+global using Todo.FunctionalTests.Infrastructure;
+global using Todo.Infrastructure.Persistence.Contexts;
+global using Xunit;
