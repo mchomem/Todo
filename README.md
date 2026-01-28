@@ -1,12 +1,12 @@
-# Todo App
+﻿# Todo App
 
 A simple and educational task management application built with Clean Architecture principles.
 
-## ?? About
+## 📋 About
 
 This project is a simplified task registration system designed as a learning platform for web development best practices. It demonstrates a full-stack implementation with a clean separation of concerns and modern development patterns.
 
-## ? Features
+## ✨ Features
 
 - User authentication and registration
 - Task creation, editing, and deletion
@@ -14,7 +14,7 @@ This project is a simplified task registration system designed as a learning pla
 - Responsive design
 - RESTful API architecture
 
-## ??? Screenshots
+## 🖼️ Screenshots
 
 ### Login Screen
 ![TO DO login](Docs/Images/todo-login.png)
@@ -25,7 +25,7 @@ This project is a simplified task registration system designed as a learning pla
 ### Account Creation
 ![TO DO tasks](Docs/Images/todo-create-new-account.png)
 
-## ??? Architecture
+## 🏗️ Architecture
 
 The project follows Clean Architecture principles with a clear separation between layers:
 
@@ -47,10 +47,10 @@ The project follows Clean Architecture principles with a clear separation betwee
 - **Todo.IntegrationTests**: Integration tests
 - **Todo.FunctionalTests**: End-to-end functional tests
 
-## ??? Tech Stack
+## 🛠️ Tech Stack
 
 **Backend:**
-- C# / .NET
+- C# / .NET 8
 - Entity Framework Core
 - SQL Server
 - RESTful API
@@ -64,105 +64,105 @@ The project follows Clean Architecture principles with a clear separation betwee
 - xUnit / NUnit
 - Integration and Unit Testing frameworks
 
-## ?? Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- .NET SDK (version compatible with the project)
+- .NET 8 SDK
 - SQL Server (LocalDB, Express, or Full Edition)
-- Visual Studio 2019+ or Visual Studio Code
+- Visual Studio 2022+ or Visual Studio Code
 - Git
 
 ### Installation
 
 1. **Clone the repository**
-   ```bash
+   ``````bash
    git clone https://github.com/mchomem/Todo.git
    cd Todo
-   ```
+   ``````
 
 2. **Configure the database connection**
    
-   Update the connection string in `Todo.API/appsettings.json`:
-   ```json
+   Update the connection string in ``Todo.API/appsettings.json``:
+   ``````json
    "ConnectionStrings": {
      "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=TodoDb;Trusted_Connection=True;"
    }
-   ```
+   ``````
 
 3. **Create the database**
 
    Open the Package Manager Console in Visual Studio and run:
-   ```powershell
+   ``````powershell
    add-migration DbInit -Context TodoContext -Project Todo.Infrastructure.Persistence -StartupProject Todo.API
    update-database -Context TodoContext -Project Todo.Infrastructure.Persistence -StartupProject Todo.API
-   ```
+   ``````
 
 4. **Run the application**
    
-   Set `Todo.API` and `Todo.WebClient` as startup projects (for multiple projects) or run them separately:
-   - Start the API: Navigate to `Todo.API` and run `dotnet run`
-   - Start the Web Client: Navigate to `Todo.WebClient` and run `dotnet run`
+   Set ``Todo.API`` and ``Todo.WebClient`` as startup projects (for multiple projects) or run them separately:
+   - Start the API: Navigate to ``Todo.API`` and run ``dotnet run``
+   - Start the Web Client: Navigate to ``Todo.WebClient`` and run ``dotnet run``
 
-## ?? Usage
+## 📚 Usage
 
-1. Access the web application at `https://localhost:[port]`
+1. Access the web application at ``https://localhost:[port]``
 2. Create a new account or login with existing credentials
 3. Start managing your tasks!
 
-## ??? Database Migrations
+## 🗄️ Database Migrations
 
 ### Creating a new migration
 
-```powershell
+``````powershell
 add-migration [MigrationName] -Context TodoContext -Project Todo.Infrastructure.Persistence -StartupProject Todo.API
-```
+``````
 
 ### Updating the database
 
-```powershell
+``````powershell
 update-database -Context TodoContext -Project Todo.Infrastructure.Persistence -StartupProject Todo.API
-```
+``````
 
 ### Removing the last migration
 
-```powershell
+``````powershell
 remove-migration -Context TodoContext -Project Todo.Infrastructure.Persistence
-```
+``````
 
-## ?? Running Tests
+## 🧪 Running Tests
 
-```bash
+``````bash
 dotnet test
-```
+``````
 
 Or run specific test projects:
-```bash
+``````bash
 dotnet test Todo.UnitTests
 dotnet test Todo.IntegrationTests
 dotnet test Todo.FunctionalTests
-```
+``````
 
-## ?? Contributing
+## 🤝 Contributing
 
 This is an educational project, but contributions are welcome! Feel free to:
 
 1. Fork the project
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create a feature branch (``git checkout -b feature/AmazingFeature``)
+3. Commit your changes (``git commit -m 'Add some AmazingFeature'``)
+4. Push to the branch (``git push origin feature/AmazingFeature``)
 5. Open a Pull Request
 
-## ?? License
+## 📝 License
 
 This project is open source and available for educational purposes.
 
-## ?? Author
+## 👤 Author
 
 **mchomem**
 - GitHub: [@mchomem](https://github.com/mchomem)
 
-## ?? Learning Objectives
+## 📖 Learning Objectives
 
 This project demonstrates:
 - Clean Architecture implementation in .NET
@@ -174,13 +174,10 @@ This project demonstrates:
 - Authentication and Authorization
 - Automated testing (Unit, Integration, and Functional)
 
-## ?? Project Status
+## 🔄 Project Status
 
 This project is actively maintained for educational purposes and continuous learning.
 
 ---
 
-? If this project helped you learn something new, consider giving it a star!
-
-
-
+⭐ If this project helped you learn something new, consider giving it a star!
